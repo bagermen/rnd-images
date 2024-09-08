@@ -46,7 +46,7 @@ jobs:
       - name: Get The Latest Tag From The Branch
         id: search-tag
         run: |
-          echo "tag-name=$(git describe --tags --candidates=0 2>/dev/null)" >> "$GITHUB_OUTPUT"
+          echo "TAG_NAME=$(git describe --tags --candidates=0 2>/dev/null)" >> "$GITHUB_OUTPUT"
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -57,7 +57,7 @@ jobs:
           images: |
             ${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.search-tag.tag-name }}
+            type=semver,pattern={{version}},value=${{ steps.search-tag.outputs.TAG_NAME }}
 
       - name: Build and push the image
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
