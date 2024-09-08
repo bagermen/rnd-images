@@ -63,6 +63,7 @@ jobs:
         if: ${{ steps.meta.outputs.tags == '' }}
         run: |
             echo "::error::Tags are not set"
+            exit 1
 
       - name: Build and push the image
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
