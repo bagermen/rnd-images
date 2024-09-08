@@ -54,6 +54,9 @@ jobs:
         with:
           flavor: |
             latest=false
+          labels: |
+            org.opencontainers.image.title=rnd
+            org.opencontainers.image.description=base rnd image
           images: |
             ${{ env.IMAGE_NAME }}
           tags: |
@@ -76,7 +79,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
-            IMAGETAG=${{ matrix.phpTag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
