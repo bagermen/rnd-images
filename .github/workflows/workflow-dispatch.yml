@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: tag
+        description: The branch, tag or SHA to checkout
+        required: true
+        default: main
       environment:
         description: Environment
         type: environment

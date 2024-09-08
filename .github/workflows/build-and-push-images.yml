@@ -4,11 +4,11 @@ on:
   workflow_call:
     inputs:
       ref:
-        description: 'The branch, tag or SHA to checkout'
+        description: The branch, tag or SHA to checkout
         required: true
         type: string
       environment:
-        description: 'Environment to build images against'
+        description: Environment to build images against
         type: string
         required: true
 
