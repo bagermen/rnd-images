@@ -1,0 +1,27 @@
+name: Workflow Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: tag
+      environment:
+        description: Environment
+        type: environment
+        required: true
+
+permissions:
+  packages: write
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  build_images:
+    uses: ./.github/workflows/build-and-push-images.yml
+    secrets: inherit
+    with:
+      ref: ${{ inputs.ref }}
+      environment: ${{ inputs.environment }}
+
+
