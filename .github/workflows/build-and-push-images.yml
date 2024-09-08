@@ -60,7 +60,7 @@ jobs:
             type=semver,pattern={{version}},value=${{ steps.current-tag.outputs.VALUE }}
 
       - name: Thow Error If No Tags Is Generated
-        if: ${{ steps.meta.outputs.tags == '[]' }}
+        if: ${{ steps.meta.outputs.tags == '' }}
         run: |
             echo "::error::Tags are not set"
 
