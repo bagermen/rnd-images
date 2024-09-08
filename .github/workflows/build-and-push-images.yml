@@ -43,10 +43,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get The Latest Tag From The Branch
-        id: search-tag
+      - name: Get The Current Tag From The Branch
+        id: current-tag
         run: |
-          echo "TAG_NAME=$(git describe --tags --candidates=0 2>/dev/null)" >> "$GITHUB_OUTPUT"
+          echo "VALUE=$(git describe --tags --candidates=0 2>/dev/null)" >> "$GITHUB_OUTPUT"
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -57,7 +57,12 @@ jobs:
           images: |
             ${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.search-tag.outputs.TAG_NAME }}
+            type=semver,pattern={{version}},value=${{ steps.current-tag.outputs.VALUE }}
+
+      - name: Thow Error If No Tags Is Generated
+        if: ${{ steps.meta.outputs.tags == '[]' }}
+        run: |
+            echo "::error::Tags are not set"
 
       - name: Build and push the image
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
