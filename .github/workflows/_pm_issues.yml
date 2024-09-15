@@ -20,3 +20,4 @@ jobs:
           BRANCH_NAME: ${{ steps.create-issue-branch.outputs.branchName }}
         run: |
           echo $BRANCH_NAME
+          echo node -v
