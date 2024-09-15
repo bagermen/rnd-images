@@ -10,12 +10,6 @@ jobs:
     if: ${{ github.event.action == 'assigned' }}
     environment: development
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
       - name: Create Issue Branch
         id: create-issue-branch
         uses: robvanderleek/create-issue-branch@main
@@ -26,4 +20,4 @@ jobs:
           BRANCH_NAME: ${{ steps.create-issue-branch.outputs.branchName }}
         run: |
           echo $BRANCH_NAME
-          echo node -v
+          node -v
