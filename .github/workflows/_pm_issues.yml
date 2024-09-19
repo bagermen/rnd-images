@@ -2,7 +2,7 @@ name: pm / issues
 
 on:
   issues:
-    types: [assigned]
+    types: [opened]
 
 jobs:
   create_issue_branch_job:
