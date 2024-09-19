@@ -11,5 +11,5 @@ branches:
     prefix: chore/
   - label: documentation
     prefix: docs/
-  - label: "*"
-    skip: true
+  - label: '*'
+    prefix: issue/
