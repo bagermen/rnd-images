@@ -10,10 +10,6 @@ jobs:
     if: ${{ github.event.action == 'assigned' }}
     environment: development
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
       - name: Create Issue Branch
         id: create-issue-branch
         uses: robvanderleek/create-issue-branch@main
