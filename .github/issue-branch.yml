@@ -1,7 +1,11 @@
 mode: auto
 branchName: short
 silent: true
+autoCloseIssue: true
 autoDeleteBranch: true
+openDraftPR: true
+prSkipCI: true
+conventionalPrTitles: true
 branches:
   - label: enhancement
     prefix: feat/
