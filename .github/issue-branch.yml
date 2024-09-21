@@ -1,6 +1,6 @@
 mode: auto
 branchName: short
-silent: true
+silent: false
 autoCloseIssue: true
 autoDeleteBranch: true
 openDraftPR: true
