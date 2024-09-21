@@ -14,7 +14,6 @@ permissions:
 jobs:
   create_issue_branch_job:
     runs-on: ubuntu-latest
-    environment: development
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
