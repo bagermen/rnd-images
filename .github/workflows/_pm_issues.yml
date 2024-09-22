@@ -6,7 +6,11 @@ on:
   pull_request:
     types: [ opened, reopened, labeled, unlabeled, closed ]
 
-permissions: write-all
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  repository-projects: write
 
 jobs:
   create_issue_branch_job:
@@ -16,4 +20,4 @@ jobs:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
