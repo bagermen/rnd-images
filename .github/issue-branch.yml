@@ -4,8 +4,7 @@ silent: false
 autoLinkIssue: true
 autoCloseIssue: true
 autoDeleteBranch: true
-openPR: true
-prSkipCI: true
+openDraftPR: true
 
 conventionalPrTitles: true
 conventionalStyle: semver
