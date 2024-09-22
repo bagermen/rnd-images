@@ -1,9 +1,10 @@
 mode: auto
 branchName: short
 silent: false
+autoLinkIssue: true
 autoCloseIssue: true
 autoDeleteBranch: true
-openDraftPR: true
+openPR: true
 prSkipCI: true
 
 conventionalPrTitles: true
