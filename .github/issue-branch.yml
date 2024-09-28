@@ -11,7 +11,7 @@ conventionalStyle: semver
 
 copyIssueLabelsToPR: true
 copyIssueAssigneeToPR: true
-copyIssueProjectsToPR: true
+copyIssueProjectsToPR: false
 
 branches:
   - label: enhancement
