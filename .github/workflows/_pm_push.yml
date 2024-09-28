@@ -1,0 +1,22 @@
+name: build issue images
+on:
+  push:
+    branches:
+      - 'fix/issue-**'
+      - 'feat/issue-**'
+
+permissions:
+  packages: write
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  build_issue_image:
+    uses: ./.github/workflows/build-images.yml
+    secrets: inherit
+    with:
+      ref: ${{ github.event.ref }}
+      environment: development
+      push: false
+

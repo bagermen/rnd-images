@@ -1,4 +1,4 @@
-name: Build And Push Images
+name: Build image
 
 on:
   workflow_call:
@@ -11,6 +11,18 @@ on:
         description: Environment to build images against
         type: string
         required: true
+      push:
+        description: Push images
+        type: boolean
+        required: false
+        default: true
+    outputs:
+      imageid:
+        description: Image ID
+        value: ${{ jobs.build_image.outputs.imageid }}
+      digest:
+        description: Image digest
+        value: ${{ jobs.build_image.outputs.digest }}
 
 permissions:
   packages: write
@@ -18,15 +30,21 @@ permissions:
   id-token: write
   attestations: write
 
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
+
 env:
   IMAGE_NAME: ghcr.io/${{ github.actor }}/rnd
 
 jobs:
   build_image:
-    name: Build And Push Image
+    name: Build base image
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-
+    outputs:
+      imageid: ${{ steps.build.outputs.imageid }}
+      digest: ${{ steps.build.outputs.digest }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -43,7 +61,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get The Current Tag From The Branch
+      - name: Get the current tag from the branch
         id: current-tag
         run: |
           echo "VALUE=$(git describe --tags --candidates=0 2>/dev/null)" >> "$GITHUB_OUTPUT"
@@ -60,12 +78,17 @@ jobs:
           images: |
             ${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern={{version}},value=${{ steps.current-tag.outputs.VALUE }}
+            # releases
+            type=semver,priority=900,pattern={{version}},value=${{ steps.current-tag.outputs.VALUE }}
+            # edge
+            type=edge,priority=700
+            # branch
+            type=ref,priority=600,event=branch
 
-      - name: Thow Error If No Tags Is Generated
+      - name: Throw error if tags have not been generated
         if: ${{ steps.meta.outputs.tags == '' }}
         run: |
-            echo "::error::Tags are not set"
+            echo "::error::Tags were not set"
             exit 1
 
       - name: Build and push the image
@@ -75,15 +98,16 @@ jobs:
         with:
           context: .
           file: rnd/Dockerfile
-          push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
+          push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
+          sbom: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
           tags: ${{ steps.meta.outputs.tags }}
           annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+            cache-from: type=gha
+            cache-to: type=gha,mode=max
 
       - name: Generate artifact attestation (GitHub)
-        if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
+        if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.IMAGE_NAME}}
