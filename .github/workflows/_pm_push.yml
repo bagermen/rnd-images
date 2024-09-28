@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/build-images.yml
     secrets: inherit
     with:
-      ref: ${{ github.event.push.ref }}
+      ref: ${{ github.event.ref }}
       environment: development
       push: false
 
