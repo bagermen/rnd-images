@@ -1,4 +1,4 @@
-name: build issue images
+name: pm / build images
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build_issue_image:
-    uses: ./.github/workflows/build-images.yml
+    uses: ./.github/workflows/_build_image.yml
     secrets: inherit
     with:
       ref: ${{ github.event.ref }}
