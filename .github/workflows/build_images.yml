@@ -11,6 +11,10 @@ on:
         description: Environment
         type: environment
         required: true
+      push:
+        description: Push to registry
+        type: boolean
+        default: false
 
 permissions:
   packages: write
@@ -20,10 +24,11 @@ permissions:
 
 jobs:
   build_images:
-    uses: ./.github/workflows/build-and-push-images.yml
+    uses: ./.github/workflows/_build_image.yml
     secrets: inherit
     with:
       ref: ${{ inputs.ref }}
       environment: ${{ inputs.environment }}
+      push: ${{ inputs.push }}
 
 
