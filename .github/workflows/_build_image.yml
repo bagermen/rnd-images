@@ -33,7 +33,8 @@ concurrency:
     cancel-in-progress: true
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.actor }}/rnd
+  IMAGE_NAME: rnd
+  GH_REGISTRY: ghcr.io/${{ github.actor }}
 
 jobs:
   build_image:
@@ -74,7 +75,7 @@ jobs:
             org.opencontainers.image.title=rnd
             org.opencontainers.image.description=base rnd image
           images: |
-            ${{ env.IMAGE_NAME }}
+            ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             # releases
             type=semver,priority=900,pattern={{version}},value=${{ steps.current-tag.outputs.VALUE }}
@@ -89,13 +90,12 @@ jobs:
             echo "::error::Tags were not set"
             exit 1
 
-      - name: Build and push the image
-        if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' }}
+      - name: Build and optionaly push image
         id: build
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: rnd/Dockerfile
+          file: base/Dockerfile
           push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
           sbom: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -108,7 +108,7 @@ jobs:
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ env.IMAGE_NAME}}
+          subject-name: ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build.outputs.digest }}
           github-token: ${{ github.token }}
           push-to-registry: true
