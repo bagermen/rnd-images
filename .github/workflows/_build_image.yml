@@ -90,7 +90,7 @@ jobs:
             echo "::error::Tags were not set"
             exit 1
 
-      - name: Build and optionaly push image
+      - name: Build and optionally push image
         id: build
         uses: docker/build-push-action@v6
         with:
