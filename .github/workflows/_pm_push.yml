@@ -12,8 +12,28 @@ permissions:
   attestations: write
 
 jobs:
-  build_issue_image:
-    uses: ./.github/workflows/_build_image.yml
+  changed_files:
+    runs-on: ubuntu-latest
+    name: Test changed docker files
+    outputs:
+      any_changed: ${{ steps.changed-docker-files.outputs.any_changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+            fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+      - id: changed-docker-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: base/**
+          files_ignore: |
+            base/**.md
+            base/docs/**
+
+  base_image:
+    needs: [changed_files]
+    name: build
+    if: ${{ needs.changed_files.outputs.any_changed == 'true' }}
+    uses: ./.github/workflows/_build_base_image.yml
     secrets: inherit
     with:
       ref: ${{ github.event.ref }}

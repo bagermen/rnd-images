@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   build_images:
-    uses: ./.github/workflows/_build_image.yml
+    uses: ./.github/workflows/_build_base_image.yml
     secrets: inherit
     with:
       ref: ${{ inputs.ref }}
