@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build_images:
-    uses: ./.github/workflows/build-and-push-images.yml
+    uses: ./.github/workflows/base/_build_image.yml
     secrets: inherit
     with:
       ref: ${{ github.event.release.tag_name  }}
