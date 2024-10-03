@@ -1,0 +1,27 @@
+name: ci / base check
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
+    paths:
+      - base/**
+    paths-ignore:
+      - base/**.md
+      - base/docs/**
+
+permissions:
+  packages: write
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  base_check:
+    uses: ./.github/workflows/_wc_build_base_image.yml
+    secrets: inherit
+    with:
+      ref: ${{ github.ref }}
+      environment: development
+      push: false
+

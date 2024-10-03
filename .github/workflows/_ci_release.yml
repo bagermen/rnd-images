@@ -1,4 +1,4 @@
-name: Release
+name: ci / release
 
 on:
   release:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build_images:
-    uses: ./.github/workflows/_build_base_image.yml
+    uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
       ref: ${{ github.event.release.tag_name  }}
