@@ -7,7 +7,7 @@ on:
     paths:
       - 'base/**'
       - '!base/**.md'
-      - '!base/docs/**''
+      - '!base/docs/**'
 
 permissions:
   packages: write
