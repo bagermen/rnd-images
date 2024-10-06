@@ -1,7 +1,7 @@
 name: ci / base check
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
     paths:
@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   base_check:
+    if: ${{ github.event.pull_request.draft == false }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
