@@ -14,7 +14,7 @@ permissions:
   attestations: write
 
 jobs:
-  base_changed_files:
+  test_changed_files:
     if: ${{ github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     name: Test changed-files
@@ -35,9 +35,9 @@ jobs:
             *.md
             docs/**
 
-  base_check:
-    needs: [base_changed_files]
-    if: ${{ needs.base_changed_files.outputs.any_modified == true }}
+  check_image_build:
+    needs: [test_changed_files]
+    if: ${{ needs.test_changed_files.outputs.any_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
