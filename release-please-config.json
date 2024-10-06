@@ -7,7 +7,7 @@
   "draft": false,
   "packages": {
     "base": {
-      "changelog-path": "base/CHANGELOG.md",
+      "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
 
       "prerelease-type": "beta",
