@@ -5,10 +5,9 @@ on:
     branches:
       - main
     paths:
-      - base/**
-    paths-ignore:
-      - base/**.md
-      - base/docs/**
+      - 'base/**'
+      - '!base/**.md'
+      - '!base/docs/**''
 
 permissions:
   packages: write
