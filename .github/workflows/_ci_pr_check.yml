@@ -1,4 +1,4 @@
-name: ci / base check
+name: ci / pr check
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -14,30 +14,26 @@ permissions:
   attestations: write
 
 jobs:
-  test_changed_files:
+  test_changed_project:
     if: ${{ github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
-    name: Test changed-files
+    name: Test changed files
     outputs:
-      any_modified: ${{ steps.changed-files.outputs.any_modified }}
+      base: ${{ steps.base.outputs.any_modified }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          sparse-checkout: |
-            base
-      - name: Detect changed files
-        id: changed-files
+      - id: base
         uses: tj-actions/changed-files@v45
         with:
+          since_last_remote_commit: true
           path: base
           files_ignore: |
-            *.md
-            docs/**
+            - **.md
+            - docs/**
 
-  check_image_build:
-    needs: [test_changed_files]
-    if: ${{ needs.test_changed_files.outputs.any_modified == 'true' }}
+  test_base_image:
+    needs: [test_changed_project]
+    if: ${{ !cancelled() && !failure() && needs.test_changed_project.outputs.base == 'true' }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
