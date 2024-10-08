@@ -77,13 +77,13 @@ jobs:
             ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             # releases
-            type=semver,priority=900,pattern={{version}},value=${{ steps.tag_name.outputs.tag }}
+            type=semver,priority=900,pattern={{version}},value=v${{ steps.tag_name.outputs.tag }}
             # edge
             type=edge,priority=700
             # branch
-            type=ref,priority=600,event=branch
+            type=ref,priority=600,event=branch,enable=${{ steps.tag_name.outputs.tag != '' }}
             # pr
-            type=ref,priority=600,event=pr
+            type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.tag != '' }}
 
       - name: Throw error if tags have not been generated
         if: ${{ steps.meta.outputs.tags == '' }}
