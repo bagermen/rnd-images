@@ -81,9 +81,9 @@ jobs:
             # edge
             type=edge,priority=700
             # branch
-            type=ref,priority=600,event=branch,enable=${{ steps.tag_name.outputs.tag != '' }}
+            type=ref,priority=600,event=branch,enable=${{ steps.tag_name.outputs.tag == '' }}
             # pr
-            type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.tag != '' }}
+            type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.tag == '' }}
 
       - name: Throw error if tags have not been generated
         if: ${{ steps.meta.outputs.tags == '' }}
