@@ -1,0 +1,62 @@
+name: ci / release-please
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release_please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    outputs:
+      releases_created: ${{ steps.release_please.outputs.releases_created }}
+      pr: ${{ steps.release_please.outputs.pr }}
+      base_released: ${{ steps.release_please.outputs.base--release_created }}
+      base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release_please
+        with:
+          token: ${{ secrets.PAT }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish_base_image:
+    uses: ./.github/workflows/_wc_build_base_image.yml
+    needs: [release_please]
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.base_released }}
+
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+      attestations: write
+
+    secrets: inherit
+    with:
+      ref: ${{ needs.release_please.outputs.base_tag_name }}
+      environment: production
+      push: true
+
+  label_base_release_done:
+    runs-on: ubuntu-latest
+    needs: [release_please, publish_base_image]
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.releases_created }}
+
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - uses: PauMAVA/add-remove-label-action@v1.0.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          issue_number: ${{ fromJson(needs.release_please.outputs.pr).number }}
+          add: 'autorelease: published'
+          remove: 'autorelease: tagged'
+
+
