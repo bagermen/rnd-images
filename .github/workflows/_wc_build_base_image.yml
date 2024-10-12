@@ -77,9 +77,9 @@ jobs:
             ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             # releases
-            type=semver,priority=900,pattern={{version}},value=v${{ steps.tag_name.outputs.tag }}
-            type=semver,priority=900,pattern={{major}}.{{minor}},value=v${{ steps.tag_name.outputs.tag }}
-            type=semver,priority=900,pattern={{major}},value=v${{ steps.tag_name.outputs.tag }}
+            type=semver,priority=900,pattern={{version}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
+            type=semver,priority=900,pattern={{major}}.{{minor}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
+            type=semver,priority=900,pattern={{major}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
             # edge
             type=edge,priority=700
             # branch
