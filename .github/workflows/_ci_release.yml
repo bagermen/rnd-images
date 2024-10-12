@@ -14,8 +14,8 @@ jobs:
 
     outputs:
       pr: ${{ steps.release_please.outputs.pr }}
-      releases_created: ${{ steps.release_please.outputs.releases_created == 'true' }}
-      base_released: ${{ steps.release_please.outputs.base--release_created == 'true' }}
+      releases_created: ${{ steps.release_please.outputs.releases_created }}
+      base_released: ${{ steps.release_please.outputs.base--release_created }}
       base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
     steps:
       - uses: googleapis/release-please-action@v4
@@ -28,7 +28,7 @@ jobs:
   publish_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml
     needs: [release_please]
-    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.base_released }}
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.base_released == 'true' }}
 
     permissions:
       packages: write
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     needs: [release_please, publish_base_image]
-    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.releases_created }}
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.releases_created == 'true' }}
 
     permissions:
       pull-requests: write
