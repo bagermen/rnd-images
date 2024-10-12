@@ -13,7 +13,6 @@ jobs:
       pull-requests: write
 
     outputs:
-      pr: ${{ steps.release_please.outputs.pr }}
       releases_created: ${{ steps.release_please.outputs.releases_created }}
       base_released: ${{ steps.release_please.outputs.base--release_created }}
       base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
@@ -53,11 +52,13 @@ jobs:
       contents: read
 
     steps:
+      - uses: cloudposse-github-actions/get-pr@v2
+        id: pr
       - uses: PauMAVA/add-remove-label-action@v1.0.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
-          issue_number: ${{ fromJson(needs.release_please.outputs.pr).number }}
+          issue_number: ${{ steps.pr.outputs.number }}
           add: 'autorelease: published'
 
 
