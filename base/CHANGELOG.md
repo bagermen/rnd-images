@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.11](https://github.com/bagermen/rnd-images/compare/0.0.10...0.0.11) (2024-10-12)
+
+
+### Bug Fixes
+
+* 🐛 fix project build v7 ([#90](https://github.com/bagermen/rnd-images/issues/90)) ([aa7a582](https://github.com/bagermen/rnd-images/commit/aa7a582d5e4928008f4fffec2629cd41ef2572ce))
+* 🐛 fix project build v8 ([#92](https://github.com/bagermen/rnd-images/issues/92)) ([7abed48](https://github.com/bagermen/rnd-images/commit/7abed48cb53dbe3e4f07c957b5e00e1178b9e46c))
+
 ## [0.0.10](https://github.com/bagermen/rnd-images/compare/0.0.9...0.0.10) (2024-10-12)
 
 
