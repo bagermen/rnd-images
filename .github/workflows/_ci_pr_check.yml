@@ -16,7 +16,6 @@ jobs:
     environment: development
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    name: Test changed files
     outputs:
       base: ${{ steps.base.outputs.any_modified }}
     steps:

@@ -1,6 +1,7 @@
 {
   "bootstrap-sha": "8ef3b1c6c03adb6758f769e02ac64efb2f0ba45b",
   "include-v-in-tag": false,
+  "include-component-in-tag": true,
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
   "draft": false,
@@ -8,7 +9,6 @@
     "base": {
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
-      "include-component-in-tag": true,
       "prerelease-type": "beta",
       "prerelease": true
     }
