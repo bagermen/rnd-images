@@ -1,4 +1,4 @@
-name: ci / release-please
+name: ci / release
 
 on:
   push:
@@ -21,8 +21,9 @@ jobs:
         id: release_please
         with:
           token: ${{ secrets.PAT }}
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
+          config-file: ./release-please-config.json
+          manifest-file: ./.release-please-manifest.json
+          include-component-in-tag: true
 
   publish_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml

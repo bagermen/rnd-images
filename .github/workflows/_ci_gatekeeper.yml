@@ -1,4 +1,4 @@
-name: ci / Merge Gatekeeper
+name: ci / gatekeeper
 
 on:
   pull_request:
