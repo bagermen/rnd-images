@@ -6,6 +6,7 @@
   "draft": false,
   "packages": {
     "base": {
+      "component": "base",
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
       "include-component-in-tag": true,
