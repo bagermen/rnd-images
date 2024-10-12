@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.12](https://github.com/bagermen/rnd-images/compare/0.0.11...v0.0.12) (2024-10-12)
+
+
+### Bug Fixes
+
+* 🐛 fix project build v9 ([#95](https://github.com/bagermen/rnd-images/issues/95)) ([5f8180c](https://github.com/bagermen/rnd-images/commit/5f8180cd2d2012fb21c4016603827af40285224e))
+
 ## [0.0.11](https://github.com/bagermen/rnd-images/compare/0.0.10...0.0.11) (2024-10-12)
 
 
