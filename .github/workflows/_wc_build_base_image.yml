@@ -59,11 +59,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get the current tag from the branch
-        uses: olegtarasov/get-tag@v2.1.3
-        with:
-          tagRegex: "base-(.*)"
+      - name: Parse tag from the ref
         id: tag_name
+        uses: kaisugi/action-regex-match@v1.0.1
+        with:
+          text: ${{ inputs.ref }}
+          regex: "^base-(.*)$"
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -77,15 +78,15 @@ jobs:
             ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             # releases
-            type=semver,priority=900,pattern={{version}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
-            type=semver,priority=900,pattern={{major}}.{{minor}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
-            type=semver,priority=900,pattern={{major}},value=v${{ steps.tag_name.outputs.tag }},enable=${{ steps.tag_name.outputs.tag != '' }}
+            type=semver,priority=900,pattern={{version}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
+            type=semver,priority=900,pattern={{major}}.{{minor}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
+            type=semver,priority=900,pattern={{major}},value=v${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
             # edge
             type=edge,priority=700
             # branch
-            type=ref,priority=600,event=branch,enable=${{ steps.tag_name.outputs.tag == '' }}
+            type=ref,priority=600,event=branch,enable=${{ steps.tag_name.outputs.group1 == '' }}
             # pr
-            type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.tag == '' }}
+            type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.group1 == '' }}
 
       - name: Throw error if tags have not been generated
         if: ${{ steps.meta.outputs.tags == '' }}
