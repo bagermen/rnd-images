@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   test_changed_project:
+    environment: development
     if: ${{ github.event.pull_request.draft == false &&  !contains(github.event.pull_request.labels.*.name, 'autorelease') }}
     runs-on: ubuntu-latest
     name: Test changed files

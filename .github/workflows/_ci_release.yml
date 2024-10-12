@@ -7,6 +7,7 @@ on:
 jobs:
   release_please:
     runs-on: ubuntu-latest
+    environment: development
     permissions:
       contents: write
       pull-requests: write
@@ -38,11 +39,12 @@ jobs:
     secrets: inherit
     with:
       ref: ${{ needs.release_please.outputs.base_tag_name }}
-      environment: production
+      environment: development
       push: true
 
   label_base_release_done:
     runs-on: ubuntu-latest
+    environment: development
     needs: [release_please, publish_base_image]
     if: ${{ !cancelled() && !failure() && needs.release_please.outputs.releases_created }}
 
