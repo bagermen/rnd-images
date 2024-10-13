@@ -28,11 +28,20 @@ jobs:
           files_ignore: |
             **.md
             docs/**
+      - id: base-all-files
+        uses: tj-actions/changed-files@v45
+        with:
+          since_last_remote_commit: true
+          path: base
       - id: last_base_ref_status
-        if: ${{ steps.base.outputs.any_modified == 'false' }}
+        if: ${{ steps.base.outputs.any_modified == 'false' && steps.base-all-files.outputs.any_modified == 'true' }}
         uses: danieldeichfuss/get-status@v0.0.10
         with:
             ref: ${{ github.event.pull_request.head.sha }}
+      - if: ${{ steps.base.outputs.any_modified == 'false' && steps.base-all-files.outputs.any_modified == 'true' && steps.last_base_ref_status.outputs.all-checks-passed == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script:  core.setFailed('base build failed')
 
   test_base_image:
     needs: [test_changed_project]
