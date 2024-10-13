@@ -32,7 +32,7 @@ jobs:
         if: ${{ steps.base.outputs.any_modified == 'false' }}
         uses: danieldeichfuss/get-status@v0.0.10
         with:
-            ref: ${{ github.sha }}
+            ref: ${{ github.event.pull_request.head.sha }}
 
   test_base_image:
     needs: [test_changed_project]
