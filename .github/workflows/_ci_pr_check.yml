@@ -26,8 +26,8 @@ jobs:
           since_last_remote_commit: true
           path: base
           files_ignore: |
-            - **.md
-            - docs/**
+            **.md
+            docs/**
       - id: last_base_ref_status
         if: ${{ steps.base.outputs.any_modified == 'false' }}
         uses: danieldeichfuss/get-status@v0.0.10
