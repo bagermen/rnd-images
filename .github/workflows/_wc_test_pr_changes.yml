@@ -78,7 +78,7 @@ jobs:
         with:
           name: ${{ inputs.artifact }}
           json: >
-            {"src_modified":${{ steps.src-files.outputs.any_modified }},"test_modified":${{ steps.test-files.outputs.any_modified == 'true' }}}
+            {\"src_modified\":${{ steps.src-files.outputs.any_modified }},\"test_modified\":${{ steps.test-files.outputs.any_modified == 'true' }}}
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.artifact != ''}}
         with:
