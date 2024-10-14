@@ -47,8 +47,8 @@ jobs:
     environment: development
     outputs:
       path: ${{ steps.project.outputs.value }}
-      src_modified: ${{ steps.src_modified.outputs.propStr }}
-      test_modified: ${{ steps.test_modified.outputs.propStr }}
+      src_modified: ${{ fromJson(steps.package.outputs.content).src_modified }}
+      test_modified: ${{ fromJson(steps.package.outputs.content).test_modified }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
@@ -65,18 +65,18 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: ${{ matrix.artifact }}
-      - name: Echo package.json
-        run: echo "${{ steps.package.outputs.content }}"
-      - uses: 'notiz-dev/github-action-json-property@release'
-        id: src_modified
-        with:
-          path: ${{ matrix.artifact }}
-          prop_path: src_modified
-      - uses: 'notiz-dev/github-action-json-property@release'
-        id: test_modified
-        with:
-          path: ${{ matrix.artifact }}
-          prop_path: test_modified
+      # - name: Echo package.json
+      #   run: echo "${{ steps.package.outputs.content }}"
+      # - uses: 'notiz-dev/github-action-json-property@release'
+      #   id: src_modified
+      #   with:
+      #     path: ${{ matrix.artifact }}
+      #     prop_path: src_modified
+      # - uses: 'notiz-dev/github-action-json-property@release'
+      #   id: test_modified
+      #   with:
+      #     path: ${{ matrix.artifact }}
+      #     prop_path: test_modified
 
 
   # test_changed_project:
