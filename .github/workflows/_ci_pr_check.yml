@@ -60,6 +60,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact }}
+      - name: Display structure of downloaded files
+        run: ls -R
       - uses: 'notiz-dev/github-action-json-property@release'
         id: src_modified
         with:
