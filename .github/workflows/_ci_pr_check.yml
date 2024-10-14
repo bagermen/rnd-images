@@ -33,7 +33,8 @@ jobs:
     needs: [list_projects]
     if: ${{ !cancelled() && !failure() }}
     strategy:
-      matrix: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
+      matrix:
+        include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
     uses: ./.github/workflows/_wc_test_pr_changes.yml
     with:
       environment: development
