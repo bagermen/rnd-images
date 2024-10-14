@@ -44,6 +44,7 @@ jobs:
     if: ${{ !cancelled() && !failure() }}
     needs: [list_projects, test_changes]
     runs-on: ubuntu-latest
+    environment: development
     outputs:
       path: ${{ steps.project.outputs.value }}
       src_modified: ${{ fromJson(steps.file.outputs).src_modified }}
