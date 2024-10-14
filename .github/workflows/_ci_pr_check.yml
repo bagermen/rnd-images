@@ -24,8 +24,8 @@ jobs:
             - artifact: base.json
               path: base
               src_files: |
-                '!**.md'
-                '!docs/**'
+                !**.md
+                !docs/**
   check_changes:
     needs: [list_projects]
     if: ${{ !cancelled() && !failure() }}
