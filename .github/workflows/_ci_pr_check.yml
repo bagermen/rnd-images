@@ -13,13 +13,11 @@ jobs:
     outputs:
       matrix: ${{ steps.project-list.outputs.matrix }}
     steps:
-      - uses: yakubique/list-artifacts@v1.1
-        id: artefact-list
+      - uses: geekyeggo/delete-artifact@v5
         with:
-          name: '*.yml'
-      - uses: MichaelMelena/remove-artifacts@v1
-        with:
-          artifacts: ${{ steps.artefact-list.outputs.result }}
+          useGlob: true
+          name: |
+            *.yml
       - uses: mmastrac/mmm-matrix@v1
         id: project-list
         with:
@@ -51,7 +49,8 @@ jobs:
       src_modified: ${{ fromJson(steps.file.outputs).src_modified }}
       test_modified: ${{ fromJson(steps.file.outputs).test_modified }}
     strategy:
-      matrix: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
+      matrix:
+        include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
     steps:
       - uses: streetsidesoftware/action-set-output@v1
         id: project
