@@ -47,8 +47,8 @@ jobs:
     environment: development
     outputs:
       path: ${{ steps.project.outputs.value }}
-      src_modified: ${{ steps.src_modified.outputs.prop }}
-      test_modified: ${{ steps.test_modified.outputs.prop }}
+      src_modified: ${{ steps.src_modified.outputs.propStr }}
+      test_modified: ${{ steps.test_modified.outputs.propStr }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
@@ -61,17 +61,17 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
       - name: Display structure of downloaded files
-        run: ls -R
+        run: cat ./base.json
       - uses: 'notiz-dev/github-action-json-property@release'
         id: src_modified
         with:
-          path: ./${{ matrix.artifact }}
-          prop_path: src_modified
+          path: ${{ matrix.artifact }}
+          prop_path: 'src_modified'
       - uses: 'notiz-dev/github-action-json-property@release'
         id: test_modified
         with:
-          path: ./${{ matrix.artifact }}
-          prop_path: test_modified
+          path: ${{ matrix.artifact }}
+          prop_path: 'test_modified'
 
 
   # test_changed_project:
