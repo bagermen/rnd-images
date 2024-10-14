@@ -17,12 +17,12 @@ jobs:
         with:
           useGlob: true
           name: |
-            *.yml
+            *.json
       - uses: mmastrac/mmm-matrix@v1
         id: project-list
         with:
           input: |
-            - artifact: base.yml
+            - artifact: base.json
               path: base
               src_files: |
                 '!**.md'
@@ -47,8 +47,8 @@ jobs:
     environment: development
     outputs:
       path: ${{ steps.project.outputs.value }}
-      src_modified: ${{ fromJson(steps.file.outputs).src_modified }}
-      test_modified: ${{ fromJson(steps.file.outputs).test_modified }}
+      src_modified: ${{ steps.src_modified.outputs.prop }}
+      test_modified: ${{ steps.test_modified.outputs.prop }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
@@ -60,10 +60,18 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-      - uses: juliangruber/read-file-action@v1
-        id: file
+      - uses: 'notiz-dev/github-action-json-property@release'
+        id: src_modified
         with:
           path: ${{ matrix.artifact }}
+          prop_path: src_modified
+      - uses: 'notiz-dev/github-action-json-property@release'
+        id: test_modified
+        with:
+          path: ${{ matrix.artifact }}
+          prop_path: test_modified
+
+
   # test_changed_project:
   #   environment: development
   #   if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
