@@ -60,17 +60,21 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact }}
+
+      - name: Show artifact
+        run: echo '${{ matrix.artifact }}'
+
       - name: Display structure of downloaded files
-        run: cat ./base.json
+        run: cat ${{ matrix.artifact }}
       - uses: 'notiz-dev/github-action-json-property@release'
         id: src_modified
         with:
-          path: ./${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
           prop_path: src_modified
       - uses: 'notiz-dev/github-action-json-property@release'
         id: test_modified
         with:
-          path: ./${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
           prop_path: test_modified
 
 
