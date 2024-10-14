@@ -60,12 +60,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-
-      - name: Show artifact
-        run: echo '${{ matrix.artifact }}'
-
-      - name: Display structure of downloaded files
-        run: cat ${{ matrix.artifact }}
+      - name: Read package.json
+        id: package
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ${{ matrix.artifact }}
+      - name: Echo package.json
+        run: echo "${{ steps.package.outputs.content }}"
       - uses: 'notiz-dev/github-action-json-property@release'
         id: src_modified
         with:
