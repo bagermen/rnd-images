@@ -65,13 +65,13 @@ jobs:
       - uses: 'notiz-dev/github-action-json-property@release'
         id: src_modified
         with:
-          path: ${{ matrix.artifact }}
-          prop_path: 'src_modified'
+          path: ./${{ matrix.artifact }}
+          prop_path: src_modified
       - uses: 'notiz-dev/github-action-json-property@release'
         id: test_modified
         with:
-          path: ${{ matrix.artifact }}
-          prop_path: 'test_modified'
+          path: ./${{ matrix.artifact }}
+          prop_path: test_modified
 
 
   # test_changed_project:
