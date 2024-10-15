@@ -21,8 +21,8 @@ jobs:
         id: release_please
         with:
           token: ${{ secrets.PAT }}
-          config-file: .github/release-config.json
-          manifest-file: .github/.release-manifest.json
+          config-file: ./.github/release-config.json
+          manifest-file: ./.github/.release-manifest.json
           include-component-in-tag: true
 
       - uses: actions/checkout@v4
