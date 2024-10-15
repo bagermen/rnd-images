@@ -3,7 +3,7 @@ ARG VARIANT=3.1
 # ARG VARIANT=3.1 (debian 10)
 FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}
 
-# Copy library scripts to execute (some fake changes 15)
+# Copy library scripts to execute (some fake changes)
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 
 # [Option] Upgrade OS packages to their latest versions
@@ -16,7 +16,7 @@ ARG USER_GID=$USER_UID
 
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
-RUN bash /tmp/library-scripts/packages1.sh "${UPGRADE_PACKAGES}" "libgdiplus"  \
+RUN bash /tmp/library-scripts/packages.sh "${UPGRADE_PACKAGES}" "libgdiplus"  \
     && bash /tmp/library-scripts/user.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
