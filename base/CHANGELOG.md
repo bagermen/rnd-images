@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.15](https://github.com/bagermen/rnd-images/compare/base-v0.0.14...base-v0.0.15) (2024-10-15)
+
+
+### Bug Fixes
+
+* 🐛 check previous run on push ([#104](https://github.com/bagermen/rnd-images/issues/104)) ([dd4df7a](https://github.com/bagermen/rnd-images/commit/dd4df7a3c48bb1a212eff7516645a3540a86f391))
+* 🐛 release many tags ([#116](https://github.com/bagermen/rnd-images/issues/116)) ([35e1e6d](https://github.com/bagermen/rnd-images/commit/35e1e6d79b430c226d5aa210045406fb25e93631))
+
 ## [0.0.14](https://github.com/bagermen/rnd-images/compare/base-v0.0.13...base-v0.0.14) (2024-10-12)
 
 
