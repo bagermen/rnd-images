@@ -4,35 +4,57 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     branches:
       - main
-
-permissions:
-  packages: write
-  contents: read
-  id-token: write
-  attestations: write
-
 jobs:
-  test_changed_project:
-    environment: development
+  check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
+    environment: development
     outputs:
-      base: ${{ steps.base.outputs.any_modified }}
+      base_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: check-files
+        uses: tj-actions/changed-files@v45
+        with:
+          since_last_remote_commit: true
+          files: |
+            !.github/**
+            !*.md
+            !**/docs/**
+            !.editorconfig
+            !LICENSE
+      - id: parent-commit
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          echo "SHA=$(git rev-list --skip=1 -1 $SHA)" >> $GITHUB_OUTPUT
+      - id: last-ref-status
+        if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 }}
+        uses: danieldeichfuss/get-status@v0.0.10
+        with:
+            ref: ${{ steps.parent-commit.outputs.SHA }}
+      - if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script:  core.setFailed('Required checks has been failed')
+
       - id: base
         uses: tj-actions/changed-files@v45
         with:
           since_last_remote_commit: true
           path: base
-          files_ignore: |
-            - **.md
-            - docs/**
 
   test_base_image:
-    needs: [test_changed_project]
-    if: ${{ !cancelled() && !failure() && needs.test_changed_project.outputs.base == 'true' }}
+    needs: [check_changes]
+    if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.base_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_base_image.yml
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+      attestations: write
     secrets: inherit
     with:
       ref: ${{ github.ref }}

@@ -88,11 +88,10 @@ jobs:
             # pr
             type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.group1 == '' }}
 
-      - name: Throw error if tags have not been generated
-        if: ${{ steps.meta.outputs.tags == '' }}
-        run: |
-            echo "::error::Tags were not set"
-            exit 1
+      - if: ${{ steps.meta.outputs.tags == '' }}
+        uses: actions/github-script@v7
+        with:
+          script:  core.setFailed('Tags were not set')
 
       - name: Build and optionally push image
         id: build
