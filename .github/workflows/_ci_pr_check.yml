@@ -20,12 +20,11 @@ jobs:
         with:
           since_last_remote_commit: true
           files: |
-            '!.github/**'
-            '!**.md'
-            '!docs/**''
-            '!*/docs/**'
-            '!.editorconfig'
-            '!LICENSE'
+            !.github/**
+            !*.md
+            !**/docs/**
+            !.editorconfig
+            !LICENSE
       - id: parent-commit
         env:
           SHA: ${{ github.event.pull_request.head.sha }}
