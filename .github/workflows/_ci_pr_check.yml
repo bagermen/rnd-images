@@ -10,36 +10,33 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     outputs:
-      base_modified: ${{ steps.src-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
+      base_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - id: all-files
+      - id: check-files
         uses: tj-actions/changed-files@v45
         with:
           since_last_remote_commit: true
-      - id: src-files
-        uses: tj-actions/changed-files@v45
-        with:
-          since_last_remote_commit: true
-          files_ignore: |
-            .github/**
-            **.md
-            docs/**
-            .editorconfig
-            LICENSE
+          files: |
+            '!.github/**'
+            '!**.md'
+            '!docs/**''
+            '!*/docs/**'
+            '!.editorconfig'
+            '!LICENSE'
       - id: parent-commit
         env:
           SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           echo "SHA=$(git rev-list --skip=1 -1 $SHA)" >> $GITHUB_OUTPUT
       - id: last-ref-status
-        if: ${{ steps.src-files.outputs.any_modified == 'false' && steps.all-files.outputs.any_modified == 'true' }}
+        if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 }}
         uses: danieldeichfuss/get-status@v0.0.10
         with:
             ref: ${{ steps.parent-commit.outputs.SHA }}
-      - if: ${{ steps.src-files.outputs.any_modified == 'false' && steps.all-files.outputs.any_modified == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' }}
+      - if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-passed == 'false' }}
         uses: actions/github-script@v7
         with:
           script:  core.setFailed('Required checks has been failed')
