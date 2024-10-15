@@ -5,68 +5,47 @@ on:
     branches:
       - main
 jobs:
-  list_projects:
+  check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
     environment: development
     outputs:
-      matrix: ${{ steps.project-list.outputs.matrix }}
+      base_modified: ${{ steps.base.outputs.any_modified }}
     steps:
-      - uses: geekyeggo/delete-artifact@v5
+      - uses: actions/checkout@v4
+      - id: all-files
+        uses: tj-actions/changed-files@v45
         with:
-          useGlob: true
-          name: |
-            *.json
-      - uses: mmastrac/mmm-matrix@v1
-        id: project-list
+          since_last_remote_commit: true
+      - id: src-files
+        uses: tj-actions/changed-files@v45
         with:
-          input: |
-            - artifact: base.json
-              path: base
-              src_files: |
-                !**.md
-                !docs/**
-  check_changes:
-    needs: [list_projects]
-    if: ${{ !cancelled() && !failure() }}
-    strategy:
-      matrix:
-        include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
-    uses: ./.github/workflows/_wc_test_pr_changes.yml
-    with:
-      environment: development
-      artifact: ${{ matrix.artifact }}
-      path: ${{ matrix.path }}
-      src_files: ${{ matrix.src_files }}
+          since_last_remote_commit: true
+          files_ignore: |
+            .github/**
+            **.md
+            docs/**
+            .editorconfig
+            LICENSE
+      - id: last-ref-status
+        if: ${{ steps.src-files.outputs.any_modified == 'false' && steps.all-files.outputs.any_modified == 'true' }}
+        uses: danieldeichfuss/get-status@v0.0.10
+        with:
+            ref: ${{ github.event.pull_request.head.sha }}
+      - if: ${{ steps.src-files.outputs.any_modified == 'false' && steps.all-files.outputs.any_modified == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script:  core.setFailed('Required checks has been failed')
 
-  read_changes:
-    if: ${{ !cancelled() && !failure() }}
-    needs: [list_projects, check_changes]
-    runs-on: ubuntu-latest
-    environment: development
-    outputs:
-      path: ${{ steps.project.outputs.value }}
-      src_modified: ${{ fromJson(steps.artifact.outputs.content).src_modified }}
-      test_modified: ${{ fromJson(steps.artifact.outputs.content).test_modified }}
-    strategy:
-      matrix:
-        include: ${{ fromJSON(needs.list_projects.outputs.matrix) }}
-    steps:
-      - uses: streetsidesoftware/action-set-output@v1
-        id: project
+      - id: base
+        uses: tj-actions/changed-files@v45
         with:
-          value: ${{ matrix.path }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.artifact }}
-      - id: artifact
-        uses: juliangruber/read-file-action@v1
-        with:
-          path: ${{ matrix.artifact }}
+          since_last_remote_commit: true
+          path: base
 
   test_base_image:
-    needs: [read_changes]
-    if: ${{ !cancelled() && !failure() && needs.read_changes.outputs.path == 'base' && needs.read_changes.outputs.src_modified == 'true' }}
+    needs: [check_changes]
+    if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.base_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     permissions:
       packages: write
