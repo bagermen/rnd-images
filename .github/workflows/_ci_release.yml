@@ -25,6 +25,28 @@ jobs:
           manifest-file: .github/.release-manifest.json
           include-component-in-tag: true
 
+      - uses: actions/checkout@v4
+        if: ${{ steps.release_please.outputs.releases_created == 'true' }}
+      - uses: raven-actions/bot-details@v1
+        if: ${{ steps.release_please.outputs.releases_created == 'true' }}
+        id: bot-details
+      - name: setup git
+        if: ${{ steps.release_please.outputs.releases_created == 'true' }}
+        run: |
+          git config user.name ${{ steps.bot-details.outputs.name }}
+          git config user.email ${{ steps.bot-details.outputs.email }}
+      - name: tag major and minor versions of base project
+        if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
+        run: |
+          git tag -d base-v${{ steps.release_please.outputs.base--major }} || true
+          git tag -d base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }} || true
+          git push origin :base-v${{ steps.release_please.outputs.base--major }} || true
+          git push origin :base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }} || true
+          git tag -a base-v${{ steps.release_please.outputs.base--major }} -m "Release base-v${{ steps.release_please.outputs.base--major }}"
+          git tag -a base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }} -m "Release base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}"
+          git push origin base-v${{ steps.release_please.outputs.base--major }}
+          git push origin base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
+
   publish_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml
     needs: [release_please]
@@ -61,5 +83,3 @@ jobs:
           repository: ${{ github.repository }}
           issue_number: ${{ steps.pr.outputs.number }}
           add: 'autorelease: published'
-
-
