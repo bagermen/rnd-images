@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     outputs:
-      base_modified: ${{ steps.base.outputs.any_modified }}
+      base_modified: ${{ steps.src-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
     steps:
       - uses: actions/checkout@v4
       - id: all-files
