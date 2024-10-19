@@ -16,40 +16,38 @@ runs:
       with:
         script: |
           try {
-            const del_rsp = await github.rest.git.deleteRef({
+            await github.rest.git.deleteRef({
               ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}'
             });
-
-            if (del_rsp.status !== 201) {
-              core.setFailed(`Failed to delete tag object (status=${del_rsp.status})`);
+          } catch (error) {
+            if (error.response.status !== 409) {
+              core.setFailed(`Failed to delete tag object (status=${error.response.status}, message="${error.response.data.message}")`);
               return;
             }
-
-            const tag_rsp = await github.rest.git.createTag({
+          }
+          let tag_rsp;
+          try {
+            tag_rsp = await github.rest.git.createTag({
               ...context.repo,
               tag: '${{ inputs.tag }}',
               message: '${{ inputs.tag-message }}',
               type: 'commit',
               object: '${{ inputs.sha }}'
             });
+          } catch (error) {
+            core.setFailed(`Failed to create tag object (status=${error.response.status}, message="${error.response.data.message}")`);
+            return;
+          }
 
-            if (tag_rsp.status !== 201) {
-              core.setFailed(`Failed to create tag object (status=${tag_rsp.status})`);
-              return;
-            }
-
-            const ref_rsp = await github.rest.git.createRef({
+          try {
+            await github.rest.git.createRef({
               ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}',
-              sha: tag_rsp.data.sha
+              sha: tag_rsp.sha
             });
-
-            if (ref_rsp.status !== 201) {
-              core.setFailed(`Failed to create tag ref(status = ${tag_rsp.status})`);
-            }
           } catch (error) {
-            core.setFailed(error.message);
+            core.setFailed(`Failed to create tag ref(status=${error.response.status}, message="${error.response.data.message}")`);
           }
 
 
