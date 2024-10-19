@@ -31,24 +31,23 @@ jobs:
       - uses: ./.github/actions/create-tag
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
-          tag-name: base-v${{ steps.release_please.outputs.base--major }}
+          tag: base-v${{ steps.release_please.outputs.base--major }}
+          tag-message:
 
       - uses: ./.github/actions/create-tag
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
-          tag-name: base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
+          tag: base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
+          tag-message:
 
       - uses: ./.github/actions/create-branch
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
           branch-name: base-v${{ steps.release_please.outputs.base--major }}
 
