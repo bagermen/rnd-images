@@ -21,7 +21,7 @@ runs:
               ref: 'refs/tags/${{ inputs.tag }}'
             });
           } catch (error) {
-            if (error.response.status !== 409) {
+            if (error.response.status !== 422) {
               core.setFailed(`Failed to delete tag object (status=${error.response.status}, message="${error.response.data.message}")`);
               return;
             }
