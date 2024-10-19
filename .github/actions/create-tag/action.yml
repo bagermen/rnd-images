@@ -6,7 +6,6 @@ inputs:
   repo:
     type: string
     required: true
-    default
   tag-name:
     type: string
     required: true
