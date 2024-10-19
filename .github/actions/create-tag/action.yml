@@ -36,7 +36,7 @@ runs:
           await github.rest.git.createRef({
             owner: '${{inputs.owner }}',
             repo: '${{ inputs.repo }}',
-            ref: 'refs/tags/${{ inputs.tag-name }}'
+            ref: 'refs/tags/${{ inputs.tag-name }}',
             sha: '${{ inputs.sha }}'
           });
 
