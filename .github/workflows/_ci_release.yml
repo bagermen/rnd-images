@@ -33,14 +33,14 @@ jobs:
         with:
           sha: ${{ github.sha }}
           tag: base-v${{ steps.release_please.outputs.base--major }}
-          tag-message:
+          tag-message: 'Release base-v${{ steps.release_please.outputs.base--major }}'
 
       - uses: ./.github/actions/create-tag
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
           sha: ${{ github.sha }}
           tag: base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
-          tag-message:
+          tag-message: 'Release base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}'
 
       - uses: ./.github/actions/create-branch
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}

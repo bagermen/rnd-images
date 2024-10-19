@@ -44,7 +44,7 @@ runs:
             await github.rest.git.createRef({
               ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}',
-              sha: tag_rsp.sha
+              sha: tag_rsp.data.sha
             });
           } catch (error) {
             core.setFailed(`Failed to create tag ref(status=${error.response.status}, message="${error.response.data.message}")`);
