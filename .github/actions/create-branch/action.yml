@@ -20,17 +20,17 @@ runs:
         script: |
           try {
             await github.rest.git.createRef({
-              owner: ${{inputs.owner }},
-              repo: ${{ inputs.repo }},
-              ref: refs/heads/${{ inputs.branch-name }}
-              sha: ${{ inputs.sha }}
+              owner: '${{inputs.owner }}',
+              repo:'${{ inputs.repo }}',
+              ref: 'refs/heads/${{ inputs.branch-name }}',
+              sha: '${{ inputs.sha }}'
             });
           } catch (e) {
             await github.rest.git.updateRef({
-              owner: ${{inputs.owner }},
-              repo: ${{ inputs.repo }},
-              ref: refs/heads/${{ inputs.branch-name }}
-              sha: ${{ inputs.sha }},
+              owner: '${{inputs.owner }}',
+              repo: '${{ inputs.repo }}',
+              ref: 'refs/heads/${{ inputs.branch-name }}',
+              sha: '${{ inputs.sha }}',
               force: true
             });
           }

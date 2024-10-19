@@ -20,24 +20,24 @@ runs:
         script: |
           try {
             await github.rest.git.deleteRef({
-              owner: ${{inputs.owner }},
-              repo: ${{ inputs.repo }},
-              ref: refs/tags/${{ inputs.tag-name }}
+              owner: '${{inputs.owner }}',
+              repo: '${{ inputs.repo }}',
+              ref: 'refs/tags/${{ inputs.tag-name }}'
             });
           } catch (e) {}
           await github.rest.git.createTag({
-            owner: ${{inputs.owner }},
-            repo: ${{ inputs.repo }},
-            tag: ${{ inputs.tag-name }},
+            owner: '${{inputs.owner }}',
+            repo: '${{ inputs.repo }}',
+            tag: '${{ inputs.tag-name }}',
             message: 'Release ${{ inputs.tag-name }}',
             type: 'commit',
-            object: ${{ inputs.sha }}
+            object: '${{ inputs.sha }}'
           });
           await github.rest.git.createRef({
-            owner: ${{inputs.owner }},
-            repo: ${{ inputs.repo }},
-            ref: refs/tags/${{ inputs.tag-name }}
-            sha: ${{ inputs.sha }}
+            owner: '${{inputs.owner }}',
+            repo: '${{ inputs.repo }}',
+            ref: 'refs/tags/${{ inputs.tag-name }}'
+            sha: '${{ inputs.sha }}'
           });
 
 
