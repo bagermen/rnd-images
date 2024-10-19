@@ -13,7 +13,7 @@ runs:
       with:
         script: |
           try {
-            const branch_rsp = await github.git.createRef({
+            const branch_rsp = await github.rest.git.createRef({
               ...context.repo,
               ref: 'refs/heads/${{ inputs.branch-name }}',
               sha: '${{ inputs.sha }}'
@@ -23,7 +23,7 @@ runs:
               return;
             }
 
-            const update_branch_rsp = await github.git.updateRef({
+            const update_branch_rsp = await github.rest.git.updateRef({
               ...context.repo,
               ref: 'refs/heads/${{ inputs.branch-name }}',
               sha: '${{ inputs.sha }}',

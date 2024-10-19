@@ -16,7 +16,7 @@ runs:
       with:
         script: |
           try {
-            const del_rsp = await github.git.deleteRef({
+            const del_rsp = await github.rest.git.deleteRef({
               ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}'
             });
@@ -26,7 +26,7 @@ runs:
               return;
             }
 
-            const tag_rsp = await github.git.createTag({
+            const tag_rsp = await github.rest.git.createTag({
               ...context.repo,
               tag: '${{ inputs.tag }}',
               message: '${{ inputs.tag-message }}',
@@ -39,7 +39,7 @@ runs:
               return;
             }
 
-            const ref_rsp = await github.git.createRef({
+            const ref_rsp = await github.rest.git.createRef({
               ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}',
               sha: tag_rsp.data.sha
