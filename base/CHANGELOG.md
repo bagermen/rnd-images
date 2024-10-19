@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.28](https://github.com/bagermen/rnd-images/compare/base-v0.0.27...base-v0.0.28) (2024-10-19)
+
+
+### Bug Fixes
+
+* 🐛 release to special branch ([#153](https://github.com/bagermen/rnd-images/issues/153)) ([e1a86d9](https://github.com/bagermen/rnd-images/commit/e1a86d9e330cf1bd559fe30ac312840e1eecfcbd))
+
 ## [0.0.27](https://github.com/bagermen/rnd-images/compare/base-v0.0.26...base-v0.0.27) (2024-10-19)
 
 
