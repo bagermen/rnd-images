@@ -3,7 +3,7 @@ ARG VARIANT=3.1
 # ARG VARIANT=3.1 (debian 10)
 FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}
 
-# Copy library scripts to execute (some fake changes  13)
+# Copy library scripts to execute (some fake changes 14)
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 
 # [Option] Upgrade OS packages to their latest versions
