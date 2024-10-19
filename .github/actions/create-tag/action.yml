@@ -1,8 +1,5 @@
 name: 'Create Tag'
 inputs:
-  token:
-    type: string
-    required: true
   tag:
     type: string
     required: true
@@ -18,10 +15,9 @@ runs:
     - uses: actions/github-script@v7
       with:
         script: |
-          const client = github.getOctokit('${{ inputs.token }}');
           try {
-            const del_rsp = await client.git.deleteRef({
-              ...github.context.repo,
+            const del_rsp = await github.git.deleteRef({
+              ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}'
             });
 
@@ -30,8 +26,8 @@ runs:
               return;
             }
 
-            const tag_rsp = await client.git.createTag({
-              ...github.context.repo,
+            const tag_rsp = await github.git.createTag({
+              ...context.repo,
               tag: '${{ inputs.tag }}',
               message: '${{ inputs.tag-message }}',
               type: 'commit',
@@ -43,8 +39,8 @@ runs:
               return;
             }
 
-            const ref_rsp = await client.git.createRef({
-              ...github.context.repo,
+            const ref_rsp = await github.git.createRef({
+              ...context.repo,
               ref: 'refs/tags/${{ inputs.tag }}',
               sha: tag_rsp.data.sha
             });
