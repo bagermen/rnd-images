@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.25](https://github.com/bagermen/rnd-images/compare/base-v0.0.24...base-v0.0.25) (2024-10-19)
+
+
+### Bug Fixes
+
+* 🐛 release to special branch ([#147](https://github.com/bagermen/rnd-images/issues/147)) ([9924a82](https://github.com/bagermen/rnd-images/commit/9924a82e24fbb43c074614b675bd579ddf0060ed))
+
 ## [0.0.24](https://github.com/bagermen/rnd-images/compare/base-v0.0.23...base-v0.0.24) (2024-10-19)
 
 
