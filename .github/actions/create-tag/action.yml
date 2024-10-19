@@ -18,7 +18,7 @@ runs:
           try {
             await github.rest.git.deleteRef({
               ...context.repo,
-              ref: 'refs/tags/${{ inputs.tag }}'
+              ref: 'tags/${{ inputs.tag }}'
             });
           } catch (error) {
             if (error.response.status !== 422) {
