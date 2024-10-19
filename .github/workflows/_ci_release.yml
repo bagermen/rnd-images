@@ -17,6 +17,9 @@ jobs:
       base_released: ${{ steps.release_please.outputs.base--release_created }}
       base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
       - uses: googleapis/release-please-action@v4
         id: release_please
         with:
