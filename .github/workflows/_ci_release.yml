@@ -31,7 +31,6 @@ jobs:
       - uses: ./.github/actions/create-tag
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
           tag: base-v${{ steps.release_please.outputs.base--major }}
           tag-message:
@@ -39,7 +38,6 @@ jobs:
       - uses: ./.github/actions/create-tag
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
           tag: base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
           tag-message:
@@ -47,7 +45,6 @@ jobs:
       - uses: ./.github/actions/create-branch
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           sha: ${{ github.sha }}
           branch-name: base-v${{ steps.release_please.outputs.base--major }}
 
