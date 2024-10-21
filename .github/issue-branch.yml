@@ -1,9 +1,10 @@
 mode: auto
-branchName: short
+branchName: tiny
 silent: false
 autoLinkIssue: true
-autoCloseIssue: true
-autoDeleteBranch: true
+autoCloseIssue: false
+autoDeleteBranch: false
+
 openDraftPR: true
 
 conventionalPrTitles: true
@@ -14,13 +15,21 @@ copyIssueAssigneeToPR: true
 copyIssueProjectsToPR: false
 
 branches:
-  - label: enhancement
+  - label:
+      - enhancement
+      - 'status: confirmed'
     prefix: feat/
-  - label: bug
+  - label:
+      - bug
+      - 'status: confirmed'
     prefix: fix/
-  - label: chore
+  - label:
+      - chore
+      - 'status: confirmed'
     prefix: chore/
-  - label: documentation
+  - label:
+      - documentation
+      - 'status: confirmed'
     prefix: docs/
   - label: '*'
     skip: true

@@ -1,0 +1,35 @@
+name: 'Create Release Refs'
+inputs:
+  component:
+    type: string
+    required: true
+  major:
+    type: string
+    required: true
+  minor:
+    type: string
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: ./.github/actions/create-tag
+        with:
+          sha: ${{ github.sha }}
+          tag: ${{ inputs.component }}-v${{ inputs.major }}
+          tag-message: 'release ${{ inputs.component }} v${{ inputs.major }}'
+
+      - uses: ./.github/actions/create-tag
+        with:
+          sha: ${{ github.sha }}
+          tag: ${{ inputs.component }}-v${{ inputs.major }}.${{ inputs.minor }}
+          tag-message: 'release ${{ inputs.component }} v${{ inputs.major }}.${{ inputs.minor }}'
+
+      - uses: ./.github/actions/create-branch
+        with:
+          sha: ${{ github.sha }}
+          branch-name: release-${{ inputs.component }}-v${{ inputs.major }}
+
+
+
+

@@ -28,26 +28,12 @@ jobs:
           manifest-file: .github/.release-manifest.json
           include-component-in-tag: true
 
-      - uses: ./.github/actions/create-tag
+      - uses: ./.github/actions/create-release-refs
         if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
         with:
-          sha: ${{ github.sha }}
-          tag: base-v${{ steps.release_please.outputs.base--major }}
-          tag-message: 'Release base-v${{ steps.release_please.outputs.base--major }}'
-
-      - uses: ./.github/actions/create-tag
-        if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
-        with:
-          sha: ${{ github.sha }}
-          tag: base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}
-          tag-message: 'Release base-v${{ steps.release_please.outputs.base--major }}.${{ steps.release_please.outputs.base--minor }}'
-
-      - uses: ./.github/actions/create-branch
-        if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
-        with:
-          sha: ${{ github.sha }}
-          branch-name: base-v${{ steps.release_please.outputs.base--major }}
-
+          component: base
+          major: ${{ steps.release_please.outputs.base--major }}
+          minor: ${{ steps.release_please.outputs.base--minor }}
 
   publish_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml
