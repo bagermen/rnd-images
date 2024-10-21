@@ -6,9 +6,6 @@ on:
       - main
       - release-*
 
-concurrency:
-    group: ci-${{ github.ref }}
-    cancel-in-progress: true
 jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') && !contains(join(github.event.pull_request.labels.*.name), 'confirmed') }}
