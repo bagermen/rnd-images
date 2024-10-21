@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.31](https://github.com/bagermen/rnd-images/compare/base-v0.0.30...base-v0.0.31) (2024-10-21)
+
+
+### Bug Fixes
+
+* 🐛 Variety of adjustments ([#160](https://github.com/bagermen/rnd-images/issues/160)) ([800dec9](https://github.com/bagermen/rnd-images/commit/800dec9dc84f43f3a562a39c001f8a5596506860))
+
 ## [0.0.30](https://github.com/bagermen/rnd-images/compare/base-v0.0.29...base-v0.0.30) (2024-10-21)
 
 
