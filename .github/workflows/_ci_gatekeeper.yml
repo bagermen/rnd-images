@@ -6,6 +6,10 @@ on:
       - main
       - master
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   merge-gatekeeper:
     runs-on: ubuntu-latest
