@@ -14,10 +14,10 @@ runs:
   using: "composite"
   steps:
     - uses: ./.github/actions/create-tag
-        with:
-          sha: ${{ github.sha }}
-          tag: ${{ inputs.component }}-v${{ inputs.major }}
-          tag-message: 'release ${{ inputs.component }} v${{ inputs.major }}'
+      with:
+        sha: ${{ github.sha }}
+        tag: ${{ inputs.component }}-v${{ inputs.major }}
+        tag-message: 'release ${{ inputs.component }} v${{ inputs.major }}'
 
       - uses: ./.github/actions/create-tag
         with:
