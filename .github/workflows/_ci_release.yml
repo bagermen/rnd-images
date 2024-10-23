@@ -19,7 +19,7 @@ jobs:
       base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.current_base_release.outputs.major }}
       devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
       devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
-      devcontainer_major_released: ${{ steps.release_please.outputs.devcontainer--release_created && steps.release_please.outputs.devcontainer--major > steps.current_devcontainer_release.outputs.major }}
+      rnd-compose_released: ${{ steps.release_please.outputs.rnd-compose--release_created }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,12 +37,6 @@ jobs:
         with:
           string: ${{ steps.current_releases.outputs.base }}
 
-      - name: parse versions from devcontainer release
-        id: current_devcontainer_release
-        uses: release-kit/semver@v2
-        with:
-          string: ${{ steps.current_releases.outputs.devcontainer }}
-
       - uses: googleapis/release-please-action@v4
         id: release_please
         with:
@@ -57,6 +51,13 @@ jobs:
           component: base
           major: ${{ steps.release_please.outputs.base--major }}
           minor: ${{ steps.release_please.outputs.base--minor }}
+
+      - uses: ./.github/actions/create-release-refs
+        if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
+        with:
+          component: devcontainer
+          major: ${{ steps.release_please.outputs.devcontainer--major }}
+          minor: ${{ steps.release_please.outputs.devcontainer--minor }}
 
       - uses: ./.github/actions/create-release-refs
         if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
@@ -94,6 +95,20 @@ jobs:
     secrets: inherit
     with:
       ref: ${{ needs.release_please.outputs.devcontainer_tag_name }}
+      environment: production
+      push: true
+
+  publish_templates:
+    uses: ./.github/workflows/_wc_build_templates.yml
+    needs: [release_please]
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.rnd-compose_released == 'true') }}
+
+    permissions:
+      packages: write
+      contents: read
+    secrets: inherit
+    with:
+      ref: ${{ github.ref }}
       environment: production
       push: true
 

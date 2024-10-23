@@ -14,6 +14,7 @@ jobs:
     outputs:
       base_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
+      templates_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,6 +54,11 @@ jobs:
         with:
           since_last_remote_commit: true
           path: devcontainer
+      - id: templates
+        uses: tj-actions/changed-files@v45
+        with:
+          since_last_remote_commit: true
+          path: templates
 
   test_base_image:
     needs: [check_changes]
@@ -73,6 +79,19 @@ jobs:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.devcontainer_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_devcontainer.yml
+    permissions:
+      packages: write
+      contents: read
+    secrets: inherit
+    with:
+      ref: ${{ github.ref }}
+      environment: production
+      push: false
+
+  test_rnd-compose_image:
+    needs: [check_changes]
+    if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.templates_modified == 'true' }}
+    uses: ./.github/workflows/_wc_build_templates.yml
     permissions:
       packages: write
       contents: read

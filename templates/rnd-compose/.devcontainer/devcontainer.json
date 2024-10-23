@@ -1,0 +1,21 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+	"name": "BPMSoft RND Dev",
+	"image": "ghcr.io/bagermen/rnd-devcontainer:1",
+
+	"runArgs": [
+		// docker run options
+		// "--network=bpmsoft"
+		// ,"--add-host=host.docker.internal:172.26.48.1"
+	],
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+			],
+			"settings": {
+			}
+		}
+	}
+}
