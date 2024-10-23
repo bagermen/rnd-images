@@ -61,7 +61,7 @@ jobs:
             # releases
             type=semver,priority=900,pattern={{version}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
             type=semver,priority=900,pattern={{major}}.{{minor}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
-            type=semver,priority=900,pattern={{major}},value=v${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
+            type=semver,priority=900,pattern={{major}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}
             # edge
             type=edge,priority=700
             # branch
@@ -78,6 +78,6 @@ jobs:
         with:
           imageName: ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           push: ${{ (vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push) && 'always' || 'never' }}
-          imageTag: ${{ steps.meta.outputs.tags }}
+          imageTag: ${{ join(fromJSON(steps.meta.outputs.json).tags) }}
           subFolder: ${{ env.ROOT_PATH }}
           noCache: true
