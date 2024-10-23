@@ -10,7 +10,7 @@ jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     outputs:
       base_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
     steps:
@@ -60,6 +60,6 @@ jobs:
     secrets: inherit
     with:
       ref: ${{ github.ref }}
-      environment: development
+      environment: production
       push: false
 
