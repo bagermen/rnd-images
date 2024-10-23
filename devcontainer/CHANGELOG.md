@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.0...devcontainer-v1.1.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* 🐛 fix tags settings of devcontainer ([#183](https://github.com/bagermen/rnd-images/issues/183)) ([f119807](https://github.com/bagermen/rnd-images/commit/f11980755a24698ada85e2d4091a7391c1210cc3))
+
 ## [1.1.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.0.0...devcontainer-v1.1.0) (2024-10-23)
 
 
