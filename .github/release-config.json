@@ -20,6 +20,21 @@
       "include-component-in-tag": true,
       "prerelease-type": "beta",
       "prerelease": true
+    },
+    "templates/rnd-compose": {
+      "component": "rnd-compose",
+      "changelog-path": "CHANGELOG.md",
+      "release-type": "simple",
+      "include-component-in-tag": true,
+      "prerelease-type": "beta",
+      "prerelease": true,
+      "extra-files": [
+        {
+          "type": "json",
+          "path": "templates/rnd-compose/devcontainer-template.json",
+          "jsonpath": "$.version"
+        }
+      ]
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
