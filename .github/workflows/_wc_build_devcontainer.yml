@@ -77,7 +77,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           imageName: ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
-          push: ${{ (vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true') && 'always' || 'never' }}
+          push: ${{ (vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push) && 'always' || 'never' }}
           imageTag: ${{ steps.meta.outputs.tags }}
           subFolder: ${{ env.ROOT_PATH }}
           noCache: true

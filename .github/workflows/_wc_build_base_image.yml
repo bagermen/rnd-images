@@ -101,8 +101,8 @@ jobs:
         with:
           context: ${{ env.ROOT_PATH }}
           file: ${{ env.ROOT_PATH }}/Dockerfile
-          push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
-          sbom: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
+          push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
+          sbom: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
           annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
@@ -110,7 +110,7 @@ jobs:
             cache-to: type=gha,mode=max
 
       - name: Generate artifact attestation (GitHub)
-        if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push == 'true' }}
+        if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
