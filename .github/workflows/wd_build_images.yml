@@ -42,7 +42,7 @@ jobs:
       push: ${{ inputs.push }}
 
   build_devcontainer_image:
-    if: ${{ inputs.target == 'all' || inputs.target == 'devcontainer' }}
+    if: ${{ !cancelled() && !failure() && (inputs.target == 'all' || inputs.target == 'devcontainer') }}
     needs: [build_base_image]
     uses: ./.github/workflows/_wc_build_devcontainer.yml
     secrets: inherit
