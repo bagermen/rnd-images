@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.35](https://github.com/bagermen/rnd-images/compare/base-v0.0.34...base-v0.0.35) (2024-10-23)
+
+
+### Features
+
+* ✨ make first base release ([#175](https://github.com/bagermen/rnd-images/issues/175)) ([a7eb8c9](https://github.com/bagermen/rnd-images/commit/a7eb8c9de15385e59ea164e209827114ec9385f8))
+
 ## [0.0.34](https://github.com/bagermen/rnd-images/compare/base-v0.0.33...base-v0.0.34) (2024-10-23)
 
 
