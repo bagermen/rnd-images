@@ -15,6 +15,15 @@ on:
         description: Push to registry
         type: boolean
         default: false
+      target:
+        description: Build target
+        required: true
+        type: choice
+        default: 'base'
+        options:
+          - base
+          - devcontainer
+          - all
 
 permissions:
   packages: write
@@ -24,6 +33,7 @@ permissions:
 
 jobs:
   build_base_image:
+    if: ${{ inputs.target == 'all' || inputs.target == 'base' }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
@@ -32,6 +42,7 @@ jobs:
       push: ${{ inputs.push }}
 
   build_devcontainer_image:
+    if: ${{ inputs.target == 'all' || inputs.target == 'devcontainer' }}
     needs: [build_base_image]
     uses: ./.github/workflows/_wc_build_devcontainer.yml
     secrets: inherit
