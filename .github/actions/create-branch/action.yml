@@ -20,7 +20,7 @@ runs:
             });
             return;
           } catch (error) {
-            if (error.response.status !== 409) {
+            if (error.response.status !== 422) {
               core.setFailed(`Failed to create branch object (status=${error.response.status}, message="${error.response.data.message}")`);
               return;
             }
@@ -29,7 +29,7 @@ runs:
           try {
             await github.rest.git.updateRef({
               ...context.repo,
-              ref: 'refs/heads/${{ inputs.branch-name }}',
+              ref: 'heads/${{ inputs.branch-name }}',
               sha: '${{ inputs.sha }}',
               force: true
             });
