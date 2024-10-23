@@ -79,6 +79,6 @@ jobs:
     secrets: inherit
     with:
       ref: ${{ github.ref }}
-      environment: development
+      environment: production
       push: false
 
