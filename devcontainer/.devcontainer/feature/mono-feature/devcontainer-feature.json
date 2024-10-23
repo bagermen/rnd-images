@@ -1,0 +1,8 @@
+{
+    "id": "mono-feature",
+    "version": "1.0.0",
+    "name": "mono-feature",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

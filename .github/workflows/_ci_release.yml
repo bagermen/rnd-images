@@ -16,10 +16,33 @@ jobs:
       releases_created: ${{ steps.release_please.outputs.releases_created }}
       base_released: ${{ steps.release_please.outputs.base--release_created }}
       base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
+      base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.current_base_release.outputs.major }}
+      devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
+      devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
+      devcontainer_major_released: ${{ steps.release_please.outputs.devcontainer--release_created && steps.release_please.outputs.devcontainer--major > steps.current_devcontainer_release.outputs.major }}
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: .github
+
+      - name: read current releases
+        id: current_releases
+        uses: ActionsTools/read-json-action@v1.0.5
+        with:
+          file_path: .github/.release-manifest.json
+
+      - name: parse versions from base release
+        id: current_base_release
+        uses: release-kit/semver@v2
+        with:
+          string: ${{ steps.current_releases.outputs.base }}
+
+      - name: parse versions from devcontainer release
+        id: current_devcontainer_release
+        uses: release-kit/semver@v2
+        with:
+          string: ${{ steps.current_releases.outputs.devcontainer }}
+
       - uses: googleapis/release-please-action@v4
         id: release_please
         with:
@@ -34,6 +57,13 @@ jobs:
           component: base
           major: ${{ steps.release_please.outputs.base--major }}
           minor: ${{ steps.release_please.outputs.base--minor }}
+
+      - uses: ./.github/actions/create-release-refs
+        if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
+        with:
+          component: devcontainer
+          major: ${{ steps.release_please.outputs.devcontainer--major }}
+          minor: ${{ steps.release_please.outputs.devcontainer--minor }}
 
   publish_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml
@@ -52,10 +82,25 @@ jobs:
       environment: production
       push: true
 
-  label_base_release_done:
+  publish_devcontainer_image:
+    uses: ./.github/workflows/_wc_build_devcontainer.yml
+    needs: [release_please, publish_base_image]
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || needs.release_please.outputs.base_major_released == 'true') }}
+
+    permissions:
+      packages: write
+      contents: read
+
+    secrets: inherit
+    with:
+      ref: ${{ needs.release_please.outputs.devcontainer_tag_name }}
+      environment: production
+      push: true
+
+  label_release:
     runs-on: ubuntu-latest
     environment: production
-    needs: [release_please, publish_base_image]
+    needs: [release_please, publish_base_image, publish_devcontainer_image]
     if: ${{ !cancelled() && !failure() && needs.release_please.outputs.releases_created == 'true' }}
 
     permissions:

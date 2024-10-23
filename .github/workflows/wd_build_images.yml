@@ -23,8 +23,17 @@ permissions:
   attestations: write
 
 jobs:
-  build_images:
+  build_base_image:
     uses: ./.github/workflows/_wc_build_base_image.yml
+    secrets: inherit
+    with:
+      ref: ${{ inputs.ref }}
+      environment: ${{ inputs.environment }}
+      push: ${{ inputs.push }}
+
+  build_devcontainer_image:
+    needs: [build_base_image]
+    uses: ./.github/workflows/_wc_build_devcontainer.yml
     secrets: inherit
     with:
       ref: ${{ inputs.ref }}
