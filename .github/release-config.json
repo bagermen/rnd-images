@@ -14,7 +14,7 @@
       "prerelease": true
     },
     "devcontainer": {
-      "component": "container",
+      "component": "devcontainer",
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
       "include-component-in-tag": true,
