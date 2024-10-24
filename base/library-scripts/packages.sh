@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
-# Upgrade/Add packages 
-# Syntax: ./packages.sh [upgrade packages flag] [packages list] 
+# Upgrade/Add packages
+# Syntax: ./packages.sh [upgrade packages flag] [packages list]
 
 set -e
 
@@ -45,7 +45,7 @@ package_list="apt-utils \
     locales \
     sudo"
 
-if [ -n "${PACKAGES}"]; then
+if [ -n "${PACKAGES}" ]; then
     package_list="${package_list} ${PACKAGES}"
 fi
 
@@ -62,7 +62,7 @@ fi
 
 # Ensure at least the en_US.UTF-8 UTF-8 locale is available.
 if [ "${LOCALE_ALREADY_SET}" != "true" ] && ! grep -o -E '^\s*en_US.UTF-8\s+UTF-8' /etc/locale.gen > /dev/null; then
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
     locale-gen
     LOCALE_ALREADY_SET="true"
 fi

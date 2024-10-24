@@ -51,12 +51,12 @@ fi
 group_name="${USERNAME}"
 if id -u ${USERNAME} > /dev/null 2>&1; then
     # User exists, update if needed
-    if [ "${USER_GID}" != "automatic" ] && [ "$USER_GID" != "$(id -g $USERNAME)" ]; then 
+    if [ "${USER_GID}" != "automatic" ] && [ "$USER_GID" != "$(id -g $USERNAME)" ]; then
         group_name="$(id -gn $USERNAME)"
         groupmod --gid $USER_GID ${group_name}
         usermod --gid $USER_GID $USERNAME
     fi
-    if [ "${USER_UID}" != "automatic" ] && [ "$USER_UID" != "$(id -u $USERNAME)" ]; then 
+    if [ "${USER_UID}" != "automatic" ] && [ "$USER_UID" != "$(id -u $USERNAME)" ]; then
         usermod --uid $USER_UID $USERNAME
     fi
 else
@@ -66,7 +66,7 @@ else
     else
         groupadd --gid $USER_GID $USERNAME
     fi
-    if [ "${USER_UID}" = "automatic" ]; then 
+    if [ "${USER_UID}" = "automatic" ]; then
         useradd -s /bin/bash --gid $USERNAME -m $USERNAME
     else
         useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
@@ -81,7 +81,7 @@ if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}"
 fi
 
 # ** Shell customization section **
-if [ "${USERNAME}" = "root" ]; then 
+if [ "${USERNAME}" = "root" ]; then
     user_rc_path="/root"
 else
     user_rc_path="/home/${USERNAME}"

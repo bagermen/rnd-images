@@ -7,21 +7,15 @@
   "packages": {
     "base": {
       "component": "base",
-      "release-type": "simple",
-      "prerelease-type": "beta",
-      "prerelease": true
+      "release-type": "simple"
     },
     "devcontainer": {
       "component": "devcontainer",
-      "release-type": "simple",
-      "prerelease-type": "beta",
-      "prerelease": true
+      "release-type": "simple"
     },
     "templates/postgres-env": {
       "component": "postgres_env",
       "release-type": "simple",
-      "prerelease-type": "beta",
-      "prerelease": true,
       "extra-files": [
         {
           "type": "json",

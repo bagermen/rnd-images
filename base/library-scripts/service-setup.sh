@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
-# Upgrade/Add packages 
-# Syntax: ./packages.sh [upgrade packages flag] [packages list] 
+# Upgrade/Add packages
+# Syntax: ./packages.sh [upgrade packages flag] [packages list]
 
 set -e
 
@@ -31,6 +31,6 @@ PATH_TO_REPLACE_NODE_VERSION="\$NODE_VERSION"
 ESCAPED_PATH_TO_REPLACE_NODE_VERSION=$(printf '%s\n' "$PATH_TO_REPLACE_NODE_VERSION" | sed -e 's/[]\/$*.^[]/\\&/g')
 sed -i -E "s/$ESCAPED_PATH_TO_REPLACE_NODE_VERSION/$ESCAPED_NODE_VERSION/" "/etc/systemd/system/$SERVICE_NAME.service"
 
-/bin/systemctl enable $SERVICE_NAME
+# /bin/systemctl enable $SERVICE_NAME
 
 echo "Done!"
