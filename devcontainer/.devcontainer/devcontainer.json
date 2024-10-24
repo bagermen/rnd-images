@@ -1,8 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-	"name": "BPMSoft RND container",
-	"image": "ghcr.io/bagermen/rnd-base:0",
+	"name": "RND devcontainer",
+	"image": "ghcr.io/bagermen/rnd-images/base:0",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {

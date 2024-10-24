@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - release-*
 jobs:
   release_please:
     runs-on: ubuntu-latest
     environment: production
+
     permissions:
       contents: write
       pull-requests: write
@@ -19,7 +21,7 @@ jobs:
       base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.parse_current_base_version.outputs.major }}
       devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
       devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
-      rnd-compose_released: ${{ steps.release_please.outputs['templates/rnd-compose--release_created'] }}
+      templates_released: ${{ steps.release_please.outputs['templates/postgres-env--release_created'] == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,7 +95,7 @@ jobs:
   publish_templates:
     uses: ./.github/workflows/_wc_build_templates.yml
     needs: [release_please]
-    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.rnd-compose_released == 'true') }}
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.templates_released) }}
 
     permissions:
       packages: write

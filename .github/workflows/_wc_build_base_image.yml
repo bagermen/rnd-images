@@ -33,7 +33,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-  IMAGE_NAME: rnd-base
+  IMAGE_NAME: base
   GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: base
 
@@ -115,5 +115,5 @@ jobs:
         with:
           subject-name: ${{ env.GH_REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build.outputs.digest }}
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           push-to-registry: true
