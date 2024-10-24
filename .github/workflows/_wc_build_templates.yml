@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-    group: ci-templates-${{ github.ref }}
+    group: ci-templates-${{ inputs.ref }}
     cancel-in-progress: true
 env:
   ROOT_PATH: templates

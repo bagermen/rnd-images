@@ -24,7 +24,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-  IMAGE_NAME: rnd-devcontainer
+  IMAGE_NAME: devcontainer
   GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: devcontainer
 

@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     outputs:
-      base_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
-      devcontainer_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
-      templates_modified: ${{ steps.check-files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+      base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
+      devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
+      templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - id: check-files
+      - id: check_files
         uses: tj-actions/changed-files@v45
         with:
           since_last_remote_commit: true
@@ -29,17 +29,17 @@ jobs:
             !**/docs/**
             !.editorconfig
             !LICENSE
-      - id: parent-commit
+      - id: parent_commit
         env:
           SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           echo "SHA=$(git rev-list --skip=1 -1 $SHA)" >> $GITHUB_OUTPUT
       - id: last-ref-status
-        if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 && steps.parent-commit.outputs.SHA != github.event.pull_request.base.sha }}
+        if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
         uses: danieldeichfuss/get-status@v0.0.10
         with:
-            ref: ${{ steps.parent-commit.outputs.SHA }}
-      - if: ${{ steps.check-files.outputs.any_modified == 'false' && steps.check-files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' && steps.parent-commit.outputs.SHA != github.event.pull_request.base.sha }}
+            ref: ${{ steps.parent_commit.outputs.SHA }}
+      - if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
         uses: actions/github-script@v7
         with:
           script:  core.setFailed('Required checks has been failed')
@@ -88,7 +88,7 @@ jobs:
       environment: production
       push: false
 
-  test_rnd-compose_image:
+  test_postgres_env_image:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.templates_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_templates.yml

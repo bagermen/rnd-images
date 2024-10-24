@@ -2,7 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
 	"name": "BPMSoft RND Dev",
-	"image": "ghcr.io/bagermen/rnd-devcontainer:1",
+	"image": "ghcr.io/bagermen/rnd-images/devcontainer:1",
 
 	"runArgs": [
 		// docker run options (fake change 3)

@@ -7,25 +7,19 @@
   "packages": {
     "base": {
       "component": "base",
-      "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
-      "include-component-in-tag": true,
       "prerelease-type": "beta",
       "prerelease": true
     },
     "devcontainer": {
       "component": "devcontainer",
-      "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
-      "include-component-in-tag": true,
       "prerelease-type": "beta",
       "prerelease": true
     },
-    "templates/rnd-compose": {
-      "component": "rnd-compose",
-      "changelog-path": "CHANGELOG.md",
+    "templates/postgres-env": {
+      "component": "postgres_env",
       "release-type": "simple",
-      "include-component-in-tag": true,
       "prerelease-type": "beta",
       "prerelease": true,
       "extra-files": [
