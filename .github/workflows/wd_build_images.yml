@@ -21,9 +21,10 @@ on:
         type: choice
         default: 'base'
         options:
+          - all
           - base
           - devcontainer
-          - all
+          - templates
 
 permissions:
   packages: write
@@ -45,6 +46,16 @@ jobs:
     if: ${{ !cancelled() && !failure() && (inputs.target == 'all' || inputs.target == 'devcontainer') }}
     needs: [build_base_image]
     uses: ./.github/workflows/_wc_build_devcontainer.yml
+    secrets: inherit
+    with:
+      ref: ${{ inputs.ref }}
+      environment: ${{ inputs.environment }}
+      push: ${{ inputs.push }}
+
+  build_templates:
+    if: ${{ !cancelled() && !failure() && (inputs.target == 'all' || inputs.target == 'templates') }}
+    needs: [build_devcontainer_image]
+    uses: ./.github/workflows/_wc_build_templates.yml
     secrets: inherit
     with:
       ref: ${{ inputs.ref }}

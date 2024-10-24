@@ -7,7 +7,7 @@ on:
 jobs:
   release_please:
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     permissions:
       contents: write
       pull-requests: write
