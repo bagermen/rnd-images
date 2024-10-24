@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.38](https://github.com/bagermen/rnd-images/compare/base-v0.0.37...base-v0.0.38) (2024-10-24)
+
+
+### Features
+
+* ✨ update base to net8 ([#200](https://github.com/bagermen/rnd-images/issues/200)) ([b97318b](https://github.com/bagermen/rnd-images/commit/b97318b5e0d6e7b33f2a0bc5d76c46fddbcce69a))
+
 ## [0.0.37](https://github.com/bagermen/rnd-images/compare/base-v0.0.36...base-v0.0.37) (2024-10-24)
 
 
