@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/bagermen/rnd-images/compare/rnd-compose-v1.0.2...rnd-compose-v1.0.3) (2024-10-24)
+
+
+### Bug Fixes
+
+* 🐛 fix templates release ([#194](https://github.com/bagermen/rnd-images/issues/194)) ([ac0f87b](https://github.com/bagermen/rnd-images/commit/ac0f87b48df4ec75e5d8ca57ed577454cbeb1dc8))
+
 ## [1.0.2](https://github.com/bagermen/rnd-images/compare/rnd-compose-v1.0.1...rnd-compose-v1.0.2) (2024-10-24)
 
 
