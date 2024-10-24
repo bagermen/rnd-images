@@ -1,7 +1,9 @@
 {
     "id": "rnd-compose",
-    "version": "0.0.0",
+    "version": "1.0.1",
     "name": "rnd-compose",
     "description": "BPMSoft Rnd Build Template",
-    "keywords": ["rnd"]
+    "keywords": [
+        "rnd"
+    ]
 }
