@@ -31,7 +31,7 @@
       "extra-files": [
         {
           "type": "json",
-          "path": "templates/rnd-compose/devcontainer-template.json",
+          "path": "./templates/rnd-compose/devcontainer-template.json",
           "jsonpath": "$.version"
         }
       ]

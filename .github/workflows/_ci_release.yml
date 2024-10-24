@@ -7,7 +7,7 @@ on:
 jobs:
   release_please:
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
     permissions:
       contents: write
       pull-requests: write
@@ -16,7 +16,7 @@ jobs:
       releases_created: ${{ steps.release_please.outputs.releases_created }}
       base_released: ${{ steps.release_please.outputs.base--release_created }}
       base_tag_name: ${{ steps.release_please.outputs.base--tag_name }}
-      base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.current_base_release.outputs.major }}
+      base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.parse_current_base_version.outputs.major }}
       devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
       devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
       rnd-compose_released: ${{ steps.release_please.outputs.rnd-compose--release_created }}
@@ -25,17 +25,16 @@ jobs:
         with:
           sparse-checkout: .github
 
-      - name: read current releases
-        id: current_releases
-        uses: ActionsTools/read-json-action@v1.0.5
+      - id: read_current_base_version
+        uses: ashley-taylor/read-json-property-action@v1.2
         with:
-          file_path: .github/.release-manifest.json
+          path: .github/.release-manifest.json
+          property: base
 
-      - name: parse versions from base release
-        id: current_base_release
+      - id: parse_current_base_version
         uses: release-kit/semver@v2
         with:
-          string: ${{ steps.current_releases.outputs.base }}
+          string: ${{ steps.read_current_base_version.outputs.value }}
 
       - uses: googleapis/release-please-action@v4
         id: release_please
@@ -51,13 +50,6 @@ jobs:
           component: base
           major: ${{ steps.release_please.outputs.base--major }}
           minor: ${{ steps.release_please.outputs.base--minor }}
-
-      - uses: ./.github/actions/create-release-refs
-        if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
-        with:
-          component: devcontainer
-          major: ${{ steps.release_please.outputs.devcontainer--major }}
-          minor: ${{ steps.release_please.outputs.devcontainer--minor }}
 
       - uses: ./.github/actions/create-release-refs
         if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
