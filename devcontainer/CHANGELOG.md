@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.2...devcontainer-v1.1.3) (2024-10-24)
+
+
+### Bug Fixes
+
+* 🐛 fix template and image names ([#197](https://github.com/bagermen/rnd-images/issues/197)) ([e481ea2](https://github.com/bagermen/rnd-images/commit/e481ea2673c3973bdee7c33c96a8d1b48bdb822d))
+
 ## [1.1.2](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.1...devcontainer-v1.1.2) (2024-10-24)
 
 
