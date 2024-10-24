@@ -19,7 +19,7 @@ jobs:
       base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.parse_current_base_version.outputs.major }}
       devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
       devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
-      rnd-compose_released: ${{ steps.release_please.outputs.rnd-compose--release_created }}
+      rnd-compose_released: ${{ steps.release_please.outputs['templates/rnd-compose--release_created'] }}
     steps:
       - uses: actions/checkout@v4
         with:

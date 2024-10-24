@@ -5,7 +5,7 @@
 	"image": "ghcr.io/bagermen/rnd-devcontainer:1",
 
 	"runArgs": [
-		// docker run options (fake change 1)
+		// docker run options (fake change 2)
 		// "--network=bpmsoft"
 		// ,"--add-host=host.docker.internal:172.26.48.1"
 	],
