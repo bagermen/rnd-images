@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.3...devcontainer-v1.2.0) (2024-10-24)
+
+
+### Features
+
+* ✨ update devcontainer to net8 ([#203](https://github.com/bagermen/rnd-images/issues/203)) ([fb7d64e](https://github.com/bagermen/rnd-images/commit/fb7d64e2d7ffd4ee0d52d8ffcd624f3801eb1e4f))
+
 ## [1.1.3](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.2...devcontainer-v1.1.3) (2024-10-24)
 
 
