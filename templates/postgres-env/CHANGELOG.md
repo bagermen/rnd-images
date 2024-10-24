@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2024-10-24)
+
+
+### Bug Fixes
+
+* 🐛 fix template and image names ([#197](https://github.com/bagermen/rnd-images/issues/197)) ([e481ea2](https://github.com/bagermen/rnd-images/commit/e481ea2673c3973bdee7c33c96a8d1b48bdb822d))
+* remove development environment  from create-issue-action ([#28](https://github.com/bagermen/rnd-images/issues/28)) ([09f31e4](https://github.com/bagermen/rnd-images/commit/09f31e4188e89e57d5e29f476a26a11bca9105f6))
+
 ## [1.0.3](https://github.com/bagermen/rnd-images/compare/rnd-compose-v1.0.2...rnd-compose-v1.0.3) (2024-10-24)
 
 

@@ -1,6 +1,6 @@
 {
     "id": "postgres-env",
-    "version": "1.0.3",
+    "version": "1.0.0",
     "name": "rnd postgres environment",
     "keywords": [
         "rnd"

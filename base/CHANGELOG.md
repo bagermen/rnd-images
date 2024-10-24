@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.37](https://github.com/bagermen/rnd-images/compare/base-v0.0.36...base-v0.0.37) (2024-10-24)
+
+
+### Bug Fixes
+
+* 🐛 fix template and image names ([#197](https://github.com/bagermen/rnd-images/issues/197)) ([e481ea2](https://github.com/bagermen/rnd-images/commit/e481ea2673c3973bdee7c33c96a8d1b48bdb822d))
+
 ## [0.0.36](https://github.com/bagermen/rnd-images/compare/base-v0.0.35...base-v0.0.36) (2024-10-24)
 
 
