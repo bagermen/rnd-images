@@ -7,7 +7,6 @@
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {}
-		,"./feature/mono-feature": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally. fake changes 3
@@ -35,11 +34,9 @@
 				"alefragnani.Bookmarks"
 				,"ms-dotnettools.csharp"
 				,"ryu1kn.partial-diff"
+        ,"ms-dotnettools.csdevkit"
 			],
 			"settings": {
-				// this is because of net3.1
-				"dotnet.server.useOmnisharp": true,
-    			"omnisharp.useModernNet": false
 			}
 		}
 	},
