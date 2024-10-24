@@ -34,7 +34,7 @@ concurrency:
 
 env:
   IMAGE_NAME: rnd-base
-  GH_REGISTRY: ghcr.io/${{ github.actor }}
+  GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: base
 
 jobs:
