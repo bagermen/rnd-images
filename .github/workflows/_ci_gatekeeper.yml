@@ -4,10 +4,10 @@ on:
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   merge-gatekeeper:
+    if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
     permissions:
       checks: read
