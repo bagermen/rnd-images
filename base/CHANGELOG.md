@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/bagermen/rnd-images/compare/base-v0.0.38...base-v1.0.0) (2024-10-25)
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([7ea88f6](https://github.com/bagermen/rnd-images/commit/7ea88f6a53b5f3bde92590c786749411eb747c6c))
+
 ## [0.0.38](https://github.com/bagermen/rnd-images/compare/base-v0.0.37...base-v0.0.38) (2024-10-24)
 
 
