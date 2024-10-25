@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.2.0...devcontainer-v1.3.0) (2024-10-25)
+
+
+### Features
+
+* ✨ update target image at devcontainer ([#209](https://github.com/bagermen/rnd-images/issues/209)) ([90053e3](https://github.com/bagermen/rnd-images/commit/90053e345d8c09142f32d2db9baf500a6659cd63))
+
 ## [1.2.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.1.3...devcontainer-v1.2.0) (2024-10-24)
 
 
