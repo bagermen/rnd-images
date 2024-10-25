@@ -6,7 +6,10 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {}
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
+		"version": "12"
+		}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally. fake changes 3
@@ -35,6 +38,7 @@
 				,"ms-dotnettools.csharp"
 				,"ryu1kn.partial-diff"
         ,"ms-dotnettools.csdevkit"
+        ,"cweijan.vscode-redis-client"
 			],
 			"settings": {
 			}
