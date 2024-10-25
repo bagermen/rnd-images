@@ -1,6 +1,4 @@
 ARG VARIANT=8.0
-# ARG VARIANT=3.1-focal (ubuntu 20)
-# ARG VARIANT=3.1 (debian 10)
 # ARG VARIANT=8.0-noble (ubuntu 24)
 # ARG VARIANT=8.0 (debian 12)
 FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}

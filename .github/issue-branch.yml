@@ -1,5 +1,5 @@
-mode: auto
-branchName: tiny
+mode: chatops
+branchName: short
 silent: false
 autoLinkIssue: true
 autoCloseIssue: false
@@ -17,19 +17,15 @@ copyIssueProjectsToPR: false
 branches:
   - label:
       - enhancement
-      - 'status: confirmed'
     prefix: feat/
   - label:
       - bug
-      - 'status: confirmed'
     prefix: fix/
   - label:
       - chore
-      - 'status: confirmed'
     prefix: chore/
   - label:
       - documentation
-      - 'status: confirmed'
     prefix: docs/
   - label: '*'
     skip: true
