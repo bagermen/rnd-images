@@ -2,20 +2,8 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
 	"name": "BPMSoft RND Dev",
-	"image": "ghcr.io/bagermen/rnd-images/devcontainer:1",
-
-	"runArgs": [
-		// docker run options (fake change 3)
-		// "--network=bpmsoft"
-		// ,"--add-host=host.docker.internal:172.26.48.1"
-	],
-
-	"customizations": {
-		"vscode": {
-			"extensions": [
-			],
-			"settings": {
-			}
-		}
-	}
+	"dockerComposeFile": "compose.yaml",
+  "service": "devcontainer",
+  "workspaceFolder": "/etc/bpmsoft",
+  "initializeCommand": "docker volume create postgres_bpmsoft && docker volume create redis_bpmsoft"
 }

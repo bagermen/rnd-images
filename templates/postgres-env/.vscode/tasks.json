@@ -1,0 +1,130 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start BPMSoft",
+			"type": "process",
+			"isBackground": true,
+			"command": "sudo",
+			"args": [
+				"systemctl",
+				"start",
+				"bpmsoft"
+			]
+		},
+		{
+			"label": "Stop BPMSoft",
+			"type": "process",
+			"isBackground": true,
+			"command": "sudo",
+			"args": [
+				"systemctl",
+				"stop",
+				"bpmsoft"
+			]
+		},
+		{
+			"label": "Rebuild Workspace",
+			"group": "build",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": "dotnet",
+			"args": [
+				"WorkspaceConsole/BPMSoft.Tools.WorkspaceConsole.dll",
+				"--autoExit=true",
+				"--operation=RebuildWorkspace",
+				"--workspaceName=Default",
+				"--webApplicationPath=${workspaceFolder}",
+				"--configurationPath=${workspaceFolder}/BPMSoft.Configuration",
+				"--confRuntimeParentDirectory=${workspaceFolder}",
+				"--logPath=${workspaceFolder}/Logs",
+				"--skipConstraints=false",
+				"--skipValidateActions=true",
+				"--regenerateSchemaSources=true",
+				"--updateDBStructure=true",
+				"--updateSystemDBStructure=true",
+				"--installPackageSqlScript=true",
+				"--installPackageData=true",
+				"--continueIfError=true",
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Workspace",
+			"group": "build",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": "dotnet",
+			"args": [
+				"WorkspaceConsole/BPMSoft.Tools.WorkspaceConsole.dll",
+				"--autoExit=true",
+				"--operation=BuildWorkspace",
+				"--workspaceName=Default",
+				"--webApplicationPath=${workspaceFolder}",
+				"--configurationPath=${workspaceFolder}/BPMSoft.Configuration",
+				"--confRuntimeParentDirectory=${workspaceFolder}",
+				"--logPath=${workspaceFolder}/Logs",
+				"--skipConstraints=false",
+				"--skipValidateActions=true",
+				"--regenerateSchemaSources=true",
+				"--updateDBStructure=true",
+				"--updateSystemDBStructure=true",
+				"--installPackageSqlScript=true",
+				"--installPackageData=true",
+				"--continueIfError=true",
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Update Workspace Solution",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": "dotnet",
+			"args": [
+				"WorkspaceConsole/BPMSoft.Tools.WorkspaceConsole.dll",
+				"--autoExit=true",
+				"--operation=UpdateWorkspaceSolution",
+				"--workspaceName=Default",
+				"--webApplicationPath=${workspaceFolder}",
+				"--configurationPath=${workspaceFolder}/BPMSoft.Configuration",
+				"--confRuntimeParentDirectory=${workspaceFolder}",
+				"--logPath=${workspaceFolder}/Logs",
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "InstallPackagesFromWorkingCopy",
+			"type": "process",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"command": "dotnet",
+			"args": [
+				"WorkspaceConsole/BPMSoft.Tools.WorkspaceConsole.dll",
+				"--autoExit=true",
+				"--operation=InstallPackagesFromWorkingCopy",
+				"--workspaceName=Default",
+				"--workingCopyPath=/etc/bpmsoft",
+				"--skipConstraints=false",
+				"--skipValidateActions=true",
+				"--regenerateSchemaSources=true",
+				"--updateDBStructure=true",
+				"--updateSystemDBStructure=true",
+				"--installPackageSqlScript=true",
+				"--installPackageData=true",
+				"--continueIfError=true",
+				"--webApplicationPath=${workspaceFolder}",
+				"--configurationPath=${workspaceFolder}/BPMSoft.Configuration",
+				"--confRuntimeParentDirectory=${workspaceFolder}",
+				"--logPath=${workspaceFolder}/Logs",
+			],
+			"problemMatcher": []
+		}
+	]
+}
