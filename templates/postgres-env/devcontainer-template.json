@@ -1,7 +1,8 @@
 {
     "id": "postgres-env",
-    "version": "1.0.0",
-    "name": "rnd postgres environment",
+    "version": "1.0.3",
+    "name": "postgres env",
+    "description": "postgresql environment of rnd images",
     "keywords": [
         "rnd"
     ]
