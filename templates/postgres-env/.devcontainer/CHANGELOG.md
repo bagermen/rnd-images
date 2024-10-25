@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v1.0.3...postgres-env-v2.0.0) (2024-10-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* ✨ setup postgres-env project ([#212](https://github.com/bagermen/rnd-images/issues/212))
+
+### Features
+
+* ✨ setup postgres-env project ([#212](https://github.com/bagermen/rnd-images/issues/212)) ([6330d49](https://github.com/bagermen/rnd-images/commit/6330d4921ff64f8932ee9f0dde3c69d9d0a92a41))
+
+
+### Bug Fixes
+
+* 🐛 fix template and image names ([#197](https://github.com/bagermen/rnd-images/issues/197)) ([e481ea2](https://github.com/bagermen/rnd-images/commit/e481ea2673c3973bdee7c33c96a8d1b48bdb822d))
+* remove development environment  from create-issue-action ([#28](https://github.com/bagermen/rnd-images/issues/28)) ([09f31e4](https://github.com/bagermen/rnd-images/commit/09f31e4188e89e57d5e29f476a26a11bca9105f6))
+
 ## 1.0.0 (2024-10-24)
 
 

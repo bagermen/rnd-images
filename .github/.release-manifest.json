@@ -1,5 +1,5 @@
 {
   "base": "1.0.0",
   "devcontainer": "1.3.0",
-  "templates/postgres-env": "1.0.3"
+  "templates/postgres-env": "2.0.0"
 }
