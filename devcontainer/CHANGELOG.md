@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.3.0...devcontainer-v1.4.0) (2024-10-25)
+
+
+### Features
+
+* ✨ add postgres-client and redis client to devcontainer ([#215](https://github.com/bagermen/rnd-images/issues/215)) ([e5f096b](https://github.com/bagermen/rnd-images/commit/e5f096bd5ecc71b46f569e3f5162adff9ab8451f))
+
 ## [1.3.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.2.0...devcontainer-v1.3.0) (2024-10-25)
 
 

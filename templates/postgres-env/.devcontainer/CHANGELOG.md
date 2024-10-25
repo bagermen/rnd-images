@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.0.0...postgres-env-v2.1.0) (2024-10-25)
+
+
+### Features
+
+* ✨ update devtemplate ([#218](https://github.com/bagermen/rnd-images/issues/218)) ([a96c655](https://github.com/bagermen/rnd-images/commit/a96c65510c3de2a127bbd0e77b3f2d7a4a89fa7b))
+
 ## [2.0.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v1.0.3...postgres-env-v2.0.0) (2024-10-25)
 
 
