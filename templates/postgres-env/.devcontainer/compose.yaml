@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   devcontainer:
-    image: ghcr.io/bagermen/rnd-images/devcontainer:1.3.0
+    image: ghcr.io/bagermen/rnd-images/devcontainer:1.4.0
     command: sleep infinity
     ports:
     - published: 55432
