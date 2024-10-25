@@ -29,7 +29,7 @@ permissions:
   attestations: write
 
 concurrency:
-    group: ci-base-${{ github.ref }}
+    group: ci-base-${{ inputs.ref }}
     cancel-in-progress: true
 
 env:

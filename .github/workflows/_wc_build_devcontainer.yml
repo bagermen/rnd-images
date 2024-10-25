@@ -20,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-    group: ci-devcontainer-${{ github.ref }}
+    group: ci-devcontainer-${{ inputs.ref }}
     cancel-in-progress: true
 
 env:

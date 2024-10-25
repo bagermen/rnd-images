@@ -6,6 +6,10 @@ on:
       - main
       - release-*
 
+concurrency:
+    group: ci-gatekeeper-${{ github.event.pull_request.head.ref }}
+    cancel-in-progress: true
+
 jobs:
   merge-gatekeeper:
     runs-on: ubuntu-latest
