@@ -10,11 +10,12 @@ jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
     outputs:
       base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
       templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+      variants: ${{ steps.variants.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -59,6 +60,12 @@ jobs:
         with:
           since_last_remote_commit: true
           path: templates
+      - id: variants
+        uses: mmastrac/mmm-matrix@v1
+        with:
+          input: |
+            - debian
+            - ubuntu
 
   test_base_image:
     needs: [check_changes]
