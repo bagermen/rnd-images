@@ -17,6 +17,13 @@ jobs:
       templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
       variants: ${{ steps.variants.outputs.matrix }}
     steps:
+      - id: variants
+        uses: mmastrac/mmm-matrix@v1
+        with:
+          input: |
+            os:
+              - debian
+              - ubuntu
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
@@ -60,13 +67,6 @@ jobs:
         with:
           since_last_remote_commit: true
           path: templates
-      - id: variants
-        uses: mmastrac/mmm-matrix@v1
-        with:
-          input: |
-            os:
-              - debian
-              - ubuntu
 
   test_base_image:
     needs: [check_changes]
