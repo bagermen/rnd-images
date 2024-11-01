@@ -64,8 +64,9 @@ jobs:
         uses: mmastrac/mmm-matrix@v1
         with:
           input: |
-            - debian
-            - ubuntu
+            $array:
+              - debian
+              - ubuntu
 
   test_base_image:
     needs: [check_changes]
