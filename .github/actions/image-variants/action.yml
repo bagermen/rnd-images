@@ -12,7 +12,7 @@ runs:
           default:
             os: debian
             file: Dockerfile
-            variant:
+            variant: ''
           ubuntu:
             os: ubuntu
             file: Dockerfile
