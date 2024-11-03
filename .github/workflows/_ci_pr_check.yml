@@ -68,6 +68,8 @@ jobs:
   test_base_image:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.base_modified == 'true' }}
+    strategy:
+      matrix: ${{ needs.check_changes.outputs.image_variants }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     permissions:
       packages: write
@@ -78,6 +80,8 @@ jobs:
     with:
       ref: ${{ github.ref }}
       environment: production
+      dockerfile: ${{ matrix.file }}
+      suffix: ${{ matrix.variant }}
       push: false
 
   test_devcontainer_image:

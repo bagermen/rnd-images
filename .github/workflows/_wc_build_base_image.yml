@@ -9,6 +9,16 @@ on:
         description: Environment to build images against
         type: string
         required: true
+      dockerfile:
+        description: Dockerfile
+        default: Dockerfile
+        type: string
+        required: false
+      suffix:
+        description: Image OS suffix
+        default: ''
+        type: string
+        required: false
       push:
         description: Push images
         type: boolean
@@ -29,7 +39,7 @@ permissions:
   attestations: write
 
 concurrency:
-    group: ci-base-${{ inputs.ref }}
+    group: ci-base-${{ inputs.ref }}-${{ inputs.dockerfile }}-${{ inputs.suffix }}
     cancel-in-progress: true
 
 env:
@@ -73,6 +83,7 @@ jobs:
         with:
           flavor: |
             latest=false
+            suffix=${{ inputs.suffix }}
           labels: |
             org.opencontainers.image.title=rnd
             org.opencontainers.image.description=base rnd image
@@ -100,7 +111,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ${{ env.ROOT_PATH }}
-          file: ${{ env.ROOT_PATH }}/Dockerfile
+          file: ${{ env.ROOT_PATH }}/${{ inputs.dockerfile }}
           push: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
           sbom: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -108,6 +119,7 @@ jobs:
           build-args: |
             cache-from: type=gha
             cache-to: type=gha,mode=max
+            SUFFIX: ${{ inputs.suffix }}
 
       - name: Generate artifact attestation (GitHub)
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}

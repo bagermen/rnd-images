@@ -25,10 +25,10 @@ runs:
         tag: ${{ inputs.component }}-v${{ inputs.major }}.${{ inputs.minor }}
         tag-message: 'release ${{ inputs.component }} v${{ inputs.major }}.${{ inputs.minor }}'
 
-    - uses: ./.github/actions/create-branch
-      with:
-        sha: ${{ github.sha }}
-        branch-name: release-${{ inputs.component }}-v${{ inputs.major }}
+    # - uses: ./.github/actions/create-branch
+    #   with:
+    #     sha: ${{ github.sha }}
+    #     branch-name: release-${{ inputs.component }}-v${{ inputs.major }}
 
 
 
