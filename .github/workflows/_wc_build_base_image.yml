@@ -31,9 +31,6 @@ on:
       digest:
         description: Image digest
         value: ${{ jobs.build_image.outputs.digest }}
-      images:
-        description: pushed images
-        value: ${{ jobs.build_image.outputs.images }}
 
 permissions:
   packages: write
@@ -46,7 +43,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-  IMAGE_NAME: base
+  IMAGE_NAME: ${{ vars.BASE_IMAGE_NAME }}
   GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: base
 
