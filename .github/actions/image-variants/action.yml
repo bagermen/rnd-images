@@ -1,8 +1,9 @@
 name: 'Image Variants'
 outputs:
-  matrix: ${{ steps.generate.outputs.matrix }}
+  matrix:
+    value: ${{ steps.generate.outputs.matrix }}
 runs:
-  using: composite
+  using: 'composite'
   steps:
     - id: generate
       uses: mmastrac/mmm-matrix@v1
