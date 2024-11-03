@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.4.0...devcontainer-v1.5.0) (2024-11-03)
+
+
+### Features
+
+* ✨ build devcontainer as matrix ([#225](https://github.com/bagermen/rnd-images/issues/225)) ([f4cce7a](https://github.com/bagermen/rnd-images/commit/f4cce7a3dc09f70e1aace2b256ac7e8270909728))
+
 ## [1.4.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.3.0...devcontainer-v1.4.0) (2024-10-25)
 
 
