@@ -9,6 +9,11 @@ on:
         description: Environment to build images against
         type: string
         required: true
+      suffix:
+        description: Image OS suffix
+        default: ''
+        type: string
+        required: false
       push:
         description: Push images
         type: boolean
@@ -24,7 +29,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-  IMAGE_NAME: devcontainer
+  IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
   GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: devcontainer
 
@@ -37,7 +42,30 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.ref }}
-          sparse-checkout: ${{ env.ROOT_PATH }}
+          sparse-checkout: |
+            .github
+            ${{ env.ROOT_PATH }}
+
+      - id: read_current_base_version
+        uses: ashley-taylor/read-json-property-action@v1.2
+        with:
+          path: .github/.release-manifest.json
+          property: base
+
+      - id: parse_current_base_version
+        uses: release-kit/semver@v2
+        with:
+          string: ${{ steps.read_current_base_version.outputs.value }}
+
+      - name: Update devcontainer.json base image
+        uses: restackio/update-json-file-action@2.1
+        with:
+          file: 'devcontainer/.devcontainer/devcontainer.json'
+          fields: "{'image': '${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}'}"
+
+      - run: |
+          cat devcontainer/.devcontainer/devcontainer.json
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
@@ -57,6 +85,7 @@ jobs:
         with:
           flavor: |
             latest=false
+            suffix=${{ inputs.suffix }}
           tags: |
             # releases
             type=semver,priority=900,pattern={{version}},value=${{ steps.tag_name.outputs.group1 }},enable=${{ steps.tag_name.outputs.group1 != '' }}

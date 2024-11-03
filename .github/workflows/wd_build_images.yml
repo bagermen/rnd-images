@@ -52,8 +52,8 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.initiate.outputs.image_variants) }}
 
-    uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
+    uses: ./.github/workflows/_wc_build_base_image.yml
     with:
       ref: ${{ inputs.ref }}
       environment: ${{ inputs.environment }}
@@ -62,13 +62,18 @@ jobs:
       push: ${{ inputs.push }}
 
   build_devcontainer_image:
+    needs: [build_base_image, initiate]
     if: ${{ !cancelled() && !failure() && (inputs.target == 'all' || inputs.target == 'devcontainer') }}
-    needs: [build_base_image]
-    uses: ./.github/workflows/_wc_build_devcontainer.yml
+    strategy:
+      matrix:
+        include: ${{ fromJSON(needs.initiate.outputs.image_variants) }}
+
     secrets: inherit
+    uses: ./.github/workflows/_wc_build_devcontainer.yml
     with:
       ref: ${{ inputs.ref }}
       environment: ${{ inputs.environment }}
+      suffix: ${{ matrix.variant }}
       push: ${{ inputs.push }}
 
   build_templates:
