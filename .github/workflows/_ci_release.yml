@@ -66,7 +66,6 @@ jobs:
           minor: ${{ steps.release_please.outputs.devcontainer--minor }}
 
   publish_base_image:
-    uses: ./.github/workflows/_wc_build_base_image.yml
     needs: [release_please]
     if: ${{ !cancelled() && !failure() && needs.release_please.outputs.base_released == 'true' }}
     strategy:
@@ -79,6 +78,7 @@ jobs:
       attestations: write
 
     secrets: inherit
+    uses: ./.github/workflows/_wc_build_base_image.yml
     with:
       ref: ${{ needs.release_please.outputs.base_tag_name }}
       environment: production

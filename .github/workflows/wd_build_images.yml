@@ -33,13 +33,32 @@ permissions:
   attestations: write
 
 jobs:
+  initiate:
+    runs-on: ubuntu-latest
+    outputs:
+      image_variants: ${{ steps.variants.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
+      - id: variants
+        uses: ./.github/actions/image-variants
+
   build_base_image:
+    needs: [initiate]
     if: ${{ inputs.target == 'all' || inputs.target == 'base' }}
+    strategy:
+      matrix:
+        include: ${{ fromJSON(needs.initiate.outputs.image_variants) }}
+
     uses: ./.github/workflows/_wc_build_base_image.yml
     secrets: inherit
     with:
       ref: ${{ inputs.ref }}
       environment: ${{ inputs.environment }}
+      dockerfile: ${{ matrix.file }}
+      suffix: ${{ matrix.variant }}
       push: ${{ inputs.push }}
 
   build_devcontainer_image:
