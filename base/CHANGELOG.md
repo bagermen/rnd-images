@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/bagermen/rnd-images/compare/base-v1.0.0...base-v1.1.0) (2024-11-03)
+
+
+### Features
+
+* ✨ generate ubuntu and debian images ([#222](https://github.com/bagermen/rnd-images/issues/222)) ([dbc956a](https://github.com/bagermen/rnd-images/commit/dbc956a46545fc4e547b1a6ff5f8832b193f62fc))
+
 ## [1.0.0](https://github.com/bagermen/rnd-images/compare/base-v0.0.38...base-v1.0.0) (2024-10-25)
 
 
