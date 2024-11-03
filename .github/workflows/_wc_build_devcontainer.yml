@@ -58,9 +58,9 @@ jobs:
           string: ${{ steps.read_current_base_version.outputs.value }}
 
       - name: Update devcontainer.json base image
-        uses: mingjun97/file-regex-replace
+        uses: mingjun97/file-regex-replace@v1
         with:
-          include: '.devcontainer/devcontainer.json'
+          include: .devcontainer/devcontainer.json
           path: ${{ env.ROOT_PATH }}
           regex: '(?<=^\\s+"image":\\s+")[^"]+'
           flags: m
