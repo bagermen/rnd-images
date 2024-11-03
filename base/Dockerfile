@@ -4,7 +4,7 @@ ARG SUFFIX=""
 # VARIANT=8.0 (debian 12)
 FROM mcr.microsoft.com/dotnet/sdk:${VERSION}${SUFFIX}
 
-# Copy library scripts to execute (some fake changes 23)
+# Copy library scripts to execute (some fake changes 24)
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 
 # [Option] Upgrade OS packages to their latest versions

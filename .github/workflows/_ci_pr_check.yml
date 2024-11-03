@@ -69,7 +69,8 @@ jobs:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.base_modified == 'true' }}
     strategy:
-      matrix: ${{ fromJSON(needs.check_changes.outputs.image_variants) }}
+      matrix:
+        include: ${{ fromJSON(needs.check_changes.outputs.image_variants) }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     permissions:
       packages: write
