@@ -58,10 +58,13 @@ jobs:
           string: ${{ steps.read_current_base_version.outputs.value }}
 
       - name: Update devcontainer.json base image
-        uses: restackio/update-json-file-action@2.1
+        uses: mingjun97/file-regex-replace
         with:
-          file: 'devcontainer/.devcontainer/devcontainer.json'
-          fields: "{'image': '${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}'}"
+          include: .devcontainer/devcontainer.json
+          path: ${{ env.ROOT_PATH }}
+          regex: (?<=^\\s+"image":\\s+")[^"]+
+          flags: m
+          replacement: ${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}
 
       - run: |
           cat devcontainer/.devcontainer/devcontainer.json
