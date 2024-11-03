@@ -7,16 +7,16 @@ runs:
   steps:
     - id: generate
       uses: mmastrac/mmm-matrix@v1
-        with:
-          input: |
-            default:
-              os: debian
-              file: Dockerfile
-              variant:
-            ubuntu:
-              os: ubuntu
-              file: Dockerfile
-              variant: -noble
+      with:
+        input: |
+          default:
+            os: debian
+            file: Dockerfile
+            variant:
+          ubuntu:
+            os: ubuntu
+            file: Dockerfile
+            variant: -noble
 
 
 
