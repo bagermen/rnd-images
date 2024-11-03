@@ -15,18 +15,15 @@ jobs:
       base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
       templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-      variants: ${{ steps.variants.outputs.matrix }}
+      image_variants: ${{ steps.variants.outputs.matrix }}
     steps:
-      - id: variants
-        uses: mmastrac/mmm-matrix@v1
-        with:
-          input: |
-            os:
-              - debian
-              - ubuntu
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+
+      - id: variants
+        uses: ./.github/actions/image-variants
+
       - id: check_files
         uses: tj-actions/changed-files@v45
         with:
