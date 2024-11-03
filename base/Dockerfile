@@ -1,9 +1,10 @@
-ARG VARIANT=8.0
-# ARG VARIANT=8.0-noble (ubuntu 24)
-# ARG VARIANT=8.0 (debian 12)
-FROM mcr.microsoft.com/dotnet/sdk:${VARIANT}
+ARG VERSION=8.0
+ARG SUFFIX=""
+# VARIANT=8.0-noble (ubuntu 24)
+# VARIANT=8.0 (debian 12)
+FROM mcr.microsoft.com/dotnet/sdk:${VERSION}${SUFFIX}
 
-# Copy library scripts to execute (some fake changes 22)
+# Copy library scripts to execute (some fake changes 24)
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 
 # [Option] Upgrade OS packages to their latest versions

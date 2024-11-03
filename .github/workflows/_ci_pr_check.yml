@@ -10,15 +10,20 @@ jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
     outputs:
       base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
       templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+      image_variants: ${{ steps.variants.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+
+      - id: variants
+        uses: ./.github/actions/image-variants
+
       - id: check_files
         uses: tj-actions/changed-files@v45
         with:
@@ -63,6 +68,9 @@ jobs:
   test_base_image:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.base_modified == 'true' }}
+    strategy:
+      matrix:
+        include: ${{ fromJSON(needs.check_changes.outputs.image_variants) }}
     uses: ./.github/workflows/_wc_build_base_image.yml
     permissions:
       packages: write
@@ -73,6 +81,8 @@ jobs:
     with:
       ref: ${{ github.ref }}
       environment: production
+      dockerfile: ${{ matrix.file }}
+      suffix: ${{ matrix.variant }}
       push: false
 
   test_devcontainer_image:

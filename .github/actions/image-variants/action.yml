@@ -1,0 +1,20 @@
+name: 'Image Variants'
+outputs:
+  matrix:
+    value: ${{ steps.generate.outputs.matrix }}
+runs:
+  using: 'composite'
+  steps:
+    - id: generate
+      uses: mmastrac/mmm-matrix@v1
+      with:
+        input: |
+          - os: debian
+            variant: ''
+            file: Dockerfile
+          - os: ubuntu
+            variant: -noble
+            file: Dockerfile
+
+
+
