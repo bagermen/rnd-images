@@ -9,13 +9,12 @@ runs:
       uses: mmastrac/mmm-matrix@v1
       with:
         input: |
-          $array:
-            - os: debian
-              variant: ''
-            - os: ubuntu
-              variant: -noble
-              file: Dockerfile1
-          file: Dockerfile
+          - os: debian
+            variant: ''
+            file: Dockerfile
+          - os: ubuntu
+            variant: -noble
+            file: Dockerfile
 
 
 
