@@ -60,14 +60,11 @@ jobs:
       - name: Update devcontainer.json base image
         uses: mingjun97/file-regex-replace
         with:
-          include: .devcontainer/devcontainer.json
+          include: '.devcontainer/devcontainer.json'
           path: ${{ env.ROOT_PATH }}
           regex: '(?<=^\\s+"image":\\s+")[^"]+'
           flags: m
           replacement: ${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}
-
-      - run: |
-          cat devcontainer/.devcontainer/devcontainer.json
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
