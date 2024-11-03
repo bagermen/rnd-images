@@ -31,6 +31,9 @@ on:
       digest:
         description: Image digest
         value: ${{ jobs.build_image.outputs.digest }}
+      images:
+        description: pushed images
+        value: ${{ jobs.build_image.outputs.images }}
 
 permissions:
   packages: write
@@ -54,6 +57,7 @@ jobs:
     outputs:
       imageid: ${{ steps.build.outputs.imageid }}
       digest: ${{ steps.build.outputs.digest }}
+      images: ${{ toJson(steps.meta.outputs.tags) }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
