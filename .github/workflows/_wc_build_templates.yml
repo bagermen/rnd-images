@@ -46,7 +46,7 @@ jobs:
         with:
           script: |
             const variants = JSON.parse('${{ steps.variants.outputs.matrix }}');
-            const basePath = ${{ env.ROOT_PATH }};
+            const basePath = '${{ env.ROOT_PATH }}';
             const templatesGlobber = await glob.create(`${basePath}/*`);
             const templates = await templatesGlobber.glob();
 
