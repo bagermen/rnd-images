@@ -58,7 +58,7 @@ jobs:
           string: ${{ steps.read_current_base_version.outputs.value }}
 
       - name: Update devcontainer.json base image
-        uses: mingjun97/file-regex-replace@v1
+        uses: vyan024/file-regex-replace-2023@v2
         with:
           include: .devcontainer/devcontainer.json
           path: ${{ env.ROOT_PATH }}

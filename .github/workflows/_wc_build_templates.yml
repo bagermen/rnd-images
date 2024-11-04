@@ -34,7 +34,25 @@ jobs:
         uses: actions/checkout@v4
         with:
             ref: ${{ inputs.ref }}
-            sparse-checkout: ${{ env.ROOT_PATH }}
+            sparse-checkout: |
+              .github
+              ${{ env.ROOT_PATH }}
+
+      - id: variants
+        uses: ./.github/actions/image-variants
+
+      - name: Make compose file copy
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const variants = JSON.parse('${{ steps.variants.outputs.value }}');
+            const basePath = '${{ env.ROOT_PATH }}';
+            const templatesGlobber = await glob.create(`${basePath}/*`);
+            const templates = await templatesGlobber.glob();
+
+            for (const template of templates) {
+              core.info(template);
+            }
 
       - name: Build and optionally push image
         uses: devcontainers/action@v1
