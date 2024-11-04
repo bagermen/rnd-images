@@ -45,8 +45,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const variants = JSON.parse('${{ steps.variants.outputs.value }}');
-            const basePath = '${{ env.ROOT_PATH }}';
+            const variants = JSON.parse(${{ steps.variants.outputs.value }});
+            const basePath = ${{ env.ROOT_PATH }};
             const templatesGlobber = await glob.create(`${basePath}/*`);
             const templates = await templatesGlobber.glob();
 
