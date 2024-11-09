@@ -49,6 +49,7 @@ jobs:
             const fs = require('node:fs/promises');
 
             const escapedImageName = 'ghcr.io/${{ github.repository }}/${{ vars.BASE_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
+            core.info(`${escapedImageName}`);
             const variants = JSON.parse('${{ steps.variants.outputs.matrix }}');
             const basePath = '${{ env.ROOT_PATH }}';
             const composeGlobber = await glob.create(`${basePath}/**/compose.yaml`);
@@ -64,11 +65,12 @@ jobs:
               await io.mv(composePath, composeTpl);
 
               for (const variant of filteredVariants) {
-                const newComposePath = `${parsedComposePath.dir}/${parsedComposePath.name}${variant.variant}.${parsedComposePath.ext}`;
+                const newComposePath = `${parsedComposePath.dir}/${parsedComposePath.name}${variant.variant}${parsedComposePath.ext}`;
                 const reg = new RegExp(`(?<=image:\\s*${escapedImageName}[^:]+:)([\\d\\.]+)`, "m");
 
                 await io.cp(composeTpl, newComposePath);
                 const yml = await fs.readFile(newComposePath, 'utf8');
+                core.info(yml.match(reg));
                 await fs.writeFile(newComposePath, yml.replace(reg, `$1${variant.variant}`), 'utf8');
 
                 core.info(await fs.readFile(newComposePath, 'utf8'));
