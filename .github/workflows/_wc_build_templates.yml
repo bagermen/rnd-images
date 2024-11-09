@@ -45,13 +45,36 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const path = require('node:path');
+            const fs = require('node:fs/promises');
+
+            const escapedImageName = 'ghcr.io/${{ github.repository }}/${{ vars.BASE_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
             const variants = JSON.parse('${{ steps.variants.outputs.matrix }}');
             const basePath = '${{ env.ROOT_PATH }}';
-            const templatesGlobber = await glob.create(`${basePath}/*`);
-            const templates = await templatesGlobber.glob();
+            const composeGlobber = await glob.create(`${basePath}/**/compose.yaml`);
+            const composes = await composeGlobber.glob();
 
-            for (const template of templates) {
-              core.info(template);
+            for (const composePath of composes) {
+              const composeTpl = `${composePath}.tpl`;
+              const parsedComposePath = path.parse(composePath);
+              const tplDir = path.dirname(parsedComposePath.dir);
+              const tpl = JSON.parse(await fs.readFile(`${tplDir}/devcontainer-template.json`, 'utf8'));
+              const filteredVariants = ["", ...variants.filter(v => tpl.options.os.proposals.includes(v.variant))];
+
+              await io.mv(composePath, composeTpl);
+
+              for (const variant of filteredVariants) {
+                const newComposePath = `${parsedComposePath.dir}/${parsedComposePath.name}${variant.variant}.${parsedComposePath.ext}`;
+                await io.cp(composeTpl, newComposePath);
+                const reg = new RegExp(`(?<=image:\\s*${escapedImageName}[^:]+:)([\\d\\.]+)`, "m");
+                const yml = await fs.readFile(newComposePath, 'utf8');
+                await fs.writeFile(newComposePath, yml.replace(reg, `$1${variant}`), 'utf8');
+
+                core.info(await fs.readFile(newComposePath, 'utf8'));
+              }
+
+              await fs.promises.unlink(composeTpl);
+              core.info("end");
             }
 
       - name: Build and optionally push image

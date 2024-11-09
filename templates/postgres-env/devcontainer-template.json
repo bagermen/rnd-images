@@ -1,9 +1,19 @@
 {
-    "id": "postgres-env",
-    "version": "2.1.0",
-    "name": "postgres env",
-    "description": "postgresql environment of rnd images",
-    "keywords": [
-        "rnd"
-    ]
+  "id": "postgres-env",
+  "version": "2.1.0",
+  "name": "postgres env",
+  "description": "postgresql environment of rnd images",
+  "keywords": [
+    "rnd"
+  ],
+  "options": {
+    "os": {
+      "type": "string",
+      "description": "Specify OS based variant",
+      "proposals": [
+        "-noble"
+      ],
+      "default": ""
+    }
+  }
 }
