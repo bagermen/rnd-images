@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.1.0...postgres-env-v2.2.0) (2024-11-09)
+
+
+### Features
+
+* ✨ add options to devtemplate to use different devcontainers ([#228](https://github.com/bagermen/rnd-images/issues/228)) ([893d7bb](https://github.com/bagermen/rnd-images/commit/893d7bb64775726553aea7cf8c55b2b8dd353698))
+
 ## [2.1.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.0.0...postgres-env-v2.1.0) (2024-10-25)
 
 
