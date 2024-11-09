@@ -68,12 +68,13 @@ jobs:
                 await io.cp(composeTpl, newComposePath);
                 const reg = new RegExp(`(?<=image:\\s*${escapedImageName}[^:]+:)([\\d\\.]+)`, "m");
                 const yml = await fs.readFile(newComposePath, 'utf8');
+                core.info(variant);
                 await fs.writeFile(newComposePath, yml.replace(reg, `$1${variant}`), 'utf8');
 
                 core.info(await fs.readFile(newComposePath, 'utf8'));
               }
 
-              await fs.promises.unlink(composeTpl);
+              await fs.unlink(composeTpl);
               core.info("end");
             }
 
