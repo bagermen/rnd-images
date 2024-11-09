@@ -23,6 +23,8 @@ concurrency:
     group: ci-templates-${{ inputs.ref }}
     cancel-in-progress: true
 env:
+  DEV_IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
+  GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: templates
 
 jobs:
@@ -41,6 +43,12 @@ jobs:
       - id: variants
         uses: ./.github/actions/image-variants
 
+      - id: read_current_image_version
+        uses: ashley-taylor/read-json-property-action@v1.2
+        with:
+          path: .github/.release-manifest.json
+          property: devcontainer
+
       - name: Make compose file copy
         uses: actions/github-script@v7
         with:
@@ -48,8 +56,7 @@ jobs:
             const path = require('node:path');
             const fs = require('node:fs/promises');
 
-            const escapedImageName = 'ghcr.io/${{ github.repository }}/${{ vars.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
-            core.info(`${escapedImageName}`);
+            const escapedImageName = '${{ env.GH_REGISTRY }}/${{ env.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
             const variants = JSON.parse('${{ steps.variants.outputs.matrix }}');
             const basePath = '${{ env.ROOT_PATH }}';
             const composeGlobber = await glob.create(`${basePath}/**/compose.yaml`);
@@ -70,11 +77,13 @@ jobs:
 
                 await io.cp(composeTpl, newComposePath);
                 const yml = await fs.readFile(newComposePath, 'utf8');
-                core.info(yml.match(reg));
-                await fs.writeFile(newComposePath, yml.replace(reg, `$1${variant.variant}`), 'utf8');
+                const matched = core.info(yml.match(reg));
 
-                core.info(await fs.readFile(newComposePath, 'utf8'));
-                core.info(`Created file: ${newComposePath}`);
+                if (matched) {
+                  core.info(`Matched image version: ${matched[1]}`);
+                  await fs.writeFile(newComposePath, yml.replace(reg, `${{ steps.read_current_image_version.outputs.value }}${variant.variant}`), 'utf8');
+                  core.info(`Created file: ${newComposePath}`);
+                }
               }
 
               await fs.unlink(composeTpl);
