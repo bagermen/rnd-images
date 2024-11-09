@@ -77,7 +77,7 @@ jobs:
 
                 await io.cp(composeTpl, newComposePath);
                 const yml = await fs.readFile(newComposePath, 'utf8');
-                const matched = core.info(yml.match(reg));
+                const matched = yml.match(reg);
 
                 if (matched) {
                   core.info(`Matched image version: ${matched[1]}`);
