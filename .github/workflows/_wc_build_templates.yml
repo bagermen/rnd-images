@@ -66,7 +66,7 @@ jobs:
 
               for (const variant of filteredVariants) {
                 const newComposePath = `${parsedComposePath.dir}/${parsedComposePath.name}${variant.variant}${parsedComposePath.ext}`;
-                const reg = new RegExp(`(?<=image:\\s*${escapedImageName}[^:]+:)([\\d\\.]+)`, 'm');
+                const reg = new RegExp(`(?<=image:\\s*${escapedImageName}:)([\\d\\.]+)`, 'm');
 
                 await io.cp(composeTpl, newComposePath);
                 const yml = await fs.readFile(newComposePath, 'utf8');
