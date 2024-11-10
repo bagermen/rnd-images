@@ -1,6 +1,6 @@
 services:
   devcontainer:
-    image: ghcr.io/bagermen/rnd-images/devcontainer:1.4.0
+    image: ghcr.io/bagermen/rnd-images/devcontainer:1.5.1
     command: sleep infinity
     ports:
     - published: 55432
