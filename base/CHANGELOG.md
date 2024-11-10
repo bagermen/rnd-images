@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/bagermen/rnd-images/compare/base-v1.1.0...base-v1.1.1) (2024-11-10)
+
+
+### Bug Fixes
+
+* 🐛 fix base image build ([#232](https://github.com/bagermen/rnd-images/issues/232)) ([5d32287](https://github.com/bagermen/rnd-images/commit/5d322872db262d62ad42977201265a00f535869b))
+
 ## [1.1.0](https://github.com/bagermen/rnd-images/compare/base-v1.0.0...base-v1.1.0) (2024-11-03)
 
 
