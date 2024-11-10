@@ -1,6 +1,8 @@
 # rnd images
 
-Initiate postgres environment
-```powershell
-devcontainer templates apply -t ghcr.io/bagermen/rnd-images/postgres-env -w .
-```
+## Initiate Postgres environment
+| OS  | Command |
+| --- | ------- |
+| Debian | <pre lang="powershell">devcontainer templates apply -t ghcr.io/bagermen/rnd-images/postgres-env -w .</pre>  |
+| Ubuntu | <pre lang="powershell">devcontainer templates apply -t ghcr.io/bagermen/rnd-images/postgres-env -a '{"os": "-noble"}' -w .</pre>  |
+
