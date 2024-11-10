@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.0...devcontainer-v1.5.1) (2024-11-10)
+
+
+### Bug Fixes
+
+* 🐛 fix ubuntu devcontainers ([#235](https://github.com/bagermen/rnd-images/issues/235)) ([38a80a1](https://github.com/bagermen/rnd-images/commit/38a80a19b6aa9f8b75a31fc8194c233a8dbb05f4))
+
 ## [1.5.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.4.0...devcontainer-v1.5.0) (2024-11-03)
 
 
