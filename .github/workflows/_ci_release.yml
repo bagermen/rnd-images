@@ -89,7 +89,7 @@ jobs:
 
   publish_devcontainer_image:
     needs: [release_please, publish_base_image]
-    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || needs.release_please.outputs.base_major_released == 'false') }}
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || (needs.release_please.outputs.base_released == 'true' && needs.release_please.outputs.base_major_released == 'false')) }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.release_please.outputs.image_variants) }}
