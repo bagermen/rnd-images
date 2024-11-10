@@ -120,7 +120,7 @@ jobs:
           build-args: |
             cache-from: type=gha
             cache-to: type=gha,mode=max
-            SUFFIX: ${{ inputs.suffix }}
+            SUFFIX=${{ inputs.suffix }}
 
       - name: Generate artifact attestation (GitHub)
         if: ${{ vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}
