@@ -89,7 +89,7 @@ jobs:
 
   publish_devcontainer_image:
     needs: [release_please, publish_base_image]
-    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || needs.release_please.outputs.base_major_released == 'true') }}
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || needs.release_please.outputs.base_major_released == 'false') }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.release_please.outputs.image_variants) }}
@@ -107,14 +107,15 @@ jobs:
       push: true
 
   publish_templates:
-    uses: ./.github/workflows/_wc_build_templates.yml
     needs: [release_please]
     if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' }}
 
+    secrets: inherit
     permissions:
       packages: write
       contents: read
-    secrets: inherit
+
+    uses: ./.github/workflows/_wc_build_templates.yml
     with:
       ref: ${{ github.ref }}
       environment: production
