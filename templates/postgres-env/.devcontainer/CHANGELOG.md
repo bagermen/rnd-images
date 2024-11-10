@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.2.0...postgres-env-v2.2.1) (2024-11-10)
+
+
+### Bug Fixes
+
+* 🐛 fix templates options ([#238](https://github.com/bagermen/rnd-images/issues/238)) ([eccf905](https://github.com/bagermen/rnd-images/commit/eccf90532752f91022f026e6c1929a0166aed82b))
+
 ## [2.2.0](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.1.0...postgres-env-v2.2.0) (2024-11-09)
 
 

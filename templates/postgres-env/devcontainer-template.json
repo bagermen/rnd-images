@@ -1,6 +1,6 @@
 {
   "id": "postgres-env",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "name": "postgres env",
   "description": "postgresql environment of rnd images",
   "keywords": [
