@@ -13,8 +13,8 @@
       "component": "devcontainer",
       "release-type": "simple"
     },
-    "templates/postgres-env": {
-      "component": "postgres-env",
+    "templates/compose-template": {
+      "component": "compose-template",
       "release-type": "simple",
       "changelog-path": ".devcontainer/CHANGELOG.md",
       "extra-files": [
