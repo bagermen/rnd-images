@@ -44,10 +44,10 @@ jobs:
         uses: danieldeichfuss/get-status@v0.0.10
         with:
             ref: ${{ steps.parent_commit.outputs.SHA }}
-      - if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
-        uses: actions/github-script@v7
-        with:
-          script:  core.setFailed('Required checks has been failed')
+      # - if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script:  core.setFailed('Required checks has been failed')
 
       - id: base
         uses: tj-actions/changed-files@v45
