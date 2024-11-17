@@ -148,11 +148,11 @@ jobs:
             const path = require('node:path');
             const fs = require('node:fs/promises');
             const basePath = '${{ env.ROOT_PATH }}';
-            const globber = await glob.create(`${basePath}/**/.devcontainer`);
+            const globber = await glob.create(`${basePath}/**/.devcontainer/devcontainer.json`);
             const dirs = (await globber.glob());
 
             for (const devDir of new Set(dirs)) {
-              const imageName = path.basename(path.dirname(devDir));
+              const imageName = path.basename(path.dirname(path.dirname(devDir)));
               core.info(`devDir: ${devDir}`);
               core.info(`imageName: ${imageName}`);
               const escapedImageName = `${{ env.GH_REGISTRY }}/${imageName}`.replaceAll('/', '\\/').replaceAll('.', '\\.');
