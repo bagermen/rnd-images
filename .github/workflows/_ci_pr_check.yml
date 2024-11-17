@@ -10,7 +10,7 @@ jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     outputs:
       base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
@@ -106,7 +106,7 @@ jobs:
       suffix: ${{ matrix.variant }}
       push: false
 
-  test_postgres_env_image:
+  test_templates:
     needs: [check_changes]
     if: ${{ !cancelled() && !failure() && needs.check_changes.outputs.templates_modified == 'true' }}
     uses: ./.github/workflows/_wc_build_templates.yml
