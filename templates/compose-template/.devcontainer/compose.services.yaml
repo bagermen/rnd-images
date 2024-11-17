@@ -1,0 +1,29 @@
+services:
+  devcontainer:
+    image: ${DEVCONTAINER}
+    command: sleep infinity
+    volumes:
+      - ..:/etc/bpmsoft:cached
+      - home:/home
+
+  redis:
+    image: redis:alpine
+    network_mode: service:devcontainer
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: redis_data
+        target: /data;
+
+  postgresdb:
+    restart: unless-stopped
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+    - published: 55432
+      target: 5432
+    volumes:
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data

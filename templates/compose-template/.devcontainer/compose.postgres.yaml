@@ -1,0 +1,5 @@
+services:
+  postgresdb:
+    extends:
+      file: compose.services.yaml
+      service: postgresdb

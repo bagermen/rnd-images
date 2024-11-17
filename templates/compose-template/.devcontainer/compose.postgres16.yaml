@@ -1,0 +1,6 @@
+services:
+  postgresdb:
+    image: postgres:16-alpine
+    extends:
+      file: compose.services.yaml
+      service: postgresdb

@@ -11,9 +11,21 @@
       "type": "string",
       "description": "Specify OS based variant",
       "proposals": [
-        "-noble"
+        "ubuntu"
       ],
       "default": ""
+    },
+    "db": {
+      "type": "string",
+      "description": "Specify database",
+      "enum": [
+        "postgres",
+        "postgres16"
+      ],
+      "default": "postgres"
     }
-  }
+  },
+  "optionalPaths": [
+    "CHANGELOG.md"
+  ]
 }
