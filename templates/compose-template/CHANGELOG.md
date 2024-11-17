@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.1...compose-template-v2.3.2) (2024-11-17)
+
+
+### Bug Fixes
+
+* 🐛 test template release ([#256](https://github.com/bagermen/rnd-images/issues/256)) ([c03c336](https://github.com/bagermen/rnd-images/commit/c03c336c6d3110725093a4d2dd240b121061cb3d))
+
 ## [2.3.1](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.0...compose-template-v2.3.1) (2024-11-17)
 
 
