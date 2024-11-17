@@ -63,9 +63,7 @@ jobs:
             const composeDirs = (await composeGlobber.glob()).map(file => path.dirname(file));
 
             for (const composeDir of new Set(composeDirs)) {
-              const composeTpl = `${composePath}.tpl`;
-              const parsedComposePath = path.parse(composeDir);
-              const tplDir = path.dirname(parsedComposePath.dir);
+              const tplDir = path.dirname(composeDir);
               core.info(`composeDir: ${composeDir}`);
               core.info(`tplDir: ${tplDir}`);
               /**
