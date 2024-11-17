@@ -2,7 +2,11 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
 	"name": "BPMSoft RND Dev",
-	"dockerComposeFile": "compose${templateOption:os}.yaml",
+	"dockerComposeFile": [
+    "compose.base.yaml",
+    "compose.${templateOption:os}.yaml",
+    "compose.${templateOption:db}.yaml"
+  ],
   "service": "devcontainer",
   "workspaceFolder": "/etc/bpmsoft",
   "initializeCommand": "docker volume create postgres_bpmsoft && docker volume create redis_bpmsoft"

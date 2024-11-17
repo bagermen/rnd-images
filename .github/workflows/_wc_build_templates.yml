@@ -92,6 +92,7 @@ jobs:
       - name: Build and optionally push image
         uses: devcontainers/action@v1
         with:
+          generate-docs: ${{ inputs.push && 'true' || 'false' }}
           publish-templates: ${{ inputs.push && 'true' || 'false' }}
           oci-registry-for-templates: 'ghcr.io'
           templates-namespace: ${{ github.repository }}

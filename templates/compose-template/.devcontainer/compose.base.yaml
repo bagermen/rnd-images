@@ -1,0 +1,16 @@
+services:
+  devcontainer:
+    extends:
+      file: compose.services.yaml
+      service: devcontainer
+  redis:
+    extends:
+        file: compose.services.yaml
+        service: redis
+volumes:
+  home:
+  redis_data:
+    name: redis_bpmsoft
+  postgres_data:
+    external: true
+    name: postgres_bpmsoft
