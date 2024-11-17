@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.0](https://github.com/bagermen/rnd-images/compare/compose-template-v2.2.1...compose-template-v2.3.0) (2024-11-17)
+
+
+### Features
+
+* ✨ change compose template structure ([#247](https://github.com/bagermen/rnd-images/issues/247)) ([9846d5d](https://github.com/bagermen/rnd-images/commit/9846d5d3244d4eea388f019292ed8cba67af2f18))
+* ✨ rename template project to 'compose-template' ([#244](https://github.com/bagermen/rnd-images/issues/244)) ([acf3622](https://github.com/bagermen/rnd-images/commit/acf3622dacee0976defdfd85be4cd865cbcbc430))
+
+
+### Bug Fixes
+
+* remove development environment  from create-issue-action ([#28](https://github.com/bagermen/rnd-images/issues/28)) ([09f31e4](https://github.com/bagermen/rnd-images/commit/09f31e4188e89e57d5e29f476a26a11bca9105f6))
+
 ## [2.2.1](https://github.com/bagermen/rnd-images/compare/postgres-env-v2.2.0...postgres-env-v2.2.1) (2024-11-10)
 
 
