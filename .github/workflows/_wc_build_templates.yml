@@ -72,7 +72,7 @@ jobs:
               }
 
               core.info(`Matched directory: ${composeDir}`);
-              const reg = new RegExp(`(?<=image:\\s*${escapedImageName}:)([\\d\\.]+)`, 'm');
+              const reg = new RegExp(`(?<=DEVCONTAINER=${escapedImageName}:)([\\d\\.]+)`, 'm');
               const matched = envContent.match(reg);
 
               if (matched) {
