@@ -153,6 +153,7 @@ jobs:
 
             for (const devDir of new Set(dirs)) {
               const imageName = path.basename(path.dirname(devDir));
+              core.info(`devDir: ${devDir}`);
               core.info(`imageName: ${imageName}`);
               const escapedImageName = `${{ env.GH_REGISTRY }}/${imageName}`.replaceAll('/', '\\/').replaceAll('.', '\\.');
               core.info(`escapedImageName: ${escapedImageName}`);
