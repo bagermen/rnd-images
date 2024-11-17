@@ -112,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
-      IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
+      DEV_IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
       GH_REGISTRY: ghcr.io/${{ github.repository }}
       ROOT_PATH: templates
     steps:
@@ -137,17 +137,19 @@ jobs:
             const path = require('node:path');
             const fs = require('node:fs/promises');
             const basePath = '${{ env.ROOT_PATH }}';
-            const globber = await glob.create(`${basePath}/**/.devcontainer`);
-            const dirs = (await globber.glob());
+            const path = require('node:path');
+            const fs = require('node:fs/promises');
+            const basePath = '${{ env.ROOT_PATH }}';
+            const globber = await glob.create(`${basePath}/**/.devcontainer/devcontainer.json`);
+            const dirs = (await globber.glob()).map(file => path.dirname(file));
 
             for (const devDir of new Set(dirs)) {
-              const imageName = path.basename(path.dirname(devDir));
-              const escapedImageName = `${{ env.GH_REGISTRY }}/${imageName}`.replaceAll('/', '\\/').replaceAll('.', '\\.');
+              const escapedImageName = '${{ env.GH_REGISTRY }}/${{ env.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
               let reg = new RegExp(`(?<=DEVCONTAINER=${escapedImageName}:)([\\d\\.]+)`, 'm');
               let file = `${devDir}/.env`;
               let hasEnv = true;
               let env, fileContent;
-              core.info(`file: ${file}`);
+
               try {
                 env = await fs.open(file);
                 fileContent = await fs.readFile(env, 'utf8');
@@ -158,7 +160,7 @@ jobs:
                 env?.close();
               }
 
-              core.info(`Matched directory: ${devDir}`);
+              core.info(`Matched template path: ${devDir}`);
 
               if (hasEnv === false) {
                 reg = new RegExp(`(?<="image":\s+"${escapedImageName}:)([\\d\\.]+)`, 'm');
@@ -167,7 +169,7 @@ jobs:
               const matched = fileContent.match(reg);
 
               if (matched) {
-                core.info(`Matched image version: ${matched[1]}`);
+                core.info(`Update image version from ${matched[1]} to ${{ steps.read_current_image_version.outputs.value }}`);
                 await fs.writeFile(file, fileContent.replace(reg, `${{ steps.read_current_image_version.outputs.value }}`), 'utf8');
               }
             }
