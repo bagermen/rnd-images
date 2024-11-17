@@ -59,13 +59,16 @@ jobs:
             const escapedImageName = '${{ env.GH_REGISTRY }}/${{ env.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
             const variants = JSON.parse('${{ steps.variants.outputs.matrix }}');
             const basePath = '${{ env.ROOT_PATH }}';
-            const composeGlobber = await glob.create(`${basePath}/**/compose.yaml`);
-            const composes = await composeGlobber.glob();
+            const composeGlobber = await glob.create(`${basePath}/**/compose.*.yaml`);
+            const composeDirs = (await composeGlobber.glob()).map(file => path.dirname(file));
 
-            for (const composePath of composes) {
+            for (const composeDir of new Set(composeDirs)) {
               const composeTpl = `${composePath}.tpl`;
-              const parsedComposePath = path.parse(composePath);
+              const parsedComposePath = path.parse(composeDir);
               const tplDir = path.dirname(parsedComposePath.dir);
+              core.info(`composeDir: ${composeDir}`);
+              core.info(`tplDir: ${tplDir}`);
+              /**
               const tpl = JSON.parse(await fs.readFile(`${tplDir}/devcontainer-template.json`, 'utf8'));
               const filteredVariants = [...variants.filter(v => v.variant === ''), ...variants.filter(v => tpl.options.os.proposals.includes(v.variant))];
 
@@ -87,6 +90,7 @@ jobs:
               }
 
               await fs.unlink(composeTpl);
+              */
             }
 
       - name: Build and optionally push image

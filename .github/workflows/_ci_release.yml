@@ -106,9 +106,23 @@ jobs:
       suffix: ${{ matrix.variant }}
       push: true
 
+  # update_templates:
+  #   if: ${{ !cancelled() && !failure() && needs.release_please.outputs.devcontainer_released == 'true' }}
+  #   needs: [release_please]
+  #   runs-on: ubuntu-latest
+  #   environment: development
+  #   steps:
+  #     - name: Check out the repo
+  #       uses: actions/checkout@v4
+  #       with:
+  #           ref: ${{ github.ref }}
+  #           sparse-checkout: |
+  #             .github
+  #             templates
+
   publish_templates:
     needs: [release_please]
-    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' }}
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' && needs.release_please.outputs.devcontainer_released == 'false' }}
 
     secrets: inherit
     permissions:
