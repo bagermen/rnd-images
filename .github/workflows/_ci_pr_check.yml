@@ -159,6 +159,7 @@ jobs:
               let file = `${devDir}/.env`;
               let hasEnv = true;
               let env, fileContent;
+              core.info(`file: ${file}`);
 
               try {
                 env = await fs.open(file);
