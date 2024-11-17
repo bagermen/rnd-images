@@ -22,7 +22,7 @@ jobs:
       base_major_released: ${{ steps.release_please.outputs.releases_created && steps.release_please.outputs.base--major > steps.parse_current_base_version.outputs.major }}
       devcontainer_released: ${{ steps.release_please.outputs.devcontainer--release_created }}
       devcontainer_tag_name: ${{ steps.release_please.outputs.devcontainer--tag_name }}
-      templates_released: ${{ steps.release_please.outputs['templates/postgres-env--release_created'] }}
+      templates_released: ${{ steps.release_please.outputs['templates/compose-template--release_created'] }}
 
     steps:
       - uses: actions/checkout@v4
@@ -89,7 +89,7 @@ jobs:
 
   publish_devcontainer_image:
     needs: [release_please, publish_base_image]
-    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || (needs.release_please.outputs.base_released == 'true' && needs.release_please.outputs.base_major_released == 'false')) }}
+    if: ${{ !cancelled() && !failure() && (needs.release_please.outputs.devcontainer_released == 'true' || (needs.release_please.outputs.base_released == 'true' && needs.release_please.outputs.base_major_released != 'true')) }}
     strategy:
       matrix:
         include: ${{ fromJSON(needs.release_please.outputs.image_variants) }}
@@ -182,7 +182,7 @@ jobs:
 
   publish_templates:
     needs: [release_please]
-    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' && needs.release_please.outputs.devcontainer_released == 'false' }}
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' && needs.release_please.outputs.devcontainer_released != 'true' }}
 
     secrets: inherit
     permissions:
