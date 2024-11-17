@@ -106,19 +106,79 @@ jobs:
       suffix: ${{ matrix.variant }}
       push: true
 
-  # update_templates:
-  #   if: ${{ !cancelled() && !failure() && needs.release_please.outputs.devcontainer_released == 'true' }}
-  #   needs: [release_please]
-  #   runs-on: ubuntu-latest
-  #   environment: development
-  #   steps:
-  #     - name: Check out the repo
-  #       uses: actions/checkout@v4
-  #       with:
-  #           ref: ${{ github.ref }}
-  #           sparse-checkout: |
-  #             .github
-  #             templates
+  update_templates:
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.devcontainer_released == 'true' }}
+    needs: [release_please]
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+      GH_REGISTRY: ghcr.io/${{ github.repository }}
+      ROOT_PATH: templates
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+        with:
+            ref: ${{ github.ref }}
+            sparse-checkout: |
+              .github
+              templates
+
+      - id: read_current_image_version
+        uses: ashley-taylor/read-json-property-action@v1.2
+        with:
+          path: .github/.release-manifest.json
+          property: devcontainer
+
+      - name: Update devcontainer image version in templates
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = require('node:path');
+            const fs = require('node:fs/promises');
+            const basePath = '${{ env.ROOT_PATH }}';
+            const globber = await glob.create(`${basePath}/**/.devcontainer`);
+            const dirs = (await globber.glob());
+
+            for (const devDir of new Set(dirs)) {
+              const imageName = path.basename(path.dirname(devDir));
+              const escapedImageName = `${{ env.GH_REGISTRY }}/${imageName}`.replaceAll('/', '\\/').replaceAll('.', '\\.');
+              let reg = new RegExp(`(?<=DEVCONTAINER=${escapedImageName}:)([\\d\\.]+)`, 'm');
+              let file = `${devDir}/.env`;
+              let hasEnv = true;
+              let env, fileContent;
+
+              try {
+                env = await fs.open(file);
+                fileContent = await fs.readFile(env, 'utf8');
+              } catch (e) {
+                hasEnv = false;
+                continue;
+              } finally {
+                env?.close();
+              }
+
+              core.info(`Matched directory: ${devDir}`);
+
+              if (hasEnv === false) {
+                reg = new RegExp(`(?<="image":\s+"${escapedImageName}:)([\\d\\.]+)`, 'm');
+                file = `${devDir}/devcontainer.json`;
+              }
+              const matched = fileContent.match(reg);
+
+              if (matched) {
+                core.info(`Matched image version: ${matched[1]}`);
+                await fs.writeFile(file, fileContent.replace(reg, `${{ steps.read_current_image_version.outputs.value }}`), 'utf8');
+              }
+            }
+
+      - uses: qoomon/actions--create-commit@v1
+        id: commit
+        with:
+          message: 'feat: update devcontainer version to ${{ steps.read_current_image_version.outputs.value }}'
+          skip-empty: true
+
+      - if: ${{ steps.commit.outputs.commit }}
+        run: git push
 
   publish_templates:
     needs: [release_please]
