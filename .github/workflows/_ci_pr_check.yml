@@ -124,6 +124,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
+      DEV_IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
       GH_REGISTRY: ghcr.io/${{ github.repository }}
       ROOT_PATH: templates
     steps:
@@ -152,10 +153,7 @@ jobs:
             const dirs = (await globber.glob());
 
             for (const devDir of new Set(dirs)) {
-              const imageName = path.basename(path.dirname(path.dirname(devDir)));
-              core.info(`devDir: ${devDir}`);
-              core.info(`imageName: ${imageName}`);
-              const escapedImageName = `${{ env.GH_REGISTRY }}/${imageName}`.replaceAll('/', '\\/').replaceAll('.', '\\.');
+              const escapedImageName = '${{ env.GH_REGISTRY }}/${{ env.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
               core.info(`escapedImageName: ${escapedImageName}`);
               let reg = new RegExp(`(?<=DEVCONTAINER=${escapedImageName}:)([\\d\\.]+)`, 'm');
               let file = `${devDir}/.env`;
