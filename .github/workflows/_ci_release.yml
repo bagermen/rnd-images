@@ -112,6 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     env:
+      IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
       GH_REGISTRY: ghcr.io/${{ github.repository }}
       ROOT_PATH: templates
     steps:
@@ -146,7 +147,7 @@ jobs:
               let file = `${devDir}/.env`;
               let hasEnv = true;
               let env, fileContent;
-
+              core.info(`file: ${file}`);
               try {
                 env = await fs.open(file);
                 fileContent = await fs.readFile(env, 'utf8');
