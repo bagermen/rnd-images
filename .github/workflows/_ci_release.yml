@@ -169,7 +169,7 @@ jobs:
                 core.info(`Update image version from ${matched[1]} to ${{ steps.read_current_image_version.outputs.value }}`);
                 core.info(`file: ${filePath}`);
                 await fs.writeFile(filePath, fileContent.replace(reg, `${{ steps.read_current_image_version.outputs.value }}`), 'utf8');
-                await core.exec('git', ['add', filePath]);
+                await exec.exec('git', ['add', filePath]);
               }
             }
 
