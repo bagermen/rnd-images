@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.9](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.8...devcontainer-v1.5.9) (2024-11-18)
+
+
+### Bug Fixes
+
+* 🐛 fix release CI ([#285](https://github.com/bagermen/rnd-images/issues/285)) ([ab849ed](https://github.com/bagermen/rnd-images/commit/ab849edb62395271a43dd922480adfcb613ed63c))
+
 ## [1.5.8](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.7...devcontainer-v1.5.8) (2024-11-18)
 
 
