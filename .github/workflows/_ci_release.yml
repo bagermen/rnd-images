@@ -122,7 +122,7 @@ jobs:
 
   publish_templates:
     needs: [release_please]
-    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' && needs.release_please.outputs.devcontainer_released != 'true' }}
+    if: ${{ !cancelled() && !failure() && needs.release_please.outputs.templates_released == 'true' }}
 
     secrets: inherit
     permissions:
