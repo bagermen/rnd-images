@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.8](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.7...devcontainer-v1.5.8) (2024-11-18)
+
+
+### Bug Fixes
+
+* 🐛 fix CI: create PR ([#281](https://github.com/bagermen/rnd-images/issues/281)) ([2a4a16b](https://github.com/bagermen/rnd-images/commit/2a4a16b42bb4037e4a8245682802f0544ddb79f2))
+
 ## [1.5.7](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.6...devcontainer-v1.5.7) (2024-11-18)
 
 
