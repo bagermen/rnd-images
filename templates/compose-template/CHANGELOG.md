@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.3...compose-template-v2.4.0) (2024-11-18)
+
+
+### Features
+
+* update templates devcontainer version to 1.5.9 ([#287](https://github.com/bagermen/rnd-images/issues/287)) ([64c2a48](https://github.com/bagermen/rnd-images/commit/64c2a489c23f618a828c45ff9731f7a2f1884c5e))
+
 ## [2.3.3](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.2...compose-template-v2.3.3) (2024-11-18)
 
 
