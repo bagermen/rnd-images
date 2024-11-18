@@ -143,12 +143,12 @@ jobs:
             for (const devDir of new Set(dirs)) {
               const escapedImageName = '${{ env.GH_REGISTRY }}/${{ env.DEV_IMAGE_NAME }}'.replaceAll('/', '\\/').replaceAll('.', '\\.');
               let reg = new RegExp(`(?<=DEVCONTAINER=${escapedImageName}:)([\\d\\.]+)`, 'm');
-              let file = `${devDir}/.env`;
+              let filePath = `${devDir}/.env`;
               let hasEnv = true;
               let env, fileContent;
 
               try {
-                env = await fs.open(file);
+                env = await fs.open(filePath);
                 fileContent = await fs.readFile(env, 'utf8');
               } catch (e) {
                 hasEnv = false;
@@ -161,13 +161,15 @@ jobs:
 
               if (hasEnv === false) {
                 reg = new RegExp(`(?<="image":\s+"${escapedImageName}:)([\\d\\.]+)`, 'm');
-                file = `${devDir}/devcontainer.json`;
+                filePath = `${devDir}/devcontainer.json`;
               }
               const matched = fileContent.match(reg);
 
               if (matched) {
                 core.info(`Update image version from ${matched[1]} to ${{ steps.read_current_image_version.outputs.value }}`);
-                await fs.writeFile(file, fileContent.replace(reg, `${{ steps.read_current_image_version.outputs.value }}`), 'utf8');
+                core.info(`file: ${filePath}`);
+                await fs.writeFile(filePath, fileContent.replace(reg, `${{ steps.read_current_image_version.outputs.value }}`), 'utf8');
+                await core.exec('git', ['add', filePath]);
               }
             }
 
