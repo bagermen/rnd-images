@@ -113,6 +113,8 @@ jobs:
     environment: development
     permissions:
       contents: write
+      pull-requests: write
+
     env:
       DEV_IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
       GH_REGISTRY: ghcr.io/${{ github.repository }}
@@ -175,14 +177,15 @@ jobs:
               }
             }
 
-      - uses: qoomon/actions--create-commit@v1
-        id: commit
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
         with:
-          message: 'feat: update devcontainer version to ${{ steps.read_current_image_version.outputs.value }}'
-          skip-empty: true
-
-      - if: ${{ steps.commit.outputs.commit }}
-        run: git push
+          token: ${{ secrets.GITHUB_TOKEN }}
+          delete-branch: true
+          commit-message: 'feat: update templates devcontainer version to ${{ steps.read_current_image_version.outputs.value }}'
+          branch: auto-update-templates-devcontainer
+          labels: |
+            enhancement
 
   publish_templates:
     needs: [release_please]
