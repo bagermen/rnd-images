@@ -111,6 +111,8 @@ jobs:
     needs: [release_please]
     runs-on: ubuntu-latest
     environment: development
+    permissions:
+      contents: write
     env:
       DEV_IMAGE_NAME: ${{ vars.DEV_IMAGE_NAME }}
       GH_REGISTRY: ghcr.io/${{ github.repository }}
