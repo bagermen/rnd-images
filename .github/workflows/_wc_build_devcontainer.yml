@@ -58,13 +58,38 @@ jobs:
           string: ${{ steps.read_current_base_version.outputs.value }}
 
       - name: Update devcontainer.json base image
-        uses: vyan024/file-regex-replace-2023@v2
+        uses: actions/github-script@v7
         with:
-          include: .devcontainer/devcontainer.json
-          path: ${{ env.ROOT_PATH }}
-          regex: '(?<=^\s+"image":\s+")[^"]+'
-          flags: m
-          replacement: ${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}
+          script: |
+            const fs = require('node:fs/promises');
+            const basePath = '${{ env.ROOT_PATH }}/.devcontainer/devcontainer.json';
+            const globber = await glob.create(basePath);
+            const filePath = (await globber.glob()).pop();
+            const replaceImage = '${{ format('{0}/{1}:{2}{3}', env.GH_REGISTRY, vars.BASE_IMAGE_NAME, steps.parse_current_base_version.outputs.major, inputs.suffix) }}';
+            const reg = new RegExp('(?<=^\\s+"image":\\s+")([^"]+)', 'm');
+            let fileContent, file;
+
+            if (filePath === undefined) {
+              core.setFailed(`Can't find ${basePath}`);
+              return;
+            }
+
+            try {
+              file = await fs.open(filePath);
+              fileContent = await fs.readFile(file, 'utf8');
+            } catch (e) {
+              core.setFailed(`Can't read ${basePath}: ${e?.toString()}`);
+            } finally {
+              file?.close();
+            }
+
+            const matched = fileContent.match(reg);
+
+            if (matched) {
+              core.info(`Update image from "${matched[1]}" to "${replaceImage}"`);
+              core.info(`file: ${basePath}`);
+              await fs.writeFile(filePath, fileContent.replace(reg, replaceImage), 'utf8');
+            }
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -98,7 +123,7 @@ jobs:
             # pr
             type=ref,priority=600,event=pr,enable=${{ steps.tag_name.outputs.group1 == '' }}
 
-      - if: ${{ steps.meta.outputs.tags == '' }}
+      - if: ${{ success() && steps.meta.outputs.tags == '' }}
         uses: actions/github-script@v7
         with:
           script:  core.setFailed('Tags were not set')

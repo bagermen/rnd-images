@@ -16,6 +16,10 @@ jobs:
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
       templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
       image_variants: ${{ steps.variants.outputs.matrix }}
+
+    permissions:
+      actions: read
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,17 +38,13 @@ jobs:
             !**/docs/**
             !.editorconfig
             !LICENSE
-      - id: parent_commit
-        env:
-          SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          echo "SHA=$(git rev-list --skip=1 -1 $SHA)" >> $GITHUB_OUTPUT
-      - id: last-ref-status
-        if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
-        uses: danieldeichfuss/get-status@v0.0.10
+
+      - id: last_status
+        if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 }}
+        uses: Mercymeilya/last-workflow-status@v0.3.3
         with:
-            ref: ${{ steps.parent_commit.outputs.SHA }}
-      - if: ${{ steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last-ref-status.outputs.all-checks-completed == 'true' && steps.last-ref-status.outputs.all-checks-passed == 'false' && steps.parent_commit.outputs.SHA != github.event.pull_request.base.sha }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last_status.outputs.last_status == 'failure' }}
         uses: actions/github-script@v7
         with:
           script:  core.setFailed('Required checks has been failed')
