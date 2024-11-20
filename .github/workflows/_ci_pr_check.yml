@@ -43,8 +43,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            core.info('${{ github.event.pull_request.head.ref }}');
-
             try {
                const result = await github.rest.actions.listWorkflowRuns({
                 workflow_id: '_ci_gatekeeper.yml',
@@ -53,12 +51,11 @@ jobs:
                 branch: '${{ github.event.pull_request.head.ref }}',
                 ...context.repo
               });
-              core.info(`result: ${JSON.stringify(result)}`);
-              const conclusion = result?.workflow_runs[0]?.conclusion;
+              const conclusion = result?.data?.workflow_runs[0]?.conclusion;
               core.info(`last workflow run conclusion: ${conclusion}`);
               core.setOutput('conclusion', conclusion);
             } catch(e) {
-              core.error(`Can't get last workflow run conclusion ${e}`);
+              core.error(`Can't get last workflow run conclusion: ${e}`);
               core.setOutput('conclusion', null);
             }
 
