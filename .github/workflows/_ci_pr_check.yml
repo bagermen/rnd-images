@@ -43,7 +43,7 @@ jobs:
         if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 }}
         uses: ./.github/actions/gatekeeper-last-status
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.event.pull_request.head.ref }}
 
       - if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last_status.outputs.last_status == 'failure' }}
