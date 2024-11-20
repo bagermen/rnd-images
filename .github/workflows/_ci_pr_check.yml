@@ -53,6 +53,7 @@ jobs:
                 branch: '${{ github.event.pull_request.head.ref }}',
                 ...context.repo
               });
+              core.info(`result: ${JSON.stringify(result)}`);
               const conclusion = result?.workflow_runs[0]?.conclusion;
               core.info(`last workflow run conclusion: ${conclusion}`);
               core.setOutput('conclusion', conclusion);
