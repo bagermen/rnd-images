@@ -57,7 +57,7 @@ jobs:
               core.info(`last workflow run conclusion: ${conclusion}`);
               core.setOutput('conclusion', conclusion);
             } catch(e) {
-              core.error(`Can't get last workflow run conclusion`);
+              core.error(`Can't get last workflow run conclusion ${e}`);
               core.setOutput('conclusion', null);
             }
 
