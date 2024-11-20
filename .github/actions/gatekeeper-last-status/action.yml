@@ -1,11 +1,12 @@
 name: 'Get status of last gatekeeper run'
 inputs:
-  token:
-    type: string
-    required: true
   branch:
     type: string
     required: true
+  token:
+    type: string
+    default: ${{ github.token }}
+
 outputs:
   last_status:
     value: ${{ steps.get_status.outputs.last_status }}
