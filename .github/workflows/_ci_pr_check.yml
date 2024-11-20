@@ -55,13 +55,13 @@ jobs:
               });
               const conclusion = result?.data?.workflow_runs[0]?.conclusion;
               core.info(`last workflow run conclusion: ${conclusion}`);
-              core.setOutput('conclusion', conclusion);
+              core.setOutput('result', conclusion);
             } catch(e) {
               core.error(`Can't get last workflow run conclusion: ${e}`);
-              core.setOutput('last_status', null);
+              core.setOutput('result', null);
             }
 
-      - if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last_status.outputs.result.last_status == 'failure' }}
+      - if: ${{ success() && steps.check_files.outputs.any_modified == 'false' && steps.check_files.outputs.other_modified_files_count > 0 && steps.last_status.outputs.result == 'failure' }}
         uses: actions/github-script@v7
         with:
           script:  core.setFailed('Required checks has been failed')
