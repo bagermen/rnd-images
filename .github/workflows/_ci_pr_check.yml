@@ -46,11 +46,12 @@ jobs:
             core.info('${{ github.event.pull_request.head.ref }}');
 
             try {
-               const result = await github.rest.actions.listWorkflowRuns({...context.repo
+               const result = await github.rest.actions.listWorkflowRuns({
                 workflow_id: '_ci_gatekeeper.yml',
                 status: 'completed',
                 per_page: 1,
-                branch: '${{ github.event.pull_request.head.ref }}'
+                branch: '${{ github.event.pull_request.head.ref }}',
+                ...context.repo
               });
               const conclusion = result?.workflow_runs[0]?.conclusion;
               core.info(`last workflow run conclusion: ${conclusion}`);
