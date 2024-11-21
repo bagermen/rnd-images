@@ -3,10 +3,9 @@ name: ci / push templates
 on:
   push:
     branches:
-      - '!main'
-      - '!release-*'
+      - '*/issue-*'
     paths:
-      - 'templates/**/*'
+      - 'templates/**'
 
 env:
   ROOT_PATH: templates
