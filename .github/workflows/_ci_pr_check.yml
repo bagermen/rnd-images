@@ -10,7 +10,7 @@ jobs:
   check_changes:
     if: ${{ github.event.pull_request.draft == false && !contains(join(github.event.pull_request.labels.*.name), 'autorelease') }}
     runs-on: ubuntu-latest
-    environment: production
+    environment: development
     outputs:
       base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
       devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
@@ -81,7 +81,7 @@ jobs:
         with:
           message: 'feat: generate templates README.md'
           files: |
-            templates/**/README.md
+            templates/*/README.md
 
 
   test_base_image:
