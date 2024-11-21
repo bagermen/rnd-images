@@ -30,13 +30,13 @@ jobs:
         uses: devcontainers/action@v1
         with:
           generate-docs: 'true'
-          base-path-to-templates: ./templates
+          base-path-to-templates: ${{ env.ROOT_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add documentation into git
         run: |
-          git add templates/*/README.md
+          git add ${{ env.ROOT_PATH }}/*/README.md
 
       - uses: qoomon/actions--create-commit@v1
         id: commit
