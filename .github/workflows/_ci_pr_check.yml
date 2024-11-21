@@ -75,17 +75,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-        run: |
-          cat ./templates/compose-template/README.md
-
       - name: Commit documentation
         if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
         uses: wranders/commit-action@v0
         with:
           message: 'feat: generate templates README.md'
           files: |
-            templates/*/README.md
+            ./templates/*/README.md
 
 
   test_base_image:
