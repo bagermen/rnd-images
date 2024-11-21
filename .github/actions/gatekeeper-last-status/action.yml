@@ -1,0 +1,38 @@
+name: 'Get status of last gatekeeper run'
+inputs:
+  branch:
+    type: string
+    required: true
+  token:
+    type: string
+    default: ${{ github.token }}
+
+outputs:
+  last_status:
+    value: ${{ steps.get_status.outputs.last_status }}
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/github-script@v7
+      id: get_status
+      with:
+        github-token: ${{ inputs.token }}
+        script: |
+          try {
+              const result = await github.rest.actions.listWorkflowRuns({
+              workflow_id: '_ci_gatekeeper.yml',
+              status: 'completed',
+              per_page: 1,
+              branch: '${{ inputs.branch }}',
+              ...context.repo
+            });
+            const conclusion = result?.data?.workflow_runs[0]?.conclusion;
+            core.info(`last workflow run conclusion: ${conclusion}`);
+            core.setOutput('last_status', conclusion);
+          } catch(e) {
+            core.error(`Can't get last workflow run conclusion: ${e}`);
+            core.setOutput('last_status', null);
+          }
+
+
+

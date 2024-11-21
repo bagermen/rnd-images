@@ -52,14 +52,14 @@ jobs:
           include-component-in-tag: true
 
       - uses: ./.github/actions/create-release-refs
-        if: ${{ steps.release_please.outputs.base--release_created == 'true' }}
+        if: ${{ success() && steps.release_please.outputs.base--release_created == 'true' }}
         with:
           component: base
           major: ${{ steps.release_please.outputs.base--major }}
           minor: ${{ steps.release_please.outputs.base--minor }}
 
       - uses: ./.github/actions/create-release-refs
-        if: ${{ steps.release_please.outputs.devcontainer--release_created == 'true' }}
+        if: ${{ success() && steps.release_please.outputs.devcontainer--release_created == 'true' }}
         with:
           component: devcontainer
           major: ${{ steps.release_please.outputs.devcontainer--major }}

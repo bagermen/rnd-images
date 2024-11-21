@@ -17,7 +17,7 @@ ARG USER_GID=$USER_UID
 
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
-RUN bash /tmp/library-scripts/packages.sh "${UPGRADE_PACKAGES}" "libgdiplus python3"  \
+RUN bash /tmp/library-scripts/packages1.sh "${UPGRADE_PACKAGES}" "libgdiplus python3"  \
     && bash /tmp/library-scripts/user.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
