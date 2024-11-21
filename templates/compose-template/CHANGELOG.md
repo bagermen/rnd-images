@@ -1,4 +1,4 @@
-# Changelog1
+# Changelog
 
 ## [2.4.0](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.3...compose-template-v2.4.0) (2024-11-18)
 
