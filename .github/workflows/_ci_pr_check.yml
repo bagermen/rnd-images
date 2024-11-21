@@ -19,7 +19,7 @@ jobs:
 
     permissions:
       actions: read
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -65,6 +65,24 @@ jobs:
         with:
           since_last_remote_commit: true
           path: templates
+
+      - name: Generate template documentation
+        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+        uses: devcontainers/action@v1
+        with:
+          generate-docs: 'true'
+          base-path-to-templates: ./templates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit documentation
+        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+        uses: wranders/commit-action@v0
+        with:
+          message: 'feat: generate templates README.md'
+          files: |
+            templates/**/README.md
+
 
   test_base_image:
     needs: [check_changes]
