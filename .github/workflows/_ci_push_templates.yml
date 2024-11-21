@@ -2,9 +2,9 @@ name: ci / push templates
 
 on:
   push:
-    branches:
-      - '!main'
-      - '!release-*'
+    branches-ignore:
+      - main
+      - release-*
     paths:
       - templates/*
 
