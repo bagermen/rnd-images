@@ -1,5 +1,5 @@
 
-# rnd environmentv (compose-template)
+# rnd environment (compose-template)
 
 Environment of rnd images
 
