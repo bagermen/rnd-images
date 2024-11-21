@@ -19,7 +19,7 @@ jobs:
 
     permissions:
       actions: read
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -65,30 +65,6 @@ jobs:
         with:
           since_last_remote_commit: true
           path: templates
-
-      - name: Generate template documentation
-        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-        uses: devcontainers/action@v1
-        with:
-          generate-docs: 'true'
-          base-path-to-templates: ./templates
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Add documentation into git
-        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-        run: |
-          git add templates/*/README.md
-
-      - uses: qoomon/actions--create-commit@v1
-        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-        id: commit
-        with:
-          message: 'feat: generate templates README.md'
-          skip-empty: true
-
-      - if: ${{ success() && steps.commit.outputs.commit }}
-        run: git push
 
   test_base_image:
     needs: [check_changes]
