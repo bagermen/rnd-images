@@ -75,14 +75,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit documentation
+      - name: Add documentation into git
         if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
-        uses: wranders/commit-action@v0
+        run: |
+          git add templates/*/README.md
+
+      - uses: qoomon/actions--create-commit@v1
+        if: ${{ success() && steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+        id: commit
         with:
           message: 'feat: generate templates README.md'
-          files: |
-            ./templates/*/README.md
+          skip-empty: true
 
+      - if: ${{ success() && steps.commit.outputs.commit }}
+        run: git push
 
   test_base_image:
     needs: [check_changes]
