@@ -6,7 +6,7 @@ on:
       - '!main'
       - '!release-*'
     paths:
-      - 'templates/**'
+      - templates/**
 
 env:
   ROOT_PATH: templates
