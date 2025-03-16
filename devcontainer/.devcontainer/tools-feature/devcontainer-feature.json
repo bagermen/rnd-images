@@ -1,0 +1,12 @@
+{
+  "id": "tools-feature",
+  "name": "RND tools",
+  "version": "0",
+  "options": {
+    "version": {
+      "type": "string",
+      "description": "RND Tool version",
+      "default": "1.0.3"
+    }
+  }
+}
