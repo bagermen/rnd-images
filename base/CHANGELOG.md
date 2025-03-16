@@ -1,5 +1,12 @@
 # Changelog2
 
+## [1.2.0](https://github.com/bagermen/rnd-images/compare/base-v1.1.1...base-v1.2.0) (2025-03-16)
+
+
+### Features
+
+* ✨ add feature project ([#298](https://github.com/bagermen/rnd-images/issues/298)) ([020134f](https://github.com/bagermen/rnd-images/commit/020134f5bb2d7069115e33e1c5d2acb60716b313))
+
 ## [1.1.1](https://github.com/bagermen/rnd-images/compare/base-v1.1.0...base-v1.1.1) (2024-11-10)
 
 
