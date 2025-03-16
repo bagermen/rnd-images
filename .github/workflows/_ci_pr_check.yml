@@ -13,9 +13,9 @@ jobs:
     environment: development
     outputs:
       image_variants: ${{ steps.variants.outputs.matrix }}
-      base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.any_modified == 'true' }}
-      devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.any_modified == 'true' }}
-      templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.any_modified == 'true' }}
+      base_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.base.outputs.all_modified_files_count > 0 }}
+      devcontainer_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.devcontainer.outputs.all_modified_files_count > 0 }}
+      templates_modified: ${{ steps.check_files.outputs.any_modified == 'true' && steps.templates.outputs.all_modified_files_count > 0 }}
 
     permissions:
       actions: read
