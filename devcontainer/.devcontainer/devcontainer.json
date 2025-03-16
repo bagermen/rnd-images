@@ -6,11 +6,11 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {},
-		"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
+		"ghcr.io/devcontainers/features/common-utils:2": {}
+		,"ghcr.io/robbert229/devcontainer-features/postgresql-client:1": {
 		  "version": "12"
-		},
-    "./tools-feature": {
+		}
+    ,"./tools-feature": {
       "version": "1.0.3"
     }
 	},
