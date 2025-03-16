@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/bagermen/rnd-images/compare/compose-template-v2.4.0...compose-template-v2.5.0) (2025-03-16)
+
+
+### Features
+
+* ✨ add feature project ([#298](https://github.com/bagermen/rnd-images/issues/298)) ([020134f](https://github.com/bagermen/rnd-images/commit/020134f5bb2d7069115e33e1c5d2acb60716b313))
+
 ## [2.4.0](https://github.com/bagermen/rnd-images/compare/compose-template-v2.3.3...compose-template-v2.4.0) (2024-11-18)
 
 

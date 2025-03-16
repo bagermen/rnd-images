@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.9...devcontainer-v1.6.0) (2025-03-16)
+
+
+### Features
+
+* ✨ add feature project ([#298](https://github.com/bagermen/rnd-images/issues/298)) ([020134f](https://github.com/bagermen/rnd-images/commit/020134f5bb2d7069115e33e1c5d2acb60716b313))
+
 ## [1.5.9](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.5.8...devcontainer-v1.5.9) (2024-11-18)
 
 
