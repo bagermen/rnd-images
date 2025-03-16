@@ -121,6 +121,9 @@ jobs:
             cache-from: type=gha
             cache-to: type=gha,mode=max
             SUFFIX=${{ inputs.suffix }}
+            GITHUB_USERNAME=${{ github.actor }}
+            GITHUB_NAMESPACE=${{ github.actor }}
+            GITHUB_PASSWORD=${{ secrets.PKG_READONLY }}
 
       - name: Generate artifact attestation (GitHub)
         if: ${{ success() && vars.ACTIONS_STEP_DEBUG != 'true' && inputs.push }}

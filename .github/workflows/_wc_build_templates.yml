@@ -38,7 +38,7 @@ jobs:
               .github
               ${{ env.ROOT_PATH }}
 
-      - name: Build and optionally push image
+      - name: Build and optionally push templates
         uses: devcontainers/action@v1
         with:
           generate-docs: ${{ inputs.push && 'true' || 'false' }}

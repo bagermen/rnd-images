@@ -2,6 +2,10 @@ services:
   devcontainer:
     image: ${DEVCONTAINER}
     command: sleep infinity
+    environment:
+      PGHOST: ${POSTGRES_HOST}
+      PGUSER: postgres
+      PGPASSWORD: ${DB_PASSWORD}
     volumes:
       - ..:/etc/bpmsoft:cached
       - home:/home
