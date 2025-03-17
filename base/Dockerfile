@@ -14,13 +14,10 @@ ARG USERNAME=dotnetuser
 ARG USER_PASSW="skip"
 ARG USER_UID=automatic
 ARG USER_GID=$USER_UID
-ARG GITHUB_USERNAME
-ARG GITHUB_NAMESPACE
-ARG GITHUB_PASSWORD
 
-ENV GITHUB_USERNAME=$GITHUB_USERNAME \
-	GITHUB_NAMESPACE=$GITHUB_NAMESPACE \
-	GITHUB_PASSWORD=$GITHUB_PASSWORD
+RUN --mount=type=secret,id=github-username,env=GITHUB_USERNAME \
+    --mount=type=secret,id=github-namespace,env=GITHUB_NAMESPACE \
+    --mount=type=secret,id=github-password,env=GITHUB_PASSWORD
 
 # Add GitHub package registry
 RUN dotnet nuget add source \
