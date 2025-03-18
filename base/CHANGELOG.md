@@ -1,5 +1,12 @@
 # Changelog2
 
+## [2.0.4](https://github.com/bagermen/rnd-images/compare/base-v2.0.3...base-v2.0.4) (2025-03-18)
+
+
+### Bug Fixes
+
+* 🐛 fix systemctl service setup ([#326](https://github.com/bagermen/rnd-images/issues/326)) ([3bb81b7](https://github.com/bagermen/rnd-images/commit/3bb81b73a007baaa6a5da2a56313879536252bef))
+
 ## [2.0.3](https://github.com/bagermen/rnd-images/compare/base-v2.0.2...base-v2.0.3) (2025-03-18)
 
 

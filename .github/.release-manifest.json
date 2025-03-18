@@ -1,5 +1,5 @@
 {
-  "base": "2.0.3",
+  "base": "2.0.4",
   "devcontainer": "2.0.0",
   "templates/compose-template": "2.8.0"
 }
