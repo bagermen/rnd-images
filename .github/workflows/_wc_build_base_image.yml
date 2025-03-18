@@ -46,6 +46,7 @@ env:
   IMAGE_NAME: ${{ vars.BASE_IMAGE_NAME }}
   GH_REGISTRY: ghcr.io/${{ github.repository }}
   ROOT_PATH: base
+  CUSER: ${{ vars.CUSER }}
 
 jobs:
   build_image:
@@ -121,6 +122,7 @@ jobs:
             cache-from: type=gha
             cache-to: type=gha,mode=max
             SUFFIX=${{ inputs.suffix }}
+            USERNAME=${{ env.CUSER }}
           secrets: |
             "github-username=${{ github.actor }}"
             "github-namespace=${{ github.actor }}"
