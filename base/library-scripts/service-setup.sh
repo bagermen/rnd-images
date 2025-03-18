@@ -8,8 +8,8 @@ set -e
 
 NVM_DIR=${1:-"/usr/local/share/nvm"}
 SERVICE_NAME=${2:-"rnd"}
-USERNAME=${1:-"root"}
-SITE_PATH=${2:-"/var/www/rnd"}
+USERNAME=${3:-"root"}
+SITE_PATH=${4:-"/var/www/rnd"}
 
 if [ "$(id -u)" -ne 0 ]; then
     echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
