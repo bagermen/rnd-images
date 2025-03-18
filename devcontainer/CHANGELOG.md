@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.7.0...devcontainer-v2.0.0) (2025-03-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* ✨ Update devcontainer to use base imgage v2.0.3 ([#310](https://github.com/bagermen/rnd-images/issues/310))
+
+### Features
+
+* ✨ Update devcontainer to use base imgage v2.0.3 ([#310](https://github.com/bagermen/rnd-images/issues/310)) ([be012d9](https://github.com/bagermen/rnd-images/commit/be012d90df99f4a77474445bcdfd16216bb466a0))
+
 ## [1.7.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.6.0...devcontainer-v1.7.0) (2025-03-16)
 
 
