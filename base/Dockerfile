@@ -15,6 +15,7 @@ ARG USER_PASSW="skip"
 ARG USER_UID=automatic
 ARG USER_GID=$USER_UID
 
+ENV PATH="$PATH:~/.dotnet/tools"
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 RUN --mount=type=secret,id=github-username,env=GITHUB_USERNAME \
     --mount=type=secret,id=github-namespace,env=GITHUB_NAMESPACE \
