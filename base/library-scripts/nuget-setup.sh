@@ -30,11 +30,17 @@ dotnet nuget add source \
 	--name github "https://nuget.pkg.github.com/%GITHUB_NAMESPACE%/index.json" \
 	--configfile $userhome/.nuget/NuGet/config/github.config
 
-cat > $userhome/.profile << EOF
+cat >> $userhome/.profile << EOF
 # Add .NET Core SDK tools
 if [ -d "\$HOME/.dotnet/tools" ] ; then
     PATH="\$HOME/.dotnet/tools:\$PATH"
 fi
+EOF
+
+cat >> /etc/environment << EOF
+GITHUB_USERNAME="$GITHUB_USERNAME"
+GITHUB_PASSWORD="$GITHUB_PASSWORD"
+GITHUB_NAMESPACE="$GITHUB_NAMESPACE"
 EOF
 
 chown -R ${USERNAME}:${group_name} "${userhome}/.profile"
