@@ -1,5 +1,12 @@
 # Changelog2
 
+## [2.0.3](https://github.com/bagermen/rnd-images/compare/base-v2.0.2...base-v2.0.3) (2025-03-18)
+
+
+### Bug Fixes
+
+* 🐛 another attempt to fix dotnet settings ([#318](https://github.com/bagermen/rnd-images/issues/318)) ([01e9929](https://github.com/bagermen/rnd-images/commit/01e9929079deaf5aa6ae2f59f1e740ef6f77a585))
+
 ## [2.0.2](https://github.com/bagermen/rnd-images/compare/base-v2.0.1...base-v2.0.2) (2025-03-18)
 
 
