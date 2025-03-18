@@ -1,13 +1,13 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the (fake change 34)
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-	"name": "BPMSoft RND Dev",
+	"name": "RND Dev",
 	"dockerComposeFile": [
     "compose.base.yaml",
     "compose.${templateOption:os}.yaml",
     "compose.${templateOption:db}.yaml"
   ],
   "service": "devcontainer",
-  "workspaceFolder": "/etc/bpmsoft",
-  "initializeCommand": "docker volume create postgres_bpmsoft && docker volume create redis_bpmsoft"
+  "workspaceFolder": "/var/www/rnd",
+  "initializeCommand": "docker volume create postgres_rnd && docker volume create redis_rnd"
 }

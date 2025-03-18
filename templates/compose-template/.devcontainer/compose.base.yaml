@@ -10,7 +10,7 @@ services:
 volumes:
   home:
   redis_data:
-    name: redis_bpmsoft
+    name: redis_rnd
   postgres_data:
     external: true
-    name: postgres_bpmsoft
+    name: postgres_rnd

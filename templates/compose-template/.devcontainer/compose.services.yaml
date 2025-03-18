@@ -7,7 +7,7 @@ services:
       PGUSER: postgres
       PGPASSWORD: ${DB_PASSWORD}
     volumes:
-      - ..:/etc/bpmsoft:cached
+      - ..:/var/www/rnd:cached
       - home:/home
 
   redis:

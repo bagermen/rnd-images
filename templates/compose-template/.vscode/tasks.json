@@ -110,7 +110,7 @@
 				"--autoExit=true",
 				"--operation=InstallPackagesFromWorkingCopy",
 				"--workspaceName=Default",
-				"--workingCopyPath=/etc/bpmsoft",
+				"--workingCopyPath=${workspaceFolder}",
 				"--skipConstraints=false",
 				"--skipValidateActions=true",
 				"--regenerateSchemaSources=true",
