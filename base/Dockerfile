@@ -15,12 +15,14 @@ ARG USER_PASSW="skip"
 ARG USER_UID=automatic
 ARG USER_GID=$USER_UID
 
+# Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 RUN --mount=type=secret,id=github-username,env=GITHUB_USERNAME \
     --mount=type=secret,id=github-namespace,env=GITHUB_NAMESPACE \
-    --mount=type=secret,id=github-password,env=GITHUB_PASSWORD
-
-# Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
-RUN bash /tmp/library-scripts/packages.sh "${UPGRADE_PACKAGES}" "libgdiplus python3"  \
+    --mount=type=secret,id=github-password,env=GITHUB_PASSWORD \
+	export GITHUB_USERNAME \
+	&& export GITHUB_NAMESPACE \
+	&& export GITHUB_PASSWORD \
+ 	&& bash /tmp/library-scripts/packages.sh "${UPGRADE_PACKAGES}" "libgdiplus python3"  \
     && bash /tmp/library-scripts/user.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" \
 	&& bash /tmp/library-scripts/nuget-setup.sh "${USERNAME}" \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
