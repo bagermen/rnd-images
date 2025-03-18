@@ -37,10 +37,10 @@ if [ -d "\$HOME/.dotnet/tools" ] ; then
 fi
 EOF
 
-cat >> /etc/environment << EOF
-GITHUB_USERNAME="$GITHUB_USERNAME"
-GITHUB_PASSWORD="$GITHUB_PASSWORD"
-GITHUB_NAMESPACE="$GITHUB_NAMESPACE"
+cat > /etc/profile.d/github-env.sh << EOF
+export GITHUB_USERNAME="$GITHUB_USERNAME"
+export GITHUB_PASSWORD="$GITHUB_PASSWORD"
+export GITHUB_NAMESPACE="$GITHUB_NAMESPACE"
 EOF
 
 chown -R ${USERNAME}:${group_name} "${userhome}/.profile"
