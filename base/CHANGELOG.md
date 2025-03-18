@@ -1,5 +1,16 @@
 # Changelog2
 
+## [2.0.0](https://github.com/bagermen/rnd-images/compare/base-v1.2.0...base-v2.0.0) (2025-03-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* ✨ Update site paths ([#307](https://github.com/bagermen/rnd-images/issues/307))
+
+### Features
+
+* ✨ Update site paths ([#307](https://github.com/bagermen/rnd-images/issues/307)) ([0ff917d](https://github.com/bagermen/rnd-images/commit/0ff917da1511e18d1100a0cc06852d501914e0bf))
+
 ## [1.2.0](https://github.com/bagermen/rnd-images/compare/base-v1.1.1...base-v1.2.0) (2025-03-16)
 
 
