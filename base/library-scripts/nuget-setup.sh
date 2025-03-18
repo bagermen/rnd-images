@@ -21,7 +21,7 @@ else
     userhome="/home/${USERNAME}"
 fi
 
-mkdir -p $userhome/.nuget/NuGet/config/github.config
+mkdir -p $userhome/.nuget/NuGet/config
 echo '<?xml version="1.0" encoding="utf-8"?><configuration></configuration>' > $userhome/.nuget/NuGet/config/github.config
 dotnet nuget add source \
 	--username "%GITHUB_USERNAME%" \
