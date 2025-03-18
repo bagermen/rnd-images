@@ -7,7 +7,9 @@
 set -e
 
 NVM_DIR=${1:-"/usr/local/share/nvm"}
-SERVICE_NAME=${2:-"bpmsoft"}
+SERVICE_NAME=${2:-"rnd"}
+USERNAME=${1:-"root"}
+SITE_PATH=${2:-"/var/www/rnd"}
 
 if [ "$(id -u)" -ne 0 ]; then
     echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
@@ -19,17 +21,38 @@ rm -f /etc/profile.d/00-restore-env.sh
 echo "export PATH=${PATH//$(sh -lc 'echo $PATH')/\$PATH}" > /etc/profile.d/00-restore-env.sh
 chmod +x /etc/profile.d/00-restore-env.sh
 
-REPLACE=$(echo $NVM_DIR)
-ESCAPED_REPLACE=$(printf '%s\n' "$REPLACE" | sed -e 's/[]\/$*.^[]/\\&/g')
-PATH_TO_REPLACE="\$NVM_DIR"
-ESCAPED_PATH_TO_REPLACE=$(printf '%s\n' "$PATH_TO_REPLACE" | sed -e 's/[]\/$*.^[]/\\&/g')
-sed -i -E "s/$ESCAPED_PATH_TO_REPLACE/$ESCAPED_REPLACE/" "/etc/systemd/system/$SERVICE_NAME.service"
+if [ "${USERNAME}" = "root" ]; then
+    userhome="/root"
+else
+    userhome="/home/${USERNAME}"
+fi
 
-NODE_VERSION=$(echo $(node -v))
-ESCAPED_NODE_VERSION=$(printf '%s\n' "$NODE_VERSION" | sed -e 's/[]\/$*.^[]/\\&/g')
-PATH_TO_REPLACE_NODE_VERSION="\$NODE_VERSION"
-ESCAPED_PATH_TO_REPLACE_NODE_VERSION=$(printf '%s\n' "$PATH_TO_REPLACE_NODE_VERSION" | sed -e 's/[]\/$*.^[]/\\&/g')
-sed -i -E "s/$ESCAPED_PATH_TO_REPLACE_NODE_VERSION/$ESCAPED_NODE_VERSION/" "/etc/systemd/system/$SERVICE_NAME.service"
+path_to_replace="\$SITEPATH"
+escaped_path_to_replace=$(printf '%s\n' "$path_to_replace" | sed -e 's/[]\/$*.^[]/\\&/g')
+escaped_path=$(printf '%s\n' "$SITE_PATH" | sed -e 's/[]\/$*.^[]/\\&/g')
+sed -i -E "s/$escaped_path_to_replace/$escaped_path/" "/etc/systemd/system/$SERVICE_NAME.service"
+
+userhome_to_replace="\$USERHOME"
+escaped_userhome_to_replace=$(printf '%s\n' "$userhome_to_replace" | sed -e 's/[]\/$*.^[]/\\&/g')
+escaped_userhome=$(printf '%s\n' "$userhome" | sed -e 's/[]\/$*.^[]/\\&/g')
+sed -i -E "s/$escaped_userhome_to_replace/$escaped_userhome/" "/etc/systemd/system/$SERVICE_NAME.service"
+
+username_to_replace="\$USERNAME"
+escaped_username_to_replace=$(printf '%s\n' "$username_to_replace" | sed -e 's/[]\/$*.^[]/\\&/g')
+escaped_username=$(printf '%s\n' "$USERNAME" | sed -e 's/[]\/$*.^[]/\\&/g')
+sed -i -E "s/$escaped_username_to_replace/$escaped_username/" "/etc/systemd/system/$SERVICE_NAME.service"
+
+replace=$(echo $NVM_DIR)
+escaped_replace=$(printf '%s\n' "$replace" | sed -e 's/[]\/$*.^[]/\\&/g')
+path_to_replace="\$NVM_DIR"
+escaped_path_to_replace=$(printf '%s\n' "$path_to_replace" | sed -e 's/[]\/$*.^[]/\\&/g')
+sed -i -E "s/$escaped_path_to_replace/$escaped_replace/" "/etc/systemd/system/$SERVICE_NAME.service"
+
+node_version=$(echo $(node -v))
+escaped_node_version=$(printf '%s\n' "$node_version" | sed -e 's/[]\/$*.^[]/\\&/g')
+path_to_replace_node_version="\$NODE_VERSION"
+escaped_path_to_replace_node_version=$(printf '%s\n' "$path_to_replace_node_version" | sed -e 's/[]\/$*.^[]/\\&/g')
+sed -i -E "s/$escaped_path_to_replace_node_version/$escaped_node_version/" "/etc/systemd/system/$SERVICE_NAME.service"
 
 # /bin/systemctl enable $SERVICE_NAME
 

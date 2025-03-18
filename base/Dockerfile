@@ -14,24 +14,15 @@ ARG USERNAME=dotnetuser
 ARG USER_PASSW="skip"
 ARG USER_UID=automatic
 ARG USER_GID=$USER_UID
-ARG GITHUB_USERNAME
-ARG GITHUB_NAMESPACE
-ARG GITHUB_PASSWORD
 
-ENV GITHUB_USERNAME=$GITHUB_USERNAME \
-	GITHUB_NAMESPACE=$GITHUB_NAMESPACE \
-	GITHUB_PASSWORD=$GITHUB_PASSWORD
-
-# Add GitHub package registry
-RUN dotnet nuget add source \
-	--username "%GITHUB_USERNAME%" \
-	--password "%GITHUB_PASSWORD%" \
-	--store-password-in-clear-text \
-	--name github "https://nuget.pkg.github.com/%GITHUB_NAMESPACE%/index.json"
+RUN --mount=type=secret,id=github-username,env=GITHUB_USERNAME \
+    --mount=type=secret,id=github-namespace,env=GITHUB_NAMESPACE \
+    --mount=type=secret,id=github-password,env=GITHUB_PASSWORD
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your own dependencies.
 RUN bash /tmp/library-scripts/packages.sh "${UPGRADE_PACKAGES}" "libgdiplus python3"  \
     && bash /tmp/library-scripts/user.sh "${USERNAME}" "${USER_UID}" "${USER_GID}" \
+	&& bash /tmp/library-scripts/nuget-setup.sh "${USERNAME}" \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install node
@@ -58,13 +49,13 @@ RUN mkdir -p /run/systemd/system \
     && chmod +x /usr/local/share/systemctl3.py \
     && ln -s /usr/local/share/systemctl3.py /bin/systemctl
 
-# add bpmsoft service and actualize node
-COPY library-scripts/bpmsoft.service /etc/systemd/system
-RUN bash /tmp/library-scripts/service-setup.sh "${NVM_DIR}" "bpmsoft"  \
-    && mkdir /etc/bpmsoft \
-    && chown -R $USERNAME:$USERNAME /etc/bpmsoft
+# add rnd service and actualize node
+COPY library-scripts/rnd.service /etc/systemd/system
+RUN bash /tmp/library-scripts/service-setup.sh "${NVM_DIR}" "rnd" "${USERNAME}" "/var/www/rnd" \
+    && mkdir -p /var/www/rnd \
+    && chown -R $USERNAME:$USERNAME /var/www/rnd
 
-VOLUME [ "/etc/bpmsoft" ]
+VOLUME [ "/var/www/rnd" ]
 
 # Remove library scripts for final image
 RUN rm -rf /tmp/library-scripts

@@ -1,0 +1,19 @@
+[Unit]
+Description=DotNet RND Service
+
+[Service]
+Environment="COMPlus_ThreadPool_ForceMinWorkerThreads=100"
+Environment="NODE_VERSION=$NODE_VERSION"
+Environment="PATH=$NVM_DIR/current/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:$USERHOME/.dotnet/tools"
+# ExecStartPre==$NVM_DIR/nvm-exec npm config set cache $USERHOME/.npm
+ExecStart=/usr/bin/dotnet BPMSoft.WebHost.dll
+WorkingDirectory=$SITEPATH
+User=$USERNAME
+Group=$USERNAME
+#Restart=on-failure
+Restart=always
+SyslogIdentifier=dotnet-rnd-service
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
