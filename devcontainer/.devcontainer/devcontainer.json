@@ -1,8 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
 {
-	"name": "RND devcontainer",
-	"image": "ghcr.io/bagermen/rnd-images/base:1",
+	"name": "RND",
+	"image": "ghcr.io/bagermen/rnd-images/base:2",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
@@ -11,7 +11,8 @@
 		  "version": "12"
 		}
     ,"./tools-feature": {
-      "version": "1.0.3"
+      "version": "1.0.3",
+      "user": "${localEnv:CUSER}"
     }
 	},
 
@@ -30,8 +31,8 @@
 	},
 
 	"updateRemoteUserUID": true,
-	"workspaceMount": "source=${localWorkspaceFolder},target=/etc/bpmsoft,type=bind,consistency=cached",
-	"workspaceFolder": "/etc/bpmsoft",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/var/www/rnd,type=bind,consistency=cached",
+	"workspaceFolder": "/var/www/rnd",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -49,6 +50,6 @@
 	},
 
 	// More info: https://aka.ms/dev-containers-non-root.
-	"containerUser": "dotnetuser",
-	"remoteUser": "dotnetuser"
+	"containerUser": "${localEnv:CUSER}",
+	"remoteUser": "${localEnv:CUSER}"
 }
