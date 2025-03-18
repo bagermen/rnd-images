@@ -1,5 +1,12 @@
 # Changelog2
 
+## [2.0.1](https://github.com/bagermen/rnd-images/compare/base-v2.0.0...base-v2.0.1) (2025-03-18)
+
+
+### Bug Fixes
+
+* 🐛 fix environment definition at base ([#312](https://github.com/bagermen/rnd-images/issues/312)) ([72744dc](https://github.com/bagermen/rnd-images/commit/72744dcae81495049b41885664b16ed92b01fb42))
+
 ## [2.0.0](https://github.com/bagermen/rnd-images/compare/base-v1.2.0...base-v2.0.0) (2025-03-18)
 
 
