@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v2.0.0...devcontainer-v2.1.0) (2025-03-18)
+
+
+### Features
+
+* ✨ update rnd tool version ([#329](https://github.com/bagermen/rnd-images/issues/329)) ([7d19527](https://github.com/bagermen/rnd-images/commit/7d19527261c77899a44a66eaec6f207394ff1d37))
+
 ## [2.0.0](https://github.com/bagermen/rnd-images/compare/devcontainer-v1.7.0...devcontainer-v2.0.0) (2025-03-18)
 
 
