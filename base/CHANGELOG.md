@@ -1,5 +1,12 @@
 # Changelog2
 
+## [2.0.2](https://github.com/bagermen/rnd-images/compare/base-v2.0.1...base-v2.0.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* 🐛 set envs into profile.d ([#315](https://github.com/bagermen/rnd-images/issues/315)) ([6d27775](https://github.com/bagermen/rnd-images/commit/6d27775f8f29931dbff907bbd7cfbd440078b124))
+
 ## [2.0.1](https://github.com/bagermen/rnd-images/compare/base-v2.0.0...base-v2.0.1) (2025-03-18)
 
 
