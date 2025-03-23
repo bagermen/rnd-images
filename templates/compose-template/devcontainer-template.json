@@ -1,6 +1,6 @@
 {
   "id": "compose-template",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "name": "rnd environment",
   "description": "Environment of rnd images",
   "keywords": [
