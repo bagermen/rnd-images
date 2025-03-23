@@ -9,6 +9,7 @@ services:
     volumes:
       - ..:/var/www/rnd:cached
       - home:/home
+      - root:/root
 
   redis:
     image: redis:alpine

@@ -2,26 +2,70 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Start BPMSoft",
+			"label": "Init PG Build",
+			"dependsOrder": "parallel",
+			"dependsOn": [
+				"set connection to main assembly",
+				"set connection to wc assembly",
+				"LoadAssemblyFromByteArray TRUE"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "set connection to main assembly",
+			"type": "shell",
+			"command": "rnd config connection db \"$PG_CONNECTION\"",
+			"problemMatcher": [],
+			"hide": true
+		},
+		{
+			"label": "set connection to wc assembly",
+			"type": "shell",
+			"command": "rnd config --assembly-path=$WC_ASSEMBLY connection db \"$PG_CONNECTION\"",
+			"problemMatcher": [],
+			"hide": true
+		},
+		{
+			"label": "LoadAssemblyFromByteArray TRUE",
+			"type": "shell",
+			"command": "rnd config setting LoadAssemblyFromByteArray true",
+			"problemMatcher": []
+		},
+		{
+			"label": "LoadAssemblyFromByteArray FALSE",
+			"type": "shell",
+			"command": "rnd config setting LoadAssemblyFromByteArray false",
+			"problemMatcher": []
+		},
+		{
+			"label": "Load DB ${file}",
+			"type": "shell",
+			"command": "rnd db load ${file}",
+			"problemMatcher": []
+		},
+		{
+			"label": "Start RND",
 			"type": "process",
 			"isBackground": true,
 			"command": "sudo",
 			"args": [
 				"systemctl",
 				"start",
-				"bpmsoft"
-			]
+				"rnd"
+			],
+			"problemMatcher": []
 		},
 		{
-			"label": "Stop BPMSoft",
+			"label": "Stop RND",
 			"type": "process",
 			"isBackground": true,
 			"command": "sudo",
 			"args": [
 				"systemctl",
 				"stop",
-				"bpmsoft"
-			]
+				"rnd"
+			],
+			"problemMatcher": []
 		},
 		{
 			"label": "Rebuild Workspace",
