@@ -8,6 +8,7 @@ services:
         file: compose.services.yaml
         service: redis
 volumes:
+  root:
   home:
   redis_data:
     name: redis_rnd

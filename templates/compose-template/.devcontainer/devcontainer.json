@@ -9,5 +9,11 @@
   ],
   "service": "devcontainer",
   "workspaceFolder": "/var/www/rnd",
-  "initializeCommand": "docker volume create postgres_rnd && docker volume create redis_rnd"
+  "initializeCommand": "docker volume create postgres_rnd",
+
+  "remoteEnv": {
+    "RNDTOOLS_CmdLine__AssemblyPath": "${containerWorkspaceFolder}/BPMSoft.WebHost.dll",
+    "WC_ASSEMBLY": "${containerWorkspaceFolder}/WorkspaceConsole/BPMSoft.Tools.WorkspaceConsole.dll",
+    "PG_CONNECTION": "Pooling=true; Database=bpmsoft; Host=${containerEnv:PGHOST}; Port=5432; Username=${containerEnv:PGUSER}; Password=${containerEnv:PGPASSWORD}; maxPoolSize=50; Timeout=5; CommandTimeout=400"
+  }
 }
