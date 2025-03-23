@@ -16,6 +16,7 @@
     "templates/compose-template": {
       "component": "compose-template",
       "release-type": "simple",
+      "changelog-path": ".devcontainer/CHANGELOG.md",
       "extra-files": [
         {
           "type": "json",
